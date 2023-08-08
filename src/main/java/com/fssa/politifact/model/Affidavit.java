@@ -1,5 +1,9 @@
 package com.fssa.politifact.model;
 
+
+
+
+
 public class Affidavit {
 	
 	private int id;
