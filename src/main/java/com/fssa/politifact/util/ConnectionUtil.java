@@ -33,6 +33,7 @@ public class ConnectionUtil {
 			System.out.println(e.getMessage());
 			throw new RuntimeException("Unable to connect to the database");
 		}
+		System.out.println("hu");
 		return con;
 	}
 

@@ -33,7 +33,7 @@ public class LeaderServicetest {
 
 	public Leaders getLeaders() {
 
-		Leaders leader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 2, "Birth Description",
+		Leaders leader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 3, "Birth Description",
 				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
 				"Income Description", "https://www.example.com/image.jpg", 2);
 
@@ -66,7 +66,7 @@ public class LeaderServicetest {
 	@Test
 	public void testUpdateLeader() throws LeaderValidateException, SQLException {
 
-		Leaders leader = new Leaders("bhack", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1, "Birth Description",
+		Leaders leader = new Leaders("bhack", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 2, "Birth Description",
 				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
 				"Income Description", "https://www.example.com/image.jpg", 2);
 

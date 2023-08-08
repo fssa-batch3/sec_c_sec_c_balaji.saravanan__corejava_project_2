@@ -23,7 +23,7 @@ public class ConstituencyValidator {
 
 	public void validateConstituencyName(String cName) throws LeaderValidateException {
 		
-		if (cName == null || cName.trim().isEmpty() || !cName.matches("[a-zA-Z\\s]+")) {
+		if (cName == null || cName.trim().isEmpty() || !cName.matches("[a-zA-Z\\s]+")|| cName.length()<2) {
 			
 			throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_NAME);
 		}
@@ -31,7 +31,7 @@ public class ConstituencyValidator {
 
 	public void validateDistrictName(String dName) throws LeaderValidateException {
 
-		if (dName == null || dName.trim().isEmpty() || !dName.matches("[a-zA-Z\\s]+")) {
+		if (dName == null || dName.trim().isEmpty() || !dName.matches("[a-zA-Z\\s]+")|| dName.length()<2) {
 			throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_NAME);
 		}
 	}

@@ -43,8 +43,9 @@ public class LeaderDao {
 			if (generatedKeys.next()) {
 
 				int generatedId = generatedKeys.getInt(1);
-
+         
 				leader.setId(generatedId);
+				System.out.println(leader.getId());
 			}
 			return true;
 		} else {
@@ -68,7 +69,7 @@ public class LeaderDao {
 		pst.setString(12, leader.getDescriptionOfIncome());
 		pst.setString(13, leader.getImageUrl());
 		pst.setInt(14, leader.getAffidavitId());
-		pst.setInt(15, 1);
+		pst.setInt(15, 3);
 
 		int row = pst.executeUpdate();
 
@@ -83,18 +84,18 @@ public class LeaderDao {
 		leader.setId(rs.getInt("id"));
 		leader.setName(rs.getString("name"));
 		leader.setPosition(rs.getString("position"));
-		leader.setPartyId(rs.getInt("party_id"));
+		leader.setPartyId(rs.getInt("partyId"));
 		leader.setExperience(rs.getDouble("experience"));
 		leader.setOccupation(rs.getString("occupation"));
-		leader.setCounstuencyId(rs.getInt("constituency_id"));
-		leader.setDescriptionOfBirth(rs.getString("description_of_birth"));
-		leader.setDescriptionOfEducation(rs.getString("description_of_education"));
-		leader.setDescriptionOfPastWorkExperience(rs.getString("description_of_past_work_experience"));
-		leader.setDescritionOfpolitics(rs.getString("description_of_politics"));
-		leader.setDescriptionOffamily(rs.getString("description_of_family"));
-		leader.setDescriptionOfIncome(rs.getString("description_of_income"));
-		leader.setImageUrl(rs.getString("image_url"));
-		leader.setAffidavitId(rs.getInt("affidavit_id"));
+		leader.setCounstuencyId(rs.getInt("counstuencyId"));
+		leader.setDescriptionOfBirth(rs.getString("descriptionOfBirth"));
+		leader.setDescriptionOfEducation(rs.getString("descriptionOfEducation"));
+		leader.setDescriptionOfPastWorkExperience(rs.getString("descriptionOfPastWorkExperience"));
+		leader.setDescritionOfpolitics(rs.getString("descritionOfpolitics"));
+		leader.setDescriptionOffamily(rs.getString("descriptionOfFamily"));
+		leader.setDescriptionOfIncome(rs.getString("descriptionOfIncome"));
+		leader.setImageUrl(rs.getString("imageUrl"));
+		leader.setAffidavitId(rs.getInt("affidavitId"));
 
 		return leader;
 	}
@@ -120,7 +121,7 @@ public class LeaderDao {
 
 	public static boolean updateLeader(Leaders leader) throws SQLException, LeaderValidateException {
 
-		final String query = "UPDATE leaders SET name=?, position=?, partyId=?, experience=?, occupation=?, counstuencyId=?, descriptionOfBirth=?, descriptionOfEducation=?, descriptionOfPastWorkExperience=?, descritionOfpolitics=?, descriptionOffamily=?, descriptionOfIncome=?, imageUrl=?, affidavitId=? WHERE id=?";
+		final String query = "UPDATE Leaders SET name=?, position=?, partyId=?, experience=?, occupation=?, counstuencyId=?, descriptionOfBirth=?, descriptionOfEducation=?, descriptionOfPastWorkExperience=?, descritionOfpolitics=?, descriptionOffamily=?, descriptionOfIncome=?, imageUrl=?, affidavitId=? WHERE id=?";
 
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(query)) {
@@ -128,6 +129,7 @@ public class LeaderDao {
 			return insertUpdate(leader, pst);
 
 		} catch (SQLException sqe) {
+			System.out.println(sqe.getMessage());
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 
@@ -161,7 +163,7 @@ public class LeaderDao {
 
 		ArrayList<Leaders> leadersList = new ArrayList<>();
 
-		final String query = "SELECT * FROM leaders";
+		final String query = "SELECT * FROM Leaders";
 
 		try (Connection connection = ConnectionUtil.getConnection();
 
@@ -179,6 +181,7 @@ public class LeaderDao {
 				return leadersList;
 
 			} catch (SQLException sqe) {
+				System.out.println(sqe.getMessage());
 
 				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 

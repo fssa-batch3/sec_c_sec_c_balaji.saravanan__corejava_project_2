@@ -52,6 +52,7 @@ public class ConstituencyService {
 		if (this.constituencyValidator.validate(constituency)) {
 
 			return this.constituencyDao.updateConstituency(constituency);
+			
 		} else {
 
 			return false;

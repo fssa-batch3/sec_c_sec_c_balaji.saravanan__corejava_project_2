@@ -48,7 +48,7 @@ public class ConstituencyServiceTest {
 	@Test
 	public void tesupDateConstituency() throws LeaderValidateException, SQLException {
 
-		Constituency constituency = new Constituency("chennai", "villupuram", 1, 1);
+		Constituency constituency = new Constituency("tambaram", "villupuram", 1, 1);
 
 		ConstituencyService constituencyService = getConstituencyService();
 

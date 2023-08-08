@@ -48,10 +48,12 @@ public class ConstituencyDao {
 		pst.setString(2, Constituency.getDistrictName());
 		pst.setInt(3, Constituency.getConstituencyNumber());
 		pst.setDouble(4, Constituency.getElectionTypeId());
-		pst.setInt(5, 1);
+		pst.setInt(5, 2);
 
 		int row = pst.executeUpdate();
-
+		
+        System.out.println(row);
+        
 		return row > 0;
 
 	}
@@ -114,7 +116,7 @@ public class ConstituencyDao {
 
 		ArrayList<Constituency> constituenciesList = new ArrayList<>();
 
-		final String query = "SELECT * FROM constituency";
+		final String query = "SELECT * FROM Constituency";
 
 		try (Connection connection = ConnectionUtil.getConnection();
 

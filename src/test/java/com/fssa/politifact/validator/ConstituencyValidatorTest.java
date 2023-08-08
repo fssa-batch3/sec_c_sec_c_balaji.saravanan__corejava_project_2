@@ -14,6 +14,7 @@ public class ConstituencyValidatorTest {
 
 	@BeforeEach
 	public void setUp() {
+		
 		constituencyValidator = new ConstituencyValidator();
 	}
 
