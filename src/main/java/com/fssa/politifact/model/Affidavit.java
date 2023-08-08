@@ -1,18 +1,14 @@
 package com.fssa.politifact.model;
 
-
-
-
-
 public class Affidavit {
-	
+
 	private int id;
 	private int electionId;
 	private int LeaderId;
 	private String affidateUrl;
-	
+
 	public Affidavit(int id, int electionId, int leaderId, String affidateUrl) {
-		
+
 		this.id = id;
 		this.electionId = electionId;
 		LeaderId = leaderId;
@@ -49,6 +45,6 @@ public class Affidavit {
 
 	public void setAffidateUrl(String affidateUrl) {
 		this.affidateUrl = affidateUrl;
-	}  
+	}
 
 }
