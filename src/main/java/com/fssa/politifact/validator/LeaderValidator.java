@@ -1,124 +1,127 @@
 package com.fssa.politifact.validator;
 
+import com.fssa.politifact.enums.Position;
+import com.fssa.politifact.exceptions.LeaderValidateException;
+import com.fssa.politifact.model.Leader;
 
+public class LeaderValidator {
 
-import com.fssa.politifact.model.Leaders;
-import com.fssa.politifact.model.Position;
-public class LeaderValidator { 
+	public boolean validate(Leader leader) throws LeaderValidateException {
 
-    public boolean validate(Leaders leader) throws LeaderValidateException {
-        if (leader == null) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_LEADER_NULL);
-        }
+		if (leader == null) {
 
-        validateName(leader.getName());
-        validatePosition(leader.getPosition());
-        validatePartyName(leader.getPartyId());
-        validateExperience(leader.getExperience());
-        validateOccupation(leader.getOccupation());
-        validateConstituencyId(leader.getCounstuencyId());
-        validateDescriptionOfBirth(leader.getDescriptionOfBirth());
-        validateDescriptionOfEducation(leader.getDescriptionOfEducation());
-        validateDescriptionOfPastWorkExperience(leader.getDescriptionOfPastWorkExperience());
-        validateDescritionOfPolitics(leader.getDescritionOfpolitics());
-        validateDescriptionOfFamily(leader.getDescriptionOffamily());
-        validateDescriptionOfIncome(leader.getDescriptionOfIncome());
-        validateUrl(leader.getImageUrl()); 
-        validateAffidavitId(leader.getAffidavitId());
-        
-        return true;
-    }
+			throw new LeaderValidateException(LeaderValidateError.INVALID_LEADER_NULL);
+		}
 
-    public void validateName(String name) throws LeaderValidateException {
-        if (name == null || name.trim().isEmpty() || name.length() <=2 || !name.matches("[A-Za-z\\s]+")) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_NAME);
-        }
-    }
+		validateName(leader.getName());
+		validatePosition(leader.getPosition());
+		validatePartyName(leader.getPartyName());
+		validateExperience(leader.getExperience());
+		validateOccupation(leader.getOccupation());
+		validateConstituencyName(leader.getCounstuencyName());
+		validateDescriptionOfBirth(leader.getDescriptionOfBirth());
+		validateDescriptionOfEducation(leader.getDescriptionOfEducation());
+		validateDescriptionOfPastWorkExperience(leader.getDescriptionOfPastWorkExperience());
+		validateDescritionOfPolitics(leader.getDescritionOfpolitics());
+		validateDescriptionOfFamily(leader.getDescriptionOffamily());
+		validateDescriptionOfIncome(leader.getDescriptionOfIncome());
+		validateUrl(leader.getImageUrl());
 
-    public void validatePosition(Position position) throws LeaderValidateException {
-        if (position == null) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_POSITION);
-        }
-    }
+		return true;
+	}
 
-    public void validatePartyName(int partyId) throws LeaderValidateException {
-        if (partyId < 0) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_PARTY_ID);
-        }
-    }
+	public boolean validateName(String name) throws LeaderValidateException {
 
-    public void validateExperience(double experience) throws LeaderValidateException {
-        if (experience <= 0) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_EXPERIENCE);
-        }
-    }
+		if (name == null || name.trim().isEmpty() || name.length() <= 2 || !name.matches("[A-Za-z\\s]+")) {
 
-    public void validateOccupation(String occupation) throws LeaderValidateException {
-        if (occupation == null || occupation.trim().isEmpty() || occupation.length() < 2 || !occupation.matches("[a-zA-Z//s]+")) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_OCCUPATION);
-        }
-    }
+			throw new LeaderValidateException(LeaderValidateError.INVALID_NAME);
+		}
+		return true;
+	}
 
+	public void validatePosition(Position position) throws LeaderValidateException {
 
-    public void validateConstituencyId(int constituencyId) throws LeaderValidateException {
-        if (constituencyId <= 0) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_NUMBER);
-        }
-    }
+		if (position == null) {
 
-    public void validateDescriptionOfBirth(String description) throws LeaderValidateException {
-        if (description == null || description.isEmpty()) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
-        }
-    }
+			throw new LeaderValidateException(LeaderValidateError.INVALID_POSITION);
+		}
+	}
 
-    public void validateDescriptionOfPastWorkExperience(String description) throws LeaderValidateException {
-        if (description.isEmpty()) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
-        }
-    }
+	public void validatePartyName(String partyName) throws LeaderValidateException {
 
-    public void validateDescritionOfPolitics(String description) throws LeaderValidateException {
-        if (description.isEmpty()) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
-        } 
-    }
+		if (partyName == null || partyName.isEmpty()) {
 
-    public void validateDescriptionOfEducation(String description) throws LeaderValidateException {
-        if (description.isEmpty()) {
-        	
-            throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
-        }
-    }
+			throw new LeaderValidateException(LeaderValidateError.INVALID_PARTY_ID);
+		}
+	}
 
-    public void validateDescriptionOfFamily(String description) throws LeaderValidateException {
-        if (description.isEmpty()) {
-        	
-            throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
-        }
-    }
+	public void validateExperience(double experience) throws LeaderValidateException {
 
-    public void validateDescriptionOfIncome(String description) throws LeaderValidateException {
-        if (description.isEmpty()) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
-        }
-    }
+		if (experience <= 0) {
+			throw new LeaderValidateException(LeaderValidateError.INVALID_EXPERIENCE);
+		}
+	}
 
-   
+	public void validateOccupation(String occupation) throws LeaderValidateException {
 
-    public void validateUrl(String url) throws LeaderValidateException {
-        if (url == null || !url.matches("^(https?://)?[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}(\\/.*)?$")) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_URL);
-        }
-    }
-    
+		if (occupation == null || occupation.trim().isEmpty() || occupation.length() < 2
+				|| !occupation.matches("[a-zA-Z//s]+")) {
+			throw new LeaderValidateException(LeaderValidateError.INVALID_OCCUPATION);
+		}
+	}
 
-    
-    public void validateAffidavitId(int id) throws LeaderValidateException {
-        if (id <=0) {
-            throw new LeaderValidateException(LeaderValidateError.INVALID_AFFIDAVIT_ID);
-        }
-    }
-    
-    
+	public void validateConstituencyName(String constituencyName) throws LeaderValidateException {
+
+		if (constituencyName == null || constituencyName.isEmpty()) {
+
+			throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_NUMBER);
+		}
+	}
+
+	public void validateDescriptionOfBirth(String description) throws LeaderValidateException {
+		if (description == null || description.isEmpty()) {
+			throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
+		}
+	}
+
+	public void validateDescriptionOfPastWorkExperience(String description) throws LeaderValidateException {
+		if (description.isEmpty()) {
+			throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
+		}
+	}
+
+	public void validateDescritionOfPolitics(String description) throws LeaderValidateException {
+		if (description.isEmpty()) {
+			throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
+		}
+	}
+
+	public void validateDescriptionOfEducation(String description) throws LeaderValidateException {
+		if (description.isEmpty()) {
+
+			throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
+		}
+	}
+
+	public void validateDescriptionOfFamily(String description) throws LeaderValidateException {
+		if (description.isEmpty()) {
+
+			throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
+		}
+	}
+
+	public void validateDescriptionOfIncome(String description) throws LeaderValidateException {
+		if (description.isEmpty()) {
+			throw new LeaderValidateException(LeaderValidateError.INVALID_DESCRIPTION);
+		}
+	}
+
+	public boolean validateUrl(String url) throws LeaderValidateException {
+		if (url == null || !url.matches("^(https?://)?[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}(\\/.*)?$")) {
+
+			throw new LeaderValidateException(LeaderValidateError.INVALID_URL);
+
+		}
+		return true;
+	}
 }

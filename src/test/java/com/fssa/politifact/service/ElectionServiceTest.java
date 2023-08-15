@@ -8,29 +8,29 @@ import org.junit.jupiter.api.Test;
 
 import com.fssa.politifact.dao.ElectionDao;
 import com.fssa.politifact.dao.Logger;
+import com.fssa.politifact.enums.ElectionTypes;
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Election;
-import com.fssa.politifact.model.ElectionTypes;
 import com.fssa.politifact.validator.ElectionValidator;
-import com.fssa.politifact.validator.LeaderValidateException;
 
-public class ElectionServiceTest {
+ class ElectionServiceTest {
 	
 	Logger logger = new Logger();
 
 	@Test
-	public void testAddEletion() throws LeaderValidateException, SQLException {
+	 void testAddEletion() throws LeaderValidateException, SQLException {
 
 		Election election = getElection();
 
 		ElectionService electionService = getElectionService();
 
 		Assertions.assertTrue(electionService.addElection(election));
-
+ 
 	}
 
 	public Election getElection() {
 
-		Election election = new Election(1,2023, ElectionTypes.LOCALA_ELECTION);
+		Election election = new Election(1,2023, ElectionTypes.LOCAL_ELECTION);
 
 		return election;
 	}
@@ -39,28 +39,28 @@ public class ElectionServiceTest {
 
 		ElectionValidator electionValidator = new ElectionValidator();
 
-		ElectionDao electionDao = new ElectionDao();
+		ElectionDao electionDao =ElectionDao.getObj();
 
 		ElectionService electionService = new ElectionService(electionValidator, electionDao);
 
 		return electionService;
 	}
-
+ 
 	@Test
-	public void tesupDateElection() throws LeaderValidateException, SQLException {
+	 void tesupDateElection() throws LeaderValidateException, SQLException {
 		
-		Election election = new Election(1,2023, ElectionTypes.LOCALA_ELECTION);
+		Election election = new Election(1,2023, ElectionTypes.LOCAL_ELECTION);
 
 		ElectionService electionService = getElectionService();
 
-		Assertions.assertTrue(electionService.upDateElection(election));
+		Assertions.assertTrue(electionService.upDateElection(election, ElectionTypes.LOCAL_ELECTION.toString()));
 
 	} 
 
 //	@Test
 //	public void testDeleteElection() throws LeaderValidateException, SQLException {
 //
-//		int id = 4;
+//		String electionName="";
 //
 //		ElectionService electionService = getElectionService();
 //
@@ -68,7 +68,7 @@ public class ElectionServiceTest {
 //	}
 
 	@Test
-	public void testAllElection() throws LeaderValidateException, SQLException {
+	 void testAllElection() throws LeaderValidateException, SQLException {
 
 		ElectionService electionService = getElectionService();
 

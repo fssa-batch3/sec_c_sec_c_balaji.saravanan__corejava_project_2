@@ -6,15 +6,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Party;
 import com.fssa.politifact.util.ConnectionUtil;
 import com.fssa.politifact.validator.LeaderValidateError;
-import com.fssa.politifact.validator.LeaderValidateException;
 
 public class PartyDao {
 	
-	private static boolean insertParty(Party party, PreparedStatement pst) throws SQLException {
+	private PartyDao() {
+		
+	}
+	public static PartyDao getObj() {
+		
+		return new PartyDao(); 
+	} 
+	
+	private boolean insertParty(Party party, PreparedStatement pst) throws SQLException {
 
 		pst.setString(1, party.getPartyName());
 		pst.setString(2, party.getPartyImageUrl());
@@ -31,21 +40,23 @@ public class PartyDao {
 				int generatedId = generatedKeys.getInt(1);
 
 				party.setPartyId(generatedId);
-			}
+			} 
 
 			return true;
 
 		} else {
 
 			return false;
-		}
+		} 
 	}
 
-	private static boolean insertUpdate(Party party, PreparedStatement pst) throws SQLException {
+	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName) throws SQLException {
 
+		int partyId= LeaderDao.findPartyId(partyName);
+		
 		pst.setString(1, party.getPartyName());
 		pst.setString(2, party.getPartyImageUrl());
-		pst.setInt(3,1);
+		pst.setInt(3,partyId);
 
 		int row = pst.executeUpdate();
 
@@ -53,7 +64,7 @@ public class PartyDao {
 
 	}
 
-	public static boolean addParty(Party party) throws SQLException, LeaderValidateException {
+	public boolean addParty(Party party) throws SQLException, LeaderValidateException {
 		
 		  final String query = "INSERT INTO Party (PartyName, partyImageUrl) VALUES (?, ?)";
 
@@ -65,31 +76,29 @@ public class PartyDao {
 
 			} catch (SQLException sqe) {
 
-				System.out.println(sqe.getMessage());
 				
 				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}
 
-	public static boolean updateParty(Party party) throws SQLException, LeaderValidateException {
+	public boolean updateParty(Party party, String partyName) throws SQLException, LeaderValidateException {
 
 		final String query = "UPDATE Party SET PartyName=?, partyImageUrl=? WHERE partyId=?";
 		
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(query)) {
 
-			return insertUpdate(party, pst);
+			return insertUpdate(party, pst, partyName);
 
 		} catch (SQLException sqe) {
 			
-			System.out.println(sqe.getMessage());
 			
 			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 	}
 
-	public static boolean deleteParty(int partyId) throws SQLException, LeaderValidateException {
+	public boolean deleteParty(String partyName) throws SQLException, LeaderValidateException {
 
 		final String query = "DELETE FROM Parties WHERE partyId=?";
 
@@ -97,22 +106,23 @@ public class PartyDao {
 
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
+				int partyId= LeaderDao.findPartyId(partyName);
+				
 				pst.setInt(1, partyId);
 
-				int rowsDeleted = pst.executeUpdate();
+				int rowsDeleted = pst.executeUpdate(); 
 
 				return rowsDeleted > 0;
 
 			} catch (SQLException sqe) {
 				
-				System.out.println(sqe.getMessage());
 
 				throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
 			}
 		}
 	}
 
-	public static ArrayList<Party> readAllParties() throws SQLException {
+	public List<Party> readAllParties() throws SQLException, LeaderValidateException {
 
 		ArrayList<Party> partyList = new ArrayList<>();
 
@@ -137,9 +147,7 @@ public class PartyDao {
 
 			} catch (SQLException sqe) {
 
-				System.out.println(sqe.getMessage());
-				
-				return null;
+				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	} 

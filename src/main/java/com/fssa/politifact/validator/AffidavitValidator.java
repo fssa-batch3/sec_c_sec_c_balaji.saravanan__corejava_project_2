@@ -1,5 +1,6 @@
 package com.fssa.politifact.validator;
 
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Affidavit;
 
 public class AffidavitValidator {

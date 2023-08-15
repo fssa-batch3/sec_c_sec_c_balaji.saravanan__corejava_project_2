@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.fssa.politifact.enums.ElectionTypes;
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Election;
-import com.fssa.politifact.model.ElectionTypes;
 
-public class ElectionValidatorTest {
+ class ElectionValidatorTest {
 
     private ElectionValidator electionValidator;
 
@@ -33,7 +34,7 @@ public class ElectionValidatorTest {
     @Test
     void testInvalidElectionYear() {
     	
-        Election election = new Election(1, 1800, ElectionTypes.LOCALA_ELECTION);
+        Election election = new Election(1, 1800, ElectionTypes.LOCAL_ELECTION);
         
         assertThrows(LeaderValidateException.class, () -> electionValidator.validate(election));
     }

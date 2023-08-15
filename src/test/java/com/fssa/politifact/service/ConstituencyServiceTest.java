@@ -8,18 +8,19 @@ import org.junit.jupiter.api.Test;
 
 import com.fssa.politifact.dao.ConstituencyDao;
 import com.fssa.politifact.dao.Logger;
+import com.fssa.politifact.enums.ElectionTypes;
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
 import com.fssa.politifact.validator.ConstituencyValidator;
-import com.fssa.politifact.validator.LeaderValidateException;
 
-public class ConstituencyServiceTest {
+class ConstituencyServiceTest {
 
 	Logger logger = new Logger();
 
 	@Test
-	public void testAddConstituency() throws LeaderValidateException, SQLException {
+	 void testAddConstituency() throws LeaderValidateException, SQLException {
 
-		Constituency constituency = getConstituency();
+		Constituency constituency = getConstituency(); 
 
 		ConstituencyService constituencyService = getConstituencyService();
 
@@ -27,18 +28,18 @@ public class ConstituencyServiceTest {
 
 	}
 
-	public Constituency getConstituency() {
+	public Constituency getConstituency() { 
 
-		Constituency constituency = new Constituency("villupuram", "villupuram", 1, 1);
+		Constituency constituency = new Constituency("villupuram", "villupuram", 1, ElectionTypes.GENERAL_ELECTION);
 
 		return constituency;
 	}
-
+ 
 	public ConstituencyService getConstituencyService() {
 
 		ConstituencyValidator constituencyValidator = new ConstituencyValidator();
 
-		ConstituencyDao constituencyDao = new ConstituencyDao();
+		ConstituencyDao constituencyDao = ConstituencyDao.getObj();
 
 		ConstituencyService constituencyService = new ConstituencyService(constituencyValidator, constituencyDao);
 
@@ -46,13 +47,13 @@ public class ConstituencyServiceTest {
 	}
 
 	@Test
-	public void tesupDateConstituency() throws LeaderValidateException, SQLException {
+	 void tesupDateConstituency() throws LeaderValidateException, SQLException {
 
-		Constituency constituency = new Constituency("tambaram", "villupuram", 1, 1);
+		Constituency constituency = new Constituency("tambaram", "villupuram", 1, ElectionTypes.GENERAL_ELECTION);
 
 		ConstituencyService constituencyService = getConstituencyService();
 
-		Assertions.assertTrue(constituencyService.upDateConstituency(constituency));
+		Assertions.assertTrue(constituencyService.upDateConstituency(constituency, "villupuram"));
 
 	}
 
@@ -67,7 +68,7 @@ public class ConstituencyServiceTest {
 //	}
 
 	@Test
-	public void testAllConstituency() throws LeaderValidateException, SQLException {
+	void testAllConstituency() throws LeaderValidateException, SQLException {
 
 		ConstituencyService constituencyService = getConstituencyService();
 

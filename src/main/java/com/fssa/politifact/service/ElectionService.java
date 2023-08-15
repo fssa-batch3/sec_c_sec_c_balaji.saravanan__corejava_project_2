@@ -1,19 +1,19 @@
 package com.fssa.politifact.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 import com.fssa.politifact.dao.ElectionDao;
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Election;
 import com.fssa.politifact.validator.ElectionValidator;
 import com.fssa.politifact.validator.LeaderValidateError;
-import com.fssa.politifact.validator.LeaderValidateException;
 
 public class ElectionService {
 
-	private ElectionValidator electionValidator;
+	private final ElectionValidator electionValidator;
 
-	private ElectionDao electionDao;
+	private final ElectionDao electionDao;
 
 	public ElectionService(ElectionValidator electionValidator, ElectionDao electionDao) {
 		
@@ -36,11 +36,11 @@ public class ElectionService {
 
 			return false;
 
-		}
+		} 
 
 	}
 
-	public boolean upDateElection(Election election) throws LeaderValidateException, SQLException {
+	public boolean upDateElection(Election election, String electionName) throws LeaderValidateException, SQLException {
 
 		if (election == null) {
 
@@ -50,7 +50,7 @@ public class ElectionService {
 
 		if (this.electionValidator.validate(election)) {
 
-			return this.electionDao.updateElection(election);
+			return this.electionDao.updateElection(election , electionName);
 		} else {
 
 			return false;
@@ -76,7 +76,7 @@ public class ElectionService {
 		}
 	}
 
-	public ArrayList<Election> electionList() throws LeaderValidateException, SQLException {
+	public List<Election> electionList() throws LeaderValidateException, SQLException {
 
 		return this.electionDao.readAllElection();
 

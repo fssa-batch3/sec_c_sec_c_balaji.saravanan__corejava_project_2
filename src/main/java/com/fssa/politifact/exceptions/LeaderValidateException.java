@@ -1,4 +1,4 @@
-package com.fssa.politifact.validator;
+package com.fssa.politifact.exceptions;
 /*
  *  this page for custom exception for my project 
  * 

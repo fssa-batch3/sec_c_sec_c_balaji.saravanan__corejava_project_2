@@ -2,12 +2,14 @@
 package com.fssa.politifact.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 import com.fssa.politifact.dao.LeaderDao;
-import com.fssa.politifact.model.Leaders;
+import com.fssa.politifact.exceptions.DaoException;
+import com.fssa.politifact.exceptions.LeaderValidateException;
+import com.fssa.politifact.model.Constituency;
+import com.fssa.politifact.model.Leader;
 import com.fssa.politifact.validator.LeaderValidateError;
-import com.fssa.politifact.validator.LeaderValidateException;
 import com.fssa.politifact.validator.LeaderValidator;
 
 /**
@@ -16,10 +18,10 @@ import com.fssa.politifact.validator.LeaderValidator;
  */
 public class LeaderService {
 
-	public LeaderValidator leaderValidator;
+	public final LeaderValidator leaderValidator;
 
-	public LeaderDao leaderDao;
- 
+	public final LeaderDao leaderDao;
+
 	public LeaderService(LeaderValidator leaderValidator, LeaderDao leader) {
 
 		this.leaderValidator = leaderValidator;
@@ -28,7 +30,7 @@ public class LeaderService {
 
 	}
 
-	public boolean addLeader(Leaders leader) throws LeaderValidateException, SQLException {
+	public boolean addLeader(Leader leader) throws LeaderValidateException {
 
 		if (leader == null) {
 
@@ -47,7 +49,7 @@ public class LeaderService {
 		}
 	}
 
-	public boolean upDateLeader(Leaders leader) throws LeaderValidateException, SQLException {
+	public boolean upDateLeader(Leader leader, String name) throws LeaderValidateException, DaoException, SQLException {
 
 		if (leader == null) {
 
@@ -57,24 +59,23 @@ public class LeaderService {
 
 		if (this.leaderValidator.validate(leader)) {
 
-			return this.leaderDao.updateLeader(leader);
+			return this.leaderDao.updateLeader(leader, name);
 
 		} else {
 
-			return false;
+			return false; 
 
 		}
-		
+
 	}
 
-	public boolean deleteLeader(int leader) throws LeaderValidateException, SQLException {
-		if (leader < 0) {
+	public boolean deleteLeader(String leader) throws LeaderValidateException, SQLException, DaoException {
+		if (leader == null) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_CANDIDATE_ID);
-
+			throw new LeaderValidateException(LeaderValidateError.INVALID_NAME);
 		}
 
-		if (leader > 0) {
+		if (leaderValidator.validateName(leader)) {
 
 			return this.leaderDao.deleteLeader(leader);
 
@@ -82,16 +83,14 @@ public class LeaderService {
 			return false;
 
 		}
+	}  
+
+	public List<String> callAllLeader() throws SQLException, DaoException {
+
+		return this.leaderDao.readLeader();
+
 	}
-	
-	
-	
-	public ArrayList<Leaders> callAllLeader() throws LeaderValidateException, SQLException {
-		
-			return this.leaderDao.readLeader();
-		
-	}
-	
+
 //	public ArrayList<Leaders> readLeaderWithConstituency()throws LeaderValidateException, SQLException {
 //		
 //		return this.leaderDao.readLeaderWithConstituency();

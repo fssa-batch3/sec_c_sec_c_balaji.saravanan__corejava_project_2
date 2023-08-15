@@ -1,26 +1,28 @@
 package com.fssa.politifact.model;
 
+import com.fssa.politifact.enums.ElectionTypes;
+
 public class Constituency {
-	
+
 	private int constituencyID;
 	private String constituencyName;
 	private String districtName;
 	private int constituencyNumber;
-	private int electionTypeId;
+	private ElectionTypes electionTypeName;
 	
 	public Constituency(String constituencyName, String districtName, int constituencyNumber,
-			int electionTypeId) {
-
+			ElectionTypes electionTypeName) {
+		
 		this.constituencyName = constituencyName;
 		this.districtName = districtName;
 		this.constituencyNumber = constituencyNumber;
-		this.electionTypeId = electionTypeId;  
-	} 
+		this.electionTypeName = electionTypeName;
+	}
 
 	public int getConstituencyID() {
 		return constituencyID;
 	}
-	
+
 	public void setConstituencyID(int constituencyID) {
 		this.constituencyID = constituencyID;
 	}
@@ -28,43 +30,42 @@ public class Constituency {
 	public String getConstituencyName() {
 		return constituencyName;
 	}
-	
+
 	public void setConstituencyName(String constituencyName) {
 		this.constituencyName = constituencyName;
 	}
-	
+
 	public String getDistrictName() {
 		return districtName;
 	}
-	
+
 	public void setDistrictName(String districtName) {
 		this.districtName = districtName;
 	}
-	
+
 	public int getConstituencyNumber() {
 		return constituencyNumber;
 	}
-	
+
 	public void setConstituencyNumber(int constituencyNumber) {
 		this.constituencyNumber = constituencyNumber;
 	}
-	
-	public int getElectionTypeId() {
-		return electionTypeId;
+
+	public ElectionTypes getElectionTypeName() {
+		return electionTypeName;
 	}
 
-	public void setElectionTypeId(int electionTypeId) {
-		this.electionTypeId = electionTypeId;
+	public void setElectionTypeName(String electionTypeName) {
+		this.electionTypeName = ElectionTypes.valueOf(electionTypeName);
 	}
 
 	@Override
 	public String toString() {
 		return "Constituency [constituencyID=" + constituencyID + ", constituencyName=" + constituencyName
-				+ ", districtName=" + districtName + ", constituencyNumber=" + constituencyNumber + ", electionTypeId="
-				+ electionTypeId + "]";
+				+ ", districtName=" + districtName + ", constituencyNumber=" + constituencyNumber
+				+ ", electionTypeName=" + electionTypeName + "]";
 	}
-	
+
+
 
 }
-
-

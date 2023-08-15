@@ -1,6 +1,10 @@
 package com.fssa.politifact.validator;
 
-public interface LeaderValidateError {
+public class LeaderValidateError {
+	
+	private LeaderValidateError() {
+		
+	}
 
 	public static final String INVALID_LEADER_NULL = "Leader object can't be null";
 	public static final String INVALID_NAME = "Leader name can't be null ";

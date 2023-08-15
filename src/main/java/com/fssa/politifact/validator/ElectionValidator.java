@@ -1,7 +1,8 @@
 package com.fssa.politifact.validator;
 
+import com.fssa.politifact.enums.ElectionTypes;
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Election;
-import com.fssa.politifact.model.ElectionTypes;
 
 public class ElectionValidator {
 

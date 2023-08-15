@@ -8,23 +8,23 @@ import org.junit.jupiter.api.Test;
 
 import com.fssa.politifact.dao.Logger;
 import com.fssa.politifact.dao.PartyDao;
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Party;
-import com.fssa.politifact.validator.LeaderValidateException;
 import com.fssa.politifact.validator.PartyValidator;
 
-public class PartyServiceTest {
+ class PartyServiceTest {
 	
 	Logger logger = new Logger();
 
 	@Test
-	public void testAddParty() throws LeaderValidateException, SQLException {
+	 void testAddParty() throws LeaderValidateException, SQLException {
 
 		Party party = getParty();
 
 		PartyService partyService = getPartyService();
 
 		Assertions.assertTrue(partyService.addParty(party));
-
+ 
 	}
 
 	public Party getParty() {
@@ -38,21 +38,21 @@ public class PartyServiceTest {
 
 		PartyValidator PartyValidator = new PartyValidator();
 
-		PartyDao partyDao = new PartyDao();
+		PartyDao partyDao = PartyDao.getObj();
 
 		PartyService partyService = new PartyService(PartyValidator, partyDao);
 
 		return partyService;
 	}
-
+ 
 	@Test
-	public void tesupDateParty() throws LeaderValidateException, SQLException {
+	void tesupDateParty() throws LeaderValidateException, SQLException {
 
-		Party party = new Party("aiadmk", "https://www.example.com/party.jpg");
+		Party party = new Party("Independent candidate", "https://www.example.com/party.jpg");
 
 		PartyService partyService = getPartyService();
 		
-		Assertions.assertTrue(partyService.upDateParty(party));
+		Assertions.assertTrue(partyService.upDateParty(party, "dmk"));
 
 	}
 
@@ -67,11 +67,11 @@ public class PartyServiceTest {
 //	}
 
 	@Test
-	public void testAllParty() throws LeaderValidateException, SQLException {
+	 void testAllParty() throws LeaderValidateException, SQLException {
 
 		PartyService partyService = getPartyService();
 		
-		List<Party> PartyList =partyService.PartyList();
+		List<Party> PartyList =partyService.partyList();
 
 		Assertions.assertTrue(PartyList.size() > 0);
 

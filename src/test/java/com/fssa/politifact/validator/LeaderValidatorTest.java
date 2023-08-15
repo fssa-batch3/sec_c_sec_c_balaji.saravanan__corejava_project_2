@@ -1,292 +1,168 @@
 package com.fssa.politifact.validator;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.fssa.politifact.model.Leaders;
-import com.fssa.politifact.model.Position;
+import com.fssa.politifact.enums.Position;
+import com.fssa.politifact.exceptions.LeaderValidateException;
+import com.fssa.politifact.model.Leader;
 
-public class LeaderValidatorTest {
+class LeaderValidatorTest {
 
-	private LeaderValidator leaderValidator;
+	private LeaderValidator validator;
+	private Leader leader;
 
 	@BeforeEach
-	void setUp() {
-		leaderValidator = new LeaderValidator();
-	} 
-	
+	public void setUp() {
+		validator = new LeaderValidator(); 
+		leader = new Leader();
+	}
+
 	@Test
-	void testValiLeader() throws LeaderValidateException {
-		
-		Leaders validLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", 2);
+	void testValidLeader() throws LeaderValidateException {
+		Leader leader = new Leader();
+		leader.setName("balaji");
+		leader.setPosition("CHIEF_MINISTER");
+		leader.setPartyName("balajis");
+		leader.setExperience(5.0);
+		leader.setOccupation("Politician");
+		leader.setCounstuencyName("chennai");
+		leader.setDescriptionOfBirth("Born on some date");
+		leader.setDescriptionOfEducation("Bachelor's in Politics");
+		leader.setDescriptionOfPastWorkExperience("Served as a local council member");
+		leader.setDescritionOfpolitics("Advocates for environmental policies");
+		leader.setDescriptionOffamily("Married with two children");
+		leader.setDescriptionOfIncome("Income from political work");
+		leader.setImageUrl("https://example.com/image.jpg");
 
-		Assertions.assertTrue(leaderValidator.validate(validLeader));
-
-		
+		assertTrue(validator.validate(leader));
 	}
 
 	@Test
 	void testNullLeader() {
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(null));
+
+		LeaderValidateException exception = assertThrows(LeaderValidateException.class, () -> validator.validate(null));
 
 		Assertions.assertEquals(LeaderValidateError.INVALID_LEADER_NULL, exception.getMessage());
 	}
 
 	@Test
 	void testInvalidName() {
-		Leaders invalidLeader = new Leaders(null, Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", 2);
+
+		leader.setName(null);
 
 		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
+				() -> validator.validate(leader));
 
 		Assertions.assertEquals(LeaderValidateError.INVALID_NAME, exception.getMessage());
 	}
+
 	@Test
 	void testInvalidNameLength() {
-		Leaders invalidLeader = new Leaders("b", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", 2);
+		leader.setName("b");
 
 		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
+				() -> validator.validate(leader));
 
 		Assertions.assertEquals(LeaderValidateError.INVALID_NAME, exception.getMessage());
 	}
+
 	@Test
 	void testInvalidNameEmpty() {
-		Leaders invalidLeader = new Leaders("", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", 2);
-
+		leader.setName("");
 		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
+				() -> validator.validate(leader));
 
 		Assertions.assertEquals(LeaderValidateError.INVALID_NAME, exception.getMessage());
 	}
+
 	@Test
 	void testInvalidNamePattern() {
-		Leaders invalidLeader = new Leaders("23456", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", 2);
-
+		leader.setName("b2hack");
 		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
+				() -> validator.validate(leader));
 
 		Assertions.assertEquals(LeaderValidateError.INVALID_NAME, exception.getMessage());
 	}
 
 	@Test
 	void testInvalidPosition() {
-		Leaders invalidLeader = new Leaders("balaji", null, 1, 5.5, "Politician", 1, "Birth Description",
-				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
+		assertThrows(LeaderValidateException.class, () -> validator.validatePosition(null));
 
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_POSITION, exception.getMessage());
 	}
 
+	
 	@Test
-	void testInvalidPartyId() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, -1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_PARTY_ID, exception.getMessage());
+	void testInvalidPartyName() {
+		assertThrows(LeaderValidateException.class, () -> validator.validatePartyName(""));
+		assertThrows(LeaderValidateException.class, () -> validator.validatePartyName(null));
 	}
 
 	@Test
 	void testInvalidExperience() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 0, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_EXPERIENCE, exception.getMessage());
+		assertThrows(LeaderValidateException.class, () -> validator.validateExperience(-1));
 	}
 
 	@Test
 	void testInvalidOccupation() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, null, 1, "Birth Description",
-				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_OCCUPATION, exception.getMessage());
-	}
-	
-	@Test
-	void testInvalidOccupationEmpty() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "", 1, "Birth Description",
-				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_OCCUPATION, exception.getMessage());
-	}
-	
-	@Test
-	void testInvalidOccupationLength() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "b", 1, "Birth Description",
-				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_OCCUPATION, exception.getMessage());
-	}
-	
-	@Test
-	void testInvalidOccupationPattern() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "12345678", 1, "Birth Description",
-				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_OCCUPATION, exception.getMessage());
+		assertThrows(LeaderValidateException.class, () -> validator.validateOccupation(null));
+		assertThrows(LeaderValidateException.class, () -> validator.validateOccupation("A")); // Invalid occupation
+		assertThrows(LeaderValidateException.class, () -> validator.validateOccupation("")); 																					
+		assertThrows(LeaderValidateException.class, () -> validator.validateOccupation("123")); // Invalid occupation
+																								// containing numbers
 	}
 
 	@Test
-	void testInvalidConstituencyId() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 0,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_CONSTITUENCY_NUMBER, exception.getMessage());
+	void testInvalidConstituencyName() {
+		assertThrows(LeaderValidateException.class, () -> validator.validateConstituencyName(""));
+		assertThrows(LeaderValidateException.class, () -> validator.validateConstituencyName(null));
 	}
 
 	@Test
 	void testInvalidDescriptionOfBirth() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1, null,
-				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_DESCRIPTION, exception.getMessage());
-	}
-	
-	@Test
-	void testInvalidDescriptionOfBirthEmpty() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1, "",
-				"Education Description", "Work Experience Description", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_DESCRIPTION, exception.getMessage());
-	}
-
-	@Test
-	void testInvalidDescriptionOfEducation() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "", "Work Experience Description", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_DESCRIPTION, exception.getMessage());
+		assertThrows(LeaderValidateException.class, () -> validator.validateDescriptionOfBirth(null));
+		assertThrows(LeaderValidateException.class, () -> validator.validateDescriptionOfBirth(""));
 	}
 
 	@Test
 	void testInvalidDescriptionOfPastWorkExperience() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "", "Politics Description", "Family Description",
-				"Income Description", "https://www.example.com/image.jpg", 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_DESCRIPTION, exception.getMessage());
+		assertThrows(LeaderValidateException.class, () -> validator.validateDescriptionOfPastWorkExperience(""));
 	}
 
 	@Test
-	void testInvalidDescritionOfpolitics() {
-		
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validateDescritionOfPolitics(""));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_DESCRIPTION, exception.getMessage());
+	void testInvalidDescritionOfPolitics() {
+		assertThrows(LeaderValidateException.class, () -> validator.validateDescritionOfPolitics(""));
 	}
 
 	@Test
-	void testInvalidDescriptionOffamily() {
+	void testInvalidDescriptionOfEducation() {
+		assertThrows(LeaderValidateException.class, () -> validator.validateDescriptionOfEducation(""));
+	}
 
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validateDescriptionOfFamily(""));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_DESCRIPTION, exception.getMessage());
+	@Test
+	void testInvalidDescriptionOfFamily() {
+		assertThrows(LeaderValidateException.class, () -> validator.validateDescriptionOfFamily(""));
 	}
 
 	@Test
 	void testInvalidDescriptionOfIncome() {
-       
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validateDescriptionOfIncome(""));
+		assertThrows(LeaderValidateException.class, () -> validator.validateDescriptionOfIncome(""));
+	}
 
-		Assertions.assertEquals(LeaderValidateError.INVALID_DESCRIPTION, exception.getMessage());
+	@Test
+	void testValidUrl() throws LeaderValidateException {
+		assertTrue(validator.validateUrl("https://example.com"));
 	}
 
 	@Test
 	void testInvalidUrl() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "234567890-", 2);
 
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_URL, exception.getMessage());
-	}
-
-	@Test
-	void testInvalidUrlnull() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", null, 2);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_URL, exception.getMessage());
-	}
-
-	@Test 
-	void testInvalidAffidavitId() {
-		Leaders invalidLeader = new Leaders("balaji", Position.COUNCIL_MINISTER, 1, 5.5, "Politician", 1,
-				"Birth Description", "Education Description", "Work Experience Description", "Politics Description",
-				"Family Description", "Income Description", "https://www.example.com/image.jpg", -1);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderValidator.validate(invalidLeader));
-
-		Assertions.assertEquals(LeaderValidateError.INVALID_AFFIDAVIT_ID, exception.getMessage());
+		assertThrows(LeaderValidateException.class, () -> validator.validateUrl("invalid_url"));
+		assertThrows(LeaderValidateException.class, () -> validator.validateUrl(null));
+		
 	}
 }

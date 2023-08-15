@@ -1,5 +1,7 @@
 package com.fssa.politifact.model;
 
+import com.fssa.politifact.enums.ElectionTypes;
+
 public class Election {
 	
    
@@ -22,7 +24,7 @@ public class Election {
 
 	public void setId(int eldctionid) {
 		this.id = eldctionid;
-	}         
+	}          
 
 	public int getElectionYear() {
 		return electionYear;
@@ -34,7 +36,7 @@ public class Election {
 
 	public ElectionTypes getElectionType() {
 		return electionType;
-	}
+	} 
 
 	public void setElectionType(String electionType) {
 		this.electionType =ElectionTypes.valueOf(electionType);

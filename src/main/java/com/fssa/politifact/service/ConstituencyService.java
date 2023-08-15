@@ -1,23 +1,23 @@
 package com.fssa.politifact.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 import com.fssa.politifact.dao.ConstituencyDao;
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
 import com.fssa.politifact.validator.ConstituencyValidator;
 import com.fssa.politifact.validator.LeaderValidateError;
-import com.fssa.politifact.validator.LeaderValidateException;
 
 public class ConstituencyService {
 
-	public ConstituencyDao constituencyDao;
+	public final ConstituencyDao constituencyDao;
 
-	public ConstituencyValidator constituencyValidator;
+	public final ConstituencyValidator constituencyValidator;
 
 	public ConstituencyService(ConstituencyValidator constituencyValidator, ConstituencyDao constituencyDao) {
 
-		this.constituencyDao = constituencyDao;
+		this.constituencyDao = constituencyDao; 
 
 		this.constituencyValidator = constituencyValidator;
 	}
@@ -41,7 +41,7 @@ public class ConstituencyService {
 
 	} 
 
-	public boolean upDateConstituency(Constituency constituency) throws LeaderValidateException, SQLException {
+	public boolean upDateConstituency(Constituency constituency ,String constituencyName) throws LeaderValidateException, SQLException {
 
 		if (constituency == null) {
 
@@ -51,7 +51,7 @@ public class ConstituencyService {
 
 		if (this.constituencyValidator.validate(constituency)) {
 
-			return this.constituencyDao.updateConstituency(constituency);
+			return this.constituencyDao.updateConstituency(constituency, constituencyName);
 			
 		} else {
 
@@ -76,12 +76,12 @@ public class ConstituencyService {
 			return false;
 
 		}
-	}
+	} 
 
-	public ArrayList<Constituency> constuencyList() throws LeaderValidateException, SQLException {
+	public List<Constituency> constuencyList() throws LeaderValidateException, SQLException {
 
 		return this.constituencyDao.readAllConstituencies();
 
 	}
 
-}
+}  

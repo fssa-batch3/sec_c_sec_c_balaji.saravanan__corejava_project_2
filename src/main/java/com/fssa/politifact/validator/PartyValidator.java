@@ -1,10 +1,11 @@
 package com.fssa.politifact.validator;
 
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Party;
 
 public class PartyValidator {
 
-	public boolean  validate(Party party) throws LeaderValidateException {
+	public boolean validate(Party party) throws LeaderValidateException {
 		
 		if (party == null) {
 			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
@@ -17,13 +18,14 @@ public class PartyValidator {
 	} 
 	
 
-	public void validatePartyName(String partyName) throws LeaderValidateException {
+	public boolean validatePartyName(String partyName) throws LeaderValidateException {
 		
 	    if (partyName == null || partyName.trim().isEmpty() || !partyName.matches("[a-zA-Z\\s]+")) {
 	    	
 	        throw new LeaderValidateException(LeaderValidateError.INVALID_PARTYNAME);
 	        
 	    }
+	    return true;
 	}
 	public void validatePartyImageUrl(String partyImageUrl) throws LeaderValidateException {
 	    if (partyImageUrl == null || partyImageUrl.isEmpty()
