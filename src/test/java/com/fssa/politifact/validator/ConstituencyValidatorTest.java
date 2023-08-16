@@ -10,15 +10,31 @@ import com.fssa.politifact.enums.ElectionTypes;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
 
+/**
+ * 
+ * @author BalajiSaravanan
+ * 
+ * send the value of constituency validator.
+ *
+ */
 class ConstituencyValidatorTest {
 
 	private ConstituencyValidator constituencyValidator;
+	
+	/**
+	 * for each to execute all method rum.
+	 */
 
 	@BeforeEach
 	public void setUp() {
 
 		constituencyValidator = new ConstituencyValidator();
 	}
+	
+	/**
+	 * test validate constituency.
+	 * @throws LeaderValidateException
+	 */
 
 	@Test
 	void testValidConstituency() throws LeaderValidateException {
@@ -26,6 +42,10 @@ class ConstituencyValidatorTest {
 				ElectionTypes.valueOf("GENERAL_ELECTION"));
 		Assertions.assertTrue(constituencyValidator.validate(constituency));
 	}
+	
+	/**
+	 * test constituency name.
+	 */
 
 	@Test
 	void testInvalidConstituencyNames() {
@@ -36,6 +56,9 @@ class ConstituencyValidatorTest {
 		}
 	}
 
+	/**
+	 * test district name.
+	 */
 	@Test
 	void testInvalidDistrictNames() {
 		String[] invalidNames = { "", null, "34567", "b" };
@@ -45,6 +68,10 @@ class ConstituencyValidatorTest {
 			assertThrows(LeaderValidateException.class, () -> constituencyValidator.validateDistrictName(name));
 		}
 	}
+	
+	/**
+	 * test constituency number.
+	 */
 
 	@Test
 	void testInvalidConstituencyNumber() {
@@ -55,6 +82,10 @@ class ConstituencyValidatorTest {
 				() -> constituencyValidator.validate(constituency));
 		Assertions.assertEquals(LeaderValidateError.INVALID_CONSTITUENCY_NUMBER, exception.getMessage());
 	}
+	
+	/**
+	 * test election type id.
+	 */
 
 	@Test
 	void testInvlaidElectionId() {

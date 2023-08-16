@@ -13,29 +13,30 @@ import com.fssa.politifact.model.Constituency;
 import com.fssa.politifact.util.ConnectionUtil;
 import com.fssa.politifact.validator.LeaderValidateError;
 
-public class ConstituencyDao {  
-	
+public class ConstituencyDao {
+
 	private ConstituencyDao() {
-		
-	} 
-	public static ConstituencyDao getObj() {
-		
-		return new ConstituencyDao();
-		
+
 	}
-	
+
+	public static ConstituencyDao getObj() { // private constuctor
+
+		return new ConstituencyDao();
+
+	}
+
 	Logger logger = new Logger();
-	 
+
 	/*
 	 * This insertConstituency methoed only prepare statement code only run hear.
-	 * what reason for that the add leader method codeline i do want to decress so that reson.
-	 * this code add leader prepare statement executeupdate code
+	 * what reason for that the add leader method codeline i do want to decress so
+	 * that reson. this code add leader prepare statement executeupdate code
 	 */
 
 	private boolean insertConstituency(Constituency constituency, PreparedStatement pst) throws SQLException {
 
-		int electionTypeId= findElectionTypeId(constituency.getElectionTypeName().toString());
-		
+		int electionTypeId = findElectionTypeId(constituency.getElectionTypeName().toString());
+
 		pst.setString(1, constituency.getConstituencyName());
 		pst.setString(2, constituency.getDistrictName());
 		pst.setInt(3, constituency.getConstituencyNumber());
@@ -63,38 +64,37 @@ public class ConstituencyDao {
 	}
 
 	/*
-	 * in this method insert update method only prepare statment code heare
-	 * this only update the code return a boolean value
+	 * in this method insert update method only prepare statment code heare this
+	 * only update the code return a boolean value
 	 */
-	private boolean insertUpdate(Constituency constituency, PreparedStatement pst, String constituencyUpadateName) throws SQLException {
-		
-		int electionTypeId= findElectionTypeId(constituency.getElectionTypeName().toString());
-		
-		int constituncyUpdateId= LeaderDao.findConstituencyId(constituencyUpadateName);
-		
+	private boolean insertUpdate(Constituency constituency, PreparedStatement pst, String constituencyUpadateName)
+			throws SQLException {
+
+		int electionTypeId = findElectionTypeId(constituency.getElectionTypeName().toString());
+
+		int constituncyUpdateId = LeaderDao.findConstituencyId(constituencyUpadateName);
+
 		pst.setString(1, constituency.getConstituencyName());
 		pst.setString(2, constituency.getDistrictName());
 		pst.setInt(3, constituency.getConstituencyNumber());
 		pst.setInt(4, electionTypeId);
 		pst.setInt(5, constituncyUpdateId);
-		
-		
 
 		int row = pst.executeUpdate();
-        
+
 		return row > 0;
 
 	}
-	
+
 	/*
-	 * addConstituency add a new constituency in database 
-	 * this method hava a connection ans also prepare statement this call a insert constituency
-	 * that place run a prepare statement
+	 * addConstituency add a new constituency in database this method hava a
+	 * connection ans also prepare statement this call a insert constituency that
+	 * place run a prepare statement
 	 */
 
 	public boolean addConstituency(Constituency constituency) throws SQLException, LeaderValidateException {
-		
-		  final String query = "INSERT INTO Constituency (constituencyName, districtName, constituencyNumber, electionTypeId) VALUES (?, ?, ?, ?)";
+
+		final String query = "INSERT INTO Constituency (constituencyName, districtName, constituencyNumber, electionTypeId) VALUES (?, ?, ?, ?)";
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 
@@ -103,45 +103,44 @@ public class ConstituencyDao {
 				return insertConstituency(constituency, pst); // invoke the value in to te insert constituency
 
 			} catch (SQLException sqe) {
-				
-		        logger.info(sqe.getMessage());
-				
+
+				logger.info(sqe.getMessage());
+
 				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}
-	
+
 	/*
-	 * update constituency perform update the vlaues in database
-	 * this also call a insert update that plass run a prepare Statement
+	 * update constituency perform update the vlaues in database this also call a
+	 * insert update that plass run a prepare Statement
 	 */
 
-	public boolean updateConstituency(Constituency constituency, String constituencyName) throws SQLException, LeaderValidateException {
+	public boolean updateConstituency(Constituency constituency, String constituencyName)
+			throws SQLException, LeaderValidateException {
 
 		final String query = "UPDATE Constituency SET constituencyName=?, districtName=?, constituencyNumber=?, electionTypeId=? WHERE constituencyID=?";
-		
+
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(query)) {
-			
-			return insertUpdate(constituency, pst, constituencyName);  // invoke the value in insert update methode
-			
+
+			return insertUpdate(constituency, pst, constituencyName); // invoke the value in insert update methode
 
 		} catch (SQLException sqe) {
-			
+
 			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 	}
-	
+
 	/*
-	 * deleteconstituency method deleate a constituency 
-	 * this perform given id
+	 * deleteconstituency method deleate a constituency this perform given id
 	 */
 
 	public boolean deleteConstituency(int constituencyId) throws SQLException, LeaderValidateException {
 
-		final String query = "DELETE FROM constituency WHERE constituencyID=?"; //query
+		final String query = "DELETE FROM constituency WHERE constituencyID=?"; // query
 
-		try (Connection connection = ConnectionUtil.getConnection()) {  // connection
+		try (Connection connection = ConnectionUtil.getConnection()) { // connection
 
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
@@ -157,12 +156,11 @@ public class ConstituencyDao {
 			}
 		}
 	}
-	
-	
+
 	/*
-	 * readAllConstituencies this method connect the database read the all constituency in the table
-	 * and then the store a List and also return
-	 * that return value go to the service layer.
+	 * readAllConstituencies this method connect the database read the all
+	 * constituency in the table and then the store a List and also return that
+	 * return value go to the service layer.
 	 */
 
 	public List<Constituency> readAllConstituencies() throws SQLException, LeaderValidateException {
@@ -177,17 +175,17 @@ public class ConstituencyDao {
 
 			try (ResultSet rs = stmt.executeQuery(query)) {
 				while (rs.next()) {
-					
-					Constituency constituency = new Constituency( "constituency", "district", 1, null);
-					
-					String electionType= findElectionTypeName(rs.getInt("electionTypeId"));
-					
+
+					Constituency constituency = new Constituency("constituency", "district", 1, null);
+
+					String electionType = findElectionTypeName(rs.getInt("electionTypeId"));
+
 					System.out.println(electionType);
 
 					constituency.setConstituencyName(rs.getString(2));
 					constituency.setDistrictName(rs.getString(3));
 					constituency.setConstituencyNumber(rs.getInt(4));
-					constituency.setElectionTypeName(electionType); 
+					constituency.setElectionTypeName(electionType);
 
 					constituenciesList.add(constituency);
 				}
@@ -200,10 +198,14 @@ public class ConstituencyDao {
 			}
 		}
 	}
-	
-	
+
+	/*
+	 * find election id method i given the name that name find the database return
+	 * the that name row id this help to forienn key find and fetch this table
+	 */
+
 	public static int findElectionTypeId(String electionName) {
-		
+
 		final String query = "SELECT id FROM Election WHERE electionType = ?";
 
 		int electionId = 0;
@@ -223,20 +225,24 @@ public class ConstituencyDao {
 			}
 
 		} catch (SQLException sqe) {
-			
-			
+
 			sqe.printStackTrace();
 		}
 
 		return electionId;
 	}
 
-	
-public static String findElectionTypeName(int electionId) {
-		
+	/*
+	 * findElectionTypeName method i given the int id that give String election name
+	 * went it want to i read the value that time i give id that search for table
+	 * and then return the name this help to read the name throu the id
+	 */
+
+	public static String findElectionTypeName(int electionId) { 
+
 		final String query = "SELECT electionType FROM Election WHERE id = ?";
 
-		String electionName="";
+		String electionName = "";
 
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(query)) {
@@ -253,8 +259,7 @@ public static String findElectionTypeName(int electionId) {
 			}
 
 		} catch (SQLException sqe) {
-			
-			
+
 			sqe.printStackTrace();
 		}
 

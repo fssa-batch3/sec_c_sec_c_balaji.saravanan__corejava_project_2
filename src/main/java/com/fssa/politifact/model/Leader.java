@@ -8,9 +8,19 @@ import com.fssa.politifact.enums.Position;
 /**
  * @author BalajiSaravanan
  * 
- *         Model object for representing the all leaders
- *
+/*
+ * The Leader class is a model object that stores details about a Leader.
+ * It includes the following attributes:
+ *  id: An integer representing the unique ID of the Leader.
+ *  Position: position is a enum class it's a constant.
+ *  party  Name: A enum representing the name of the party to this also forien key of this table.
+ *  constituency Name: A String representing the name of the leader.
+ *  Occupation: An String representing the occupation of the leader.
+ *  Experience : A double representing the experience of the leader model object.
+ *  Descriptions: A String representing the descriptions of the leader table the description have five types of description.
+ *  Image url: String tepresenting the image url of the leader.
  */
+ 
 public class Leader {
 
 	int id;
@@ -40,6 +50,10 @@ public class Leader {
 	private String descriptionOfIncome;
 
 	private String imageUrl;
+	
+	/*
+	 * leader model constuctor start;
+	 */
 
 	public int getId() {
 		return id;
@@ -156,8 +170,8 @@ public class Leader {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Leader [");
-		sb.append("name=").append(name);
+		sb.append("Leader");
+		sb.append(", name=").append(name);
 		sb.append(", position=").append(position);
 		sb.append(", partyName=").append(partyName);
 		sb.append(", experience=").append(experience);
@@ -170,7 +184,7 @@ public class Leader {
 		sb.append(", descriptionOffamily=").append(descriptionOffamily);
 		sb.append(", descriptionOfIncome=").append(descriptionOfIncome);
 		sb.append(", imageUrl=").append(imageUrl);
-		sb.append("]");
+		
 		return sb.toString();
 	}
 

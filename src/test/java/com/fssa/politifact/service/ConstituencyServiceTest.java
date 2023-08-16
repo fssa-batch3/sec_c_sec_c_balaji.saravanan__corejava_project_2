@@ -1,11 +1,9 @@
 package com.fssa.politifact.service;
 
-import java.sql.SQLException;
+import java.sql.SQLException; 
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import com.fssa.politifact.dao.ConstituencyDao;
 import com.fssa.politifact.dao.Logger;
 import com.fssa.politifact.enums.ElectionTypes;
@@ -13,9 +11,25 @@ import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
 import com.fssa.politifact.validator.ConstituencyValidator;
 
+/**
+ * 
+ * @author BalajiSaravanan
+ *  
+ *  this is constituenc junit test casses.
+ */
 class ConstituencyServiceTest {
+	
+	/**
+	 * logger debug and print the value.
+	 */
 
 	Logger logger = new Logger();
+	
+	/**
+	 * add constituency . this send the value in service layer that layer validate and then send for dao
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	@Test
 	 void testAddConstituency() throws LeaderValidateException, SQLException {
@@ -27,6 +41,11 @@ class ConstituencyServiceTest {
 		Assertions.assertTrue(constituencyService.addConstituency(constituency));
 
 	}
+	
+	/**
+	 * this is constituency constuctor.
+	 * @return
+	 */
 
 	public Constituency getConstituency() { 
 
@@ -34,6 +53,11 @@ class ConstituencyServiceTest {
 
 		return constituency;
 	}
+	
+	/**
+	 * this is service  constuctor.
+	 * @return
+	 */
  
 	public ConstituencyService getConstituencyService() {
 
@@ -45,6 +69,12 @@ class ConstituencyServiceTest {
 
 		return constituencyService;
 	}
+	
+	/**
+	 * update constituency .
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	@Test
 	 void tesupDateConstituency() throws LeaderValidateException, SQLException {
@@ -56,6 +86,12 @@ class ConstituencyServiceTest {
 		Assertions.assertTrue(constituencyService.upDateConstituency(constituency, "villupuram"));
 
 	}
+	
+	/**
+	 * delete constituency.
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 //	@Test
 //	public void testDeleteConstituency() throws LeaderValidateException, SQLException {
@@ -66,6 +102,12 @@ class ConstituencyServiceTest {
 //
 //		Assertions.assertTrue(constituencyService.deleteConstituency(id));
 //	}
+	
+	/**
+	 * read all constituency.
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	@Test
 	void testAllConstituency() throws LeaderValidateException, SQLException {

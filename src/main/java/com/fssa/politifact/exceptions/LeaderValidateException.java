@@ -1,9 +1,7 @@
 package com.fssa.politifact.exceptions;
 /*
  *  this page for custom exception for my project 
- * 
- * 
- * */
+ */
 public class LeaderValidateException extends Exception {
 
 	private static final long serialVersionUID= -8105491977357554060L;

@@ -2,9 +2,15 @@ package com.fssa.politifact.model;
 
 import com.fssa.politifact.enums.ElectionTypes;
 
+/*
+ * The election class is a model object that stores details about a election.
+ * It includes the following attributes:
+ * election id: An integer representing the unique ID of the election.
+ * electionTypeName:election name is a enum class .
+ * this also have a constuctor
+ */
+
 public class Election {
-	
-   
 
 	private int id;
     private int electionYear;
@@ -40,7 +46,7 @@ public class Election {
 
 	public void setElectionType(String electionType) {
 		this.electionType =ElectionTypes.valueOf(electionType);
-	}
+	} 
 	
 	 @Override
 		public String toString() {

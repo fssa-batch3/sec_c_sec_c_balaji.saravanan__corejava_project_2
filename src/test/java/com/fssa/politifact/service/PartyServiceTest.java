@@ -2,19 +2,28 @@ package com.fssa.politifact.service;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import com.fssa.politifact.dao.Logger;
 import com.fssa.politifact.dao.PartyDao;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Party;
 import com.fssa.politifact.validator.PartyValidator;
 
+/**
+ * 
+ * @author BalajiSaravanan
+ *
+ */
  class PartyServiceTest {
 	
 	Logger logger = new Logger();
+	
+	/**
+	 * add party give the value in service layer.
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	@Test
 	 void testAddParty() throws LeaderValidateException, SQLException {
@@ -26,6 +35,11 @@ import com.fssa.politifact.validator.PartyValidator;
 		Assertions.assertTrue(partyService.addParty(party));
  
 	}
+	
+	/**
+	 * party constuctor.
+	 * @return
+	 */
 
 	public Party getParty() {
 
@@ -33,6 +47,11 @@ import com.fssa.politifact.validator.PartyValidator;
 
 		return party;
 	}
+	
+	/**
+	 * service constuctor.
+	 * @return
+	 */
 
 	public PartyService getPartyService() {
 
@@ -44,6 +63,12 @@ import com.fssa.politifact.validator.PartyValidator;
 
 		return partyService;
 	}
+	
+	/**
+	 * update party.
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
  
 	@Test
 	void tesupDateParty() throws LeaderValidateException, SQLException {
@@ -55,6 +80,12 @@ import com.fssa.politifact.validator.PartyValidator;
 		Assertions.assertTrue(partyService.upDateParty(party, "dmk"));
 
 	}
+	
+	/**
+	 * delete party.
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 //	@Test
 //	public void testDeleteParty() throws LeaderValidateException, SQLException {
@@ -65,6 +96,12 @@ import com.fssa.politifact.validator.PartyValidator;
 //		
 //		Assertions.assertTrue(partyService.deleteParty(id));
 //	}
+	
+	/**
+	 * read all party.
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	@Test
 	 void testAllParty() throws LeaderValidateException, SQLException {

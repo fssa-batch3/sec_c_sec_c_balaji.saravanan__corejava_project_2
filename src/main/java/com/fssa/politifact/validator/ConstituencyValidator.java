@@ -4,7 +4,21 @@ import com.fssa.politifact.enums.ElectionTypes;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
 
+/**
+ * 
+ * @author BalajiSaravanan
+ *
+ *constituency validator is validate constituency object all attributes.
+ */
+
 public class ConstituencyValidator {
+	
+	/**
+	 * this is validate constituency object
+	 * @param constituency
+	 * @return
+	 * @throws LeaderValidateException
+	 */
 
 	public boolean validate(Constituency constituency) throws LeaderValidateException {
 
@@ -19,6 +33,12 @@ public class ConstituencyValidator {
 		return true;   
 
 	}
+	
+	/**
+	 * check for constituency name
+	 * @param cName
+	 * @throws LeaderValidateException
+	 */
 
 	public void validateConstituencyName(String cName) throws LeaderValidateException {
 
@@ -27,6 +47,12 @@ public class ConstituencyValidator {
 			throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_NAME);
 		}
 	}
+	
+	/**
+	 * check for district name.
+	 * @param dName
+	 * @throws LeaderValidateException
+	 */
 
 	public void validateDistrictName(String dName) throws LeaderValidateException {
 
@@ -34,6 +60,12 @@ public class ConstituencyValidator {
 			throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_NAME);
 		}
 	}
+	
+	/**
+	 * check for constituency number.
+	 * @param no
+	 * @throws LeaderValidateException
+	 */
 
 	public void validateConstituencyNumber(int no) throws LeaderValidateException {
 
@@ -44,6 +76,12 @@ public class ConstituencyValidator {
 		}
 
 	}
+	
+	/**
+	 * check forelection type neme.
+	 * @param election
+	 * @throws LeaderValidateException
+	 */
 
 	public void validateElectionTypeName(ElectionTypes election) throws LeaderValidateException {
 

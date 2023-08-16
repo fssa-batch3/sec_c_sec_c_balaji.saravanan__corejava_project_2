@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Party;
 
-public class TestPartyValidator {
+ class TestPartyValidator {
 
 	private PartyValidator partyValidator;
 
@@ -17,7 +17,7 @@ public class TestPartyValidator {
 	} 
 
 	@Test
-	public void testValidParty() throws LeaderValidateException {
+	 void testValidParty() throws LeaderValidateException {
 		
 		Party party = new Party( "PartyName", "https://www.example.com/party.jpg");
 		Assertions.assertDoesNotThrow(() -> partyValidator.validate(party));
@@ -25,23 +25,23 @@ public class TestPartyValidator {
 	}
 	
 	@Test
-	public void testValidPartyNull() throws LeaderValidateException {
+	 void testValidPartyNull() throws LeaderValidateException {
 		LeaderValidateException exception = Assertions.assertThrows(LeaderValidateException.class,
 				() -> partyValidator.validate(null));
 		Assertions.assertEquals(LeaderValidateError.INVALID_OBJECT, exception.getMessage());
 		
-		
+		  
 	}
 
 	@Test
-	public void testInvalidPartyName() {
+	 void testInvalidPartyName() {
 		Party party = new Party( null, "https://www.example.com/party.jpg");
 		LeaderValidateException exception = Assertions.assertThrows(LeaderValidateException.class,
 				() -> partyValidator.validate(party));
 		Assertions.assertEquals(LeaderValidateError.INVALID_PARTYNAME, exception.getMessage());
 	}
 	@Test
-	public void testInvalidPartyNameEmpty() {
+	 void testInvalidPartyNameEmpty() {
 		Party party = new Party( "", "https://www.example.com/party.jpg");
 		LeaderValidateException exception = Assertions.assertThrows(LeaderValidateException.class,
 				() -> partyValidator.validate(party));
@@ -56,21 +56,21 @@ public class TestPartyValidator {
 	}
 
 	@Test
-	public void testInvalidPartyImageUrl() { 
+	 void testInvalidPartyImageUrl() { 
 		Party party = new Party("PartyName", null);
 		LeaderValidateException exception = Assertions.assertThrows(LeaderValidateException.class,
 				() -> partyValidator.validate(party));
 		Assertions.assertEquals(LeaderValidateError.INVALID_URL, exception.getMessage());
 	}
 	@Test
-	public void testInvalidPartyImageUrlEmpty() {
+	 void testInvalidPartyImageUrlEmpty() {
 		Party party = new Party( "PartyName", "");
 		LeaderValidateException exception = Assertions.assertThrows(LeaderValidateException.class,
 				() -> partyValidator.validate(party));
 		Assertions.assertEquals(LeaderValidateError.INVALID_URL, exception.getMessage());
 	}
 	@Test
-	public void testInvalidPartyImageUrlPattern() {
+	 void testInvalidPartyImageUrlPattern() {
 		Party party = new Party("PartyName", "234567890");
 		LeaderValidateException exception = Assertions.assertThrows(LeaderValidateException.class,
 				() -> partyValidator.validate(party));

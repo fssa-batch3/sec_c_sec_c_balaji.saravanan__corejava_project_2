@@ -13,21 +13,31 @@ import com.fssa.politifact.model.Party;
 import com.fssa.politifact.util.ConnectionUtil;
 import com.fssa.politifact.validator.LeaderValidateError;
 
+/*
+ * partyDao this class doing the party table crud operation.
+ */
+
 public class PartyDao {
-	
+
 	private PartyDao() {
-		
+
 	}
+
 	public static PartyDao getObj() {
-		
-		return new PartyDao(); 
-	} 
-	
+
+		return new PartyDao();
+	}
+
+	/*
+	 * the insert party method doing only the prepare statement. and this help to
+	 * reduce the method code. the method execute correctly this return the true
+	 * otherwise rturn false.
+	 */
+
 	private boolean insertParty(Party party, PreparedStatement pst) throws SQLException {
 
 		pst.setString(1, party.getPartyName());
 		pst.setString(2, party.getPartyImageUrl());
-		
 
 		int rowsAffected = pst.executeUpdate();
 
@@ -40,23 +50,29 @@ public class PartyDao {
 				int generatedId = generatedKeys.getInt(1);
 
 				party.setPartyId(generatedId);
-			} 
+			}
 
 			return true;
 
 		} else {
 
 			return false;
-		} 
+		}
 	}
+
+	/*
+	 * the insertUpdate is common method doing only the prepare statement. and this
+	 * help to reduce the method code. the method execute correctly this return the
+	 * true otherwise rturn false.
+	 */
 
 	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName) throws SQLException {
 
-		int partyId= LeaderDao.findPartyId(partyName);
-		
+		int partyId = LeaderDao.findPartyId(partyName);
+
 		pst.setString(1, party.getPartyName());
 		pst.setString(2, party.getPartyImageUrl());
-		pst.setInt(3,partyId);
+		pst.setInt(3, partyId);
 
 		int row = pst.executeUpdate();
 
@@ -64,9 +80,14 @@ public class PartyDao {
 
 	}
 
+	/*
+	 * the add party method is add the values in the data base. this not doing in
+	 * the statement this send the value insertparty doing the preparestatment.
+	 */
+
 	public boolean addParty(Party party) throws SQLException, LeaderValidateException {
-		
-		  final String query = "INSERT INTO Party (PartyName, partyImageUrl) VALUES (?, ?)";
+
+		final String query = "INSERT INTO Party (PartyName, partyImageUrl) VALUES (?, ?)";
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 
@@ -76,27 +97,37 @@ public class PartyDao {
 
 			} catch (SQLException sqe) {
 
-				
 				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}
 
+	/*
+	 * the update party method is update the values in the data base. this not doing
+	 * in the statement this send the value insertparty doing the preparestatment.
+	 */
+
 	public boolean updateParty(Party party, String partyName) throws SQLException, LeaderValidateException {
 
 		final String query = "UPDATE Party SET PartyName=?, partyImageUrl=? WHERE partyId=?";
-		
-		try (Connection connection = ConnectionUtil.getConnection();
-				PreparedStatement pst = connection.prepareStatement(query)) {
 
-			return insertUpdate(party, pst, partyName);
+		try (Connection connection = ConnectionUtil.getConnection()) {
+
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
+
+				return insertUpdate(party, pst, partyName);
+
+			}
 
 		} catch (SQLException sqe) {
-			
-			
+
 			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 	}
+
+	/*
+	 * the deleteParty method is delete the values in the data base.
+	 */
 
 	public boolean deleteParty(String partyName) throws SQLException, LeaderValidateException {
 
@@ -106,21 +137,25 @@ public class PartyDao {
 
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
-				int partyId= LeaderDao.findPartyId(partyName);
-				
+				int partyId = LeaderDao.findPartyId(partyName);
+
 				pst.setInt(1, partyId);
 
-				int rowsDeleted = pst.executeUpdate(); 
+				int rowsDeleted = pst.executeUpdate();
 
 				return rowsDeleted > 0;
 
 			} catch (SQLException sqe) {
-				
 
 				throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
 			}
 		}
 	}
+
+	/*
+	 * read all party values in the table help this table , this not doing any
+	 * operation only doing the reading the all vlaues in the data base.
+	 */
 
 	public List<Party> readAllParties() throws SQLException, LeaderValidateException {
 
@@ -134,12 +169,12 @@ public class PartyDao {
 
 			try (ResultSet rs = stmt.executeQuery(query)) {
 				while (rs.next()) {
-					
-					Party party = new Party( "dmk", "image//url");
-					
+
+					Party party = new Party("dmk", "image//url");
+
 					party.setPartyName(rs.getString(2));
 					party.setPartyImageUrl(rs.getString(3));
-					
+
 					partyList.add(party);
 				}
 
@@ -150,7 +185,6 @@ public class PartyDao {
 				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
-	} 
-
+	}
 
 }

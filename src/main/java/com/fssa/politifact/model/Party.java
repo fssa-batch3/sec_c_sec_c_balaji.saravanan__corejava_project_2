@@ -1,5 +1,15 @@
 package com.fssa.politifact.model;
 
+
+/*
+ * The Party class represents a political party and stores relevant information.
+ * It contains the following attributes:
+ *  partyId: An integer representing the unique ID of the party.
+ *  partyName: A string representing the name of the party.
+ *  partyImageUrl: A string representing the URL of the party's image/logo.
+ */
+
+
 public class Party {
 	
 	private int partyId;

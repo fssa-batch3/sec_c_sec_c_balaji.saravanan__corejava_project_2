@@ -13,6 +13,7 @@ import com.fssa.politifact.validator.LeaderValidateError;
 import com.fssa.politifact.validator.LeaderValidator;
 
 /**
+ * 
  * @author BalajiSaravanan
  *
  */
@@ -29,6 +30,12 @@ public class LeaderService {
 		this.leaderDao = leader;
 
 	}
+	/**
+	 * add leader doing check all object atrributes and then send value in dao.
+	 * @param leader
+	 * @return
+	 * @throws LeaderValidateException
+	 */
 
 	public boolean addLeader(Leader leader) throws LeaderValidateException {
 
@@ -48,6 +55,16 @@ public class LeaderService {
 
 		}
 	}
+	
+	/**
+	 * update leader receive two parameter one is object , and another one is update name
+	 * @param leader
+	 * @param name
+	 * @return
+	 * @throws LeaderValidateException
+	 * @throws DaoException
+	 * @throws SQLException
+	 */
 
 	public boolean upDateLeader(Leader leader, String name) throws LeaderValidateException, DaoException, SQLException {
 
@@ -63,11 +80,20 @@ public class LeaderService {
 
 		} else {
 
-			return false; 
+			return false;
 
 		}
 
 	}
+	
+	/**
+	 * delete leader delete the row of leader in database 
+	 * @param leader
+	 * @return
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
 
 	public boolean deleteLeader(String leader) throws LeaderValidateException, SQLException, DaoException {
 		if (leader == null) {
@@ -83,16 +109,31 @@ public class LeaderService {
 			return false;
 
 		}
-	}  
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
 
-	public List<String> callAllLeader() throws SQLException, DaoException {
+	public List<Leader> callAllLeader() throws SQLException, DaoException {
 
 		return this.leaderDao.readLeader();
 
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
 
-//	public ArrayList<Leaders> readLeaderWithConstituency()throws LeaderValidateException, SQLException {
-//		
-//		return this.leaderDao.readLeaderWithConstituency();
-//	}
+	public List<String> readAllLeader() throws LeaderValidateException, SQLException, DaoException {
+
+		return this.leaderDao.readAllJoin();
+	}
 }

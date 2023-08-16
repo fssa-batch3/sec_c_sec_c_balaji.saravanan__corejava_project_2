@@ -4,7 +4,21 @@ import com.fssa.politifact.enums.ElectionTypes;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Election;
 
+/**
+ * 
+ * @author BalajiSaravanan
+ *
+ *validate election object all attributes.
+ */
+
 public class ElectionValidator {
+	
+	/**
+	 * validate election object.
+	 * @param election
+	 * @return
+	 * @throws LeaderValidateException
+	 */
 
 	public boolean validate(Election election) throws LeaderValidateException {
 
@@ -20,6 +34,12 @@ public class ElectionValidator {
 
 		return true;
 	}
+	
+	/**
+	 * validate election year.
+	 * @param year
+	 * @throws LeaderValidateException
+	 */
 
 	public void validateElectionYear(int year) throws LeaderValidateException {
 
@@ -28,14 +48,23 @@ public class ElectionValidator {
 			throw new LeaderValidateException(LeaderValidateError.INVALID_STARTING_DATE);
 		}
 	}
+	
+	/**
+	 * validate election type.
+	 * @param electionType
+	 * @return
+	 * @throws LeaderValidateException
+	 */
 
-	public void validateElectionType(ElectionTypes electionType) throws LeaderValidateException {
+	public boolean validateElectionType(ElectionTypes electionType) throws LeaderValidateException {
 
 		if (electionType == null) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_ELECTIPTION_TYPE);
 		}
+		return true;
 	}
+	
 
 	
 }

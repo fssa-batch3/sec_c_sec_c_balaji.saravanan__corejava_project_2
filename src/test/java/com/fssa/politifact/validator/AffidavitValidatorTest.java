@@ -2,21 +2,39 @@ package com.fssa.politifact.validator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Affidavit;
 
+/**
+ * 
+ * @author BalajiSaravanan
+ *
+ *
+ * affidavit validator send the value from here.
+ */
  class AffidavitValidatorTest {
+	 
 
+	 /**
+	  * this private affidavit validator instance create
+	  */
 	private AffidavitValidator affidavitValidator;
+	
+	/**
+	 * this before each run one method run before.
+	 */
 
 	@BeforeEach
 	void setUp() {
 		affidavitValidator = new AffidavitValidator();
 	}
+	
+	/**
+	 * 
+	 * @throws LeaderValidateException
+	 */
 
 	@Test
 	void testValidAffidavit() throws LeaderValidateException {

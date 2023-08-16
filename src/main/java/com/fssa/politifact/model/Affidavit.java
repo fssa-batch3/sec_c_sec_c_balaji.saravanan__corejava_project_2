@@ -1,5 +1,13 @@
 package com.fssa.politifact.model;
 
+/*
+ * the model class help to store the affidavit detils in the particular candidate
+ * affidate is one to mani relation ship so this is a separate model object
+ * affidate hava a id, election id (forien key), leader id (forien key) and affidavit url.
+ * this have a one constuctor thai is initialize the values.
+ * this class also have getter setter.
+ */
+
 public class Affidavit {
 
 	private int id;
@@ -15,7 +23,7 @@ public class Affidavit {
 		this.leaderId = leaderId;
 		this.affidateUrl = affidateUrl;
 	}
-
+  
 
 	public int getId() {
 		return id;

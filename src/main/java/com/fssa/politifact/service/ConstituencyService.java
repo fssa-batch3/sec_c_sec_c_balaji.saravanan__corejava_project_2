@@ -9,19 +9,36 @@ import com.fssa.politifact.model.Constituency;
 import com.fssa.politifact.validator.ConstituencyValidator;
 import com.fssa.politifact.validator.LeaderValidateError;
 
+/*
+ * this is service layer
+ * this connect to the dao layer and validator 
+ * given all value check the validator and then send the dao
+ * this purpuse help to this layer.
+ */
+
 public class ConstituencyService {
 
 	public final ConstituencyDao constituencyDao;
 
 	public final ConstituencyValidator constituencyValidator;
+	
+	/*
+	 * constiteuncy have a one constuctor
+	 */
+	 
 
 	public ConstituencyService(ConstituencyValidator constituencyValidator, ConstituencyDao constituencyDao) {
 
 		this.constituencyDao = constituencyDao; 
 
 		this.constituencyValidator = constituencyValidator;
-	}
+	} 
 
+	/*
+	 * this add constituency check the object help to the validator.
+	 * and then send the object the dao layer.
+	 */
+	
 	public boolean addConstituency(Constituency constituency) throws LeaderValidateException, SQLException {
 
 		if (constituency == null) {
@@ -40,6 +57,11 @@ public class ConstituencyService {
 		}
 
 	} 
+	
+	/*
+	 * this update constituency check the object help to the validator.
+	 * and then send the object the dao layer.
+	 */
 
 	public boolean upDateConstituency(Constituency constituency ,String constituencyName) throws LeaderValidateException, SQLException {
 
@@ -60,6 +82,13 @@ public class ConstituencyService {
 		}
 
 	}
+	
+	/**
+	 * @param constituency
+	 * @return true or false
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	public boolean deleteConstituency(int constituency) throws LeaderValidateException, SQLException {
 		if (constituency < 0) {
@@ -77,6 +106,13 @@ public class ConstituencyService {
 
 		}
 	} 
+	
+	/**
+	 *  this constuency list return the arryList
+	 * @return true or false
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	public List<Constituency> constuencyList() throws LeaderValidateException, SQLException {
 

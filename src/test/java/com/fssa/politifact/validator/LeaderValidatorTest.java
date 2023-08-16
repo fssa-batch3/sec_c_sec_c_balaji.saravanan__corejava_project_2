@@ -11,16 +11,31 @@ import com.fssa.politifact.enums.Position;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Leader;
 
+
+/**
+ * 
+ * @author BalajiSaravanan
+ *
+ * this is leader validator j unit test casses.
+ */
 class LeaderValidatorTest {
 
 	private LeaderValidator validator;
 	private Leader leader;
 
+	/**
+	 * this is for instanc create.
+	 */
 	@BeforeEach
 	public void setUp() {
 		validator = new LeaderValidator(); 
 		leader = new Leader();
 	}
+	
+	/**
+	 * test valide leader.
+	 * @throws LeaderValidateException
+	 */
 
 	@Test
 	void testValidLeader() throws LeaderValidateException {
@@ -41,6 +56,10 @@ class LeaderValidatorTest {
 
 		assertTrue(validator.validate(leader));
 	}
+	
+	/**
+	 * test null leader.
+	 */
 
 	@Test
 	void testNullLeader() {
@@ -49,6 +68,10 @@ class LeaderValidatorTest {
 
 		Assertions.assertEquals(LeaderValidateError.INVALID_LEADER_NULL, exception.getMessage());
 	}
+	
+	/**
+	 * test invalide name.
+	 */
 
 	@Test
 	void testInvalidName() {
@@ -88,13 +111,20 @@ class LeaderValidatorTest {
 
 		Assertions.assertEquals(LeaderValidateError.INVALID_NAME, exception.getMessage());
 	}
+	
+	/**
+	 * test postion
+	 */
 
 	@Test
 	void testInvalidPosition() {
 		assertThrows(LeaderValidateException.class, () -> validator.validatePosition(null));
 
 	}
-
+	
+	/**
+	 * test party name.
+	 */
 	
 	@Test
 	void testInvalidPartyName() {
@@ -102,6 +132,9 @@ class LeaderValidatorTest {
 		assertThrows(LeaderValidateException.class, () -> validator.validatePartyName(null));
 	}
 
+	/**
+	 * test experience
+	 */
 	@Test
 	void testInvalidExperience() {
 		assertThrows(LeaderValidateException.class, () -> validator.validateExperience(-1));

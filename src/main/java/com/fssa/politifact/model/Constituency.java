@@ -2,6 +2,15 @@ package com.fssa.politifact.model;
 
 import com.fssa.politifact.enums.ElectionTypes;
 
+/*
+ * The Constituency class is a model object that stores details about a constituency.
+ * It includes the following attributes:
+ *  constituency id: An integer representing the unique ID of the constituency.
+ *  consituency name: A string representing the name of the constituency.
+ *  district Name: A string representing the name of the district to which the constituency belongs.
+ *  constituency Number: An integer representing the number of the constituency.
+ *  electionTypeName: An instance of the ElectionTypes enum representing the type of election associated with the constituency.
+ */
 public class Constituency {
 
 	private int constituencyID;

@@ -9,10 +9,21 @@ import com.fssa.politifact.model.Party;
 import com.fssa.politifact.validator.LeaderValidateError;
 import com.fssa.politifact.validator.PartyValidator;
 
+/**
+ * 
+ * @author BalajiSaravanan
+ *
+ */
 public class PartyService {
 
 	public final PartyValidator partyValidator;
 	public final PartyDao partyDao;
+	
+	/**
+	 * this is party service constuctor
+	 * @param partyValidator
+	 * @param partyDao
+	 */
 
 	public PartyService(PartyValidator partyValidator, PartyDao partyDao) {
 
@@ -21,6 +32,14 @@ public class PartyService {
 		this.partyDao = partyDao;
 
 	}
+	
+	/**
+	 * add party service metod.
+	 * @param party
+	 * @return
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	public boolean addParty(Party party) throws LeaderValidateException, SQLException {
 
@@ -38,6 +57,15 @@ public class PartyService {
 		}
 
 	}
+	
+	/**
+	 * update the party
+	 * @param party
+	 * @param name
+	 * @return
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	public boolean upDateParty(Party party, String name) throws LeaderValidateException, SQLException {
 
@@ -58,6 +86,14 @@ public class PartyService {
 		}
 
 	}
+	
+	/**
+	 * delete the party service layer.
+	 * @param party
+	 * @return
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 */
 
 	public boolean deleteParty(String party) throws LeaderValidateException, SQLException {
 		if (party == null) {
@@ -75,6 +111,13 @@ public class PartyService {
 
 		}
 	}
+	
+	/**
+	 * read all party
+	 * @return
+	 * @throws SQLException
+	 * @throws LeaderValidateException
+	 */
 
 	public List<Party> partyList() throws SQLException, LeaderValidateException {
 
