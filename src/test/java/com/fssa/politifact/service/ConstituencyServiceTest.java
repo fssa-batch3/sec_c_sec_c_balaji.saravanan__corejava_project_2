@@ -83,7 +83,7 @@ class ConstituencyServiceTest {
 
 		ConstituencyService constituencyService = getConstituencyService();
 
-		Assertions.assertTrue(constituencyService.upDateConstituency(constituency, "villupuram"));
+		Assertions.assertTrue(constituencyService.upDateConstituency(constituency, "tambaram"));
 
 	}
 	
