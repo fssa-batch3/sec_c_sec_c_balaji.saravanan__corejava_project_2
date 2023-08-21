@@ -66,7 +66,7 @@ public class PartyDao {
 	 * true otherwise rturn false.
 	 */
 
-	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName) throws SQLException {
+	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName) throws SQLException, LeaderValidateException {
 
 		int partyId = LeaderDao.findPartyId(partyName);
 
@@ -78,7 +78,7 @@ public class PartyDao {
 
 		return row > 0;
 
-	}
+	} 
 
 	/*
 	 * the add party method is add the values in the data base. this not doing in

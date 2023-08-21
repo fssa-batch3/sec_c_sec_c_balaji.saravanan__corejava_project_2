@@ -29,7 +29,7 @@ public class LeaderService {
 
 		this.leaderDao = leader;
 
-	}
+	} 
 	/**
 	 * add leader doing check all object atrributes and then send value in dao.
 	 * @param leader
@@ -116,9 +116,10 @@ public class LeaderService {
 	 * @return
 	 * @throws SQLException
 	 * @throws DaoException
+	 * @throws LeaderValidateException 
 	 */
 
-	public List<Leader> callAllLeader() throws SQLException, DaoException {
+	public List<Leader> callAllLeader() throws SQLException, DaoException, LeaderValidateException {
 
 		return this.leaderDao.readLeader();
 

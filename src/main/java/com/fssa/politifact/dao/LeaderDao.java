@@ -33,7 +33,7 @@ public class LeaderDao {
 	 * id. this help to find the constituency id .
 	 */
 
-	public static int findConstituencyId(String constituencyName) {
+	public static int findConstituencyId(String constituencyName) throws LeaderValidateException {
 
 		final String query = "SELECT constituencyID FROM Constituency WHERE constituencyName = ?";
 
@@ -58,7 +58,7 @@ public class LeaderDao {
 
 		} catch (SQLException sqe) {
 
-			sqe.printStackTrace();
+			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return constituencyId;
@@ -69,7 +69,7 @@ public class LeaderDao {
 	 * then give the id, it also this help to find the party id.
 	 */
 
-	public static int findPartyId(String partyName) {
+	public static int findPartyId(String partyName) throws LeaderValidateException {
 
 		final String query = "SELECT partyId FROM Party WHERE partyName = ?";
 
@@ -92,7 +92,8 @@ public class LeaderDao {
 			}
 
 		} catch (SQLException sqe) {
-			sqe.printStackTrace();
+
+			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return partyId;
@@ -104,7 +105,7 @@ public class LeaderDao {
 	 * 
 	 */
 
-	public static String findConstituencyName(int constituencyId) {
+	public static String findConstituencyName(int constituencyId) throws LeaderValidateException {
 
 		final String query = "SELECT constituencyName FROM Constituency WHERE constituencyID = ?";
 
@@ -126,7 +127,7 @@ public class LeaderDao {
 
 		} catch (SQLException sqe) {
 
-			sqe.printStackTrace();
+			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return constituencyName;
@@ -138,7 +139,7 @@ public class LeaderDao {
 	 * 
 	 */
 
-	private static String findPartyName(int partyId) {
+	private static String findPartyName(int partyId) throws LeaderValidateException {
 
 		final String query = "SELECT partyName FROM Party WHERE partyId = ?";
 
@@ -159,7 +160,8 @@ public class LeaderDao {
 			}
 
 		} catch (SQLException sqe) {
-			sqe.printStackTrace();
+
+			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return partyName;
@@ -171,7 +173,7 @@ public class LeaderDao {
 	 * then operation happening .
 	 */
 
-	private static int findLeaderId(String leaderName) {
+	private static int findLeaderId(String leaderName) throws LeaderValidateException {
 
 		final String query = "SELECT id FROM Leader WHERE name = ?";
 
@@ -193,7 +195,7 @@ public class LeaderDao {
 
 		} catch (SQLException sqe) {
 
-			sqe.printStackTrace();
+			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return leaderId;
@@ -204,7 +206,7 @@ public class LeaderDao {
 	 * code line decress this help to add leader.
 	 */
 
-	private static boolean insertLeader(Leader leader, PreparedStatement pst) throws SQLException {
+	private static boolean insertLeader(Leader leader, PreparedStatement pst) throws SQLException, LeaderValidateException {
 
 		int partyId = findPartyId(leader.getPartyName());
 
@@ -251,7 +253,7 @@ public class LeaderDao {
 	 * code line decress this help to update the leader.
 	 */
 
-	private static boolean insertUpdate(Leader leader, PreparedStatement pst, String name) throws SQLException {
+	private static boolean insertUpdate(Leader leader, PreparedStatement pst, String name) throws SQLException, LeaderValidateException {
 
 		int constituencyId = findConstituencyId(leader.getCounstuencyName());
 
@@ -284,7 +286,7 @@ public class LeaderDao {
 	 * decress this help to read the all value in the table.
 	 */
 
-	private static Leader read(ResultSet rs) throws SQLException {
+	private static Leader read(ResultSet rs) throws SQLException, LeaderValidateException {
 
 		Leader leader = new Leader();
 
@@ -341,7 +343,7 @@ public class LeaderDao {
 	 * turn the id. any occure happend in this code this throw userdefine exception.
 	 */
 
-	public boolean updateLeader(Leader leader, String name) throws SQLException, DaoException {
+	public boolean updateLeader(Leader leader, String name) throws SQLException, DaoException, LeaderValidateException {
 
 		final String query = "UPDATE Leader SET name=?, position=?, partyId=?, experience=?, occupation=?, counstuencyId=?, descriptionOfBirth=?, descriptionOfEducation=?, descriptionOfPastWorkExperience=?, descritionOfpolitics=?, descriptionOffamily=?, descriptionOfIncome=?, imageUrl=? WHERE id=?";
 
@@ -364,7 +366,7 @@ public class LeaderDao {
 	 * any occure happend in this code this throw userdefine exception.
 	 */
 
-	public boolean deleteLeader(String leaderName) throws SQLException, DaoException {
+	public boolean deleteLeader(String leaderName) throws DaoException, LeaderValidateException, SQLException {
 
 		final String query = "DELETE FROM leaders WHERE id=?";
 
@@ -392,7 +394,7 @@ public class LeaderDao {
 	 * occure happend in this code this throw userdefine exception.
 	 */
 
-	public List<Leader> readLeader() throws SQLException, DaoException {
+	public List<Leader> readLeader() throws SQLException, DaoException, LeaderValidateException {
 
 		ArrayList<Leader> leadersList = new ArrayList<>();
 

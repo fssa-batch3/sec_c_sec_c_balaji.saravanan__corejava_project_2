@@ -16,9 +16,8 @@ public class Affidavit {
 	private String affidateUrl;
 	
 	
-	public Affidavit(int id, int electionId, int leaderId, String affidateUrl) {
+	public Affidavit(int electionId, int leaderId, String affidateUrl) {
 		
-		this.id = id;
 		this.electionId = electionId;
 		this.leaderId = leaderId;
 		this.affidateUrl = affidateUrl;
@@ -63,6 +62,15 @@ public class Affidavit {
 	public void setAffidateUrl(String affidateUrl) {
 		this.affidateUrl = affidateUrl;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Affidavit [id=" + id + ", electionId=" + electionId + ", leaderId=" + leaderId + ", affidateUrl="
+				+ affidateUrl + "]";
+	}
+	
+	
 	
 
 }

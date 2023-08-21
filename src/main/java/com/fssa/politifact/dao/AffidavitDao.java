@@ -13,8 +13,8 @@ import com.fssa.politifact.util.ConnectionUtil;
 import com.fssa.politifact.validator.LeaderValidateError;
 
 /*
- * affidate model object hlep to store the affidate url
- * this is one to mani relation ship.
+ * affidavit model object help to store the affidavit url
+ * this is one to mani relationship.
  * so this is separate model object.
  */
 
@@ -24,19 +24,19 @@ public class AffidavitDao {
 		
 	}
 	
-	public AffidavitDao getObj() {
+	public static AffidavitDao getObj() {
 		
 		return new AffidavitDao();
 	}
 
 
 	/*
-	 * inserAffidavit method is only perform the result set work
+	 * insertAffidavit method is only perform the result set work
 	 * its help to method code line decrees
 	 * this help to add election.
 	 */
 
-	private static boolean inserAffidavit(Affidavit affidavit, PreparedStatement pst) throws SQLException {
+	private static boolean insertAffidavit(Affidavit affidavit, PreparedStatement pst) throws SQLException {
 
 		pst.setInt(1, affidavit.getElectionId());
 
@@ -102,7 +102,7 @@ public class AffidavitDao {
 
 			try (PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-				return inserAffidavit(affidavit, pst);
+				return insertAffidavit(affidavit, pst);
 
 			} catch (SQLException sqe) {
 
@@ -113,7 +113,7 @@ public class AffidavitDao {
 
 	/*
 	 * updateAffidavit is performed connection and prepare statement and return this complete or not through boolean.
-	 * and i will send what id i want delete that id given this method delete.
+	 * and I will send what id I want to delete that id given this method delete.
 	 * in case any exception happen this code throw the user defined exception
 	 */
 
@@ -134,12 +134,12 @@ public class AffidavitDao {
 	}
 
 	/*
-	 * add deleteElection is perform connection and prepare statement and return this compleate or not through boolean.
-	 * this delete the election table where id.
-	 * in case any exception hapend this code thorw the user defind exception
+	 * add deleteElection is performed connection and prepare statement and return this complete or not through boolean.
+	 * this deletes the election table where id.
+	 * in case any exception happen this code throw the user defined exception
 	 */
 
-	public boolean deleteElection(int id) throws SQLException, LeaderValidateException {
+	public boolean deleteAffidavit(int id) throws SQLException, LeaderValidateException {
 
 		final String query = "DELETE FROM Affidavit WHERE id=?";
 

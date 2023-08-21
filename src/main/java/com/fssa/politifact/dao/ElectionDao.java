@@ -65,7 +65,7 @@ public class ElectionDao {
 	 * this help to update election
 	 */
 	
-	private static boolean insertUpdate(Election election, PreparedStatement pst, String electionName) throws SQLException {
+	private static boolean insertUpdate(Election election, PreparedStatement pst, String electionName) throws SQLException, LeaderValidateException {
 
 		int electionTypeId= ConstituencyDao.findElectionTypeId(electionName);
 		

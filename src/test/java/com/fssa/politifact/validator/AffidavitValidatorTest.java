@@ -38,7 +38,7 @@ import com.fssa.politifact.model.Affidavit;
 
 	@Test
 	void testValidAffidavit() throws LeaderValidateException {
-		Affidavit affidavit = new Affidavit(1,1, 1001, "https://www.example.com/affidavit1.pdf");
+		Affidavit affidavit = new Affidavit(1, 1001, "https://www.example.com/affidavit1.pdf");
 		boolean result = affidavitValidator.validate(affidavit);
 		assertEquals(true, result); 
 	}
@@ -52,7 +52,7 @@ import com.fssa.politifact.model.Affidavit;
 
 	@Test
 	void testInvalidElectionId() {
-		Affidavit affidavit = new Affidavit(1,-1, 1002, "https://www.example.com/affidavit2.pdf");
+		Affidavit affidavit = new Affidavit(-1, 1002, "https://www.example.com/affidavit2.pdf");
 		
 		assertThrows(LeaderValidateException.class, () -> affidavitValidator.validate(affidavit));
 	}
@@ -60,7 +60,7 @@ import com.fssa.politifact.model.Affidavit;
 	@Test
 	void testInvalidLeaderId() {
 		
-		Affidavit affidavit = new Affidavit(1,1, 0, "https://www.example.com/affidavit3.pdf");
+		Affidavit affidavit = new Affidavit(1, 0, "https://www.example.com/affidavit3.pdf");
 		
 		assertThrows(LeaderValidateException.class, () -> affidavitValidator.validate(affidavit));
 	}
@@ -68,7 +68,7 @@ import com.fssa.politifact.model.Affidavit;
 	@Test
 	void testInvalidAffidavitUrl() {
 		
-		Affidavit affidavit = new Affidavit(1,1, 1003, "invalid_url");
+		Affidavit affidavit = new Affidavit(1, 1003, "invalid_url");
 		
 		assertThrows(LeaderValidateException.class, () -> affidavitValidator.validate(affidavit));
 	}
@@ -76,7 +76,7 @@ import com.fssa.politifact.model.Affidavit;
 	@Test
 	void testInvalidAffidavitUrlNull() {
 		
-		Affidavit affidavit = new Affidavit(1,1, 1003, null);
+		Affidavit affidavit = new Affidavit(1, 1003, null);
 		
 		assertThrows(LeaderValidateException.class, () -> affidavitValidator.validate(affidavit));
 	}

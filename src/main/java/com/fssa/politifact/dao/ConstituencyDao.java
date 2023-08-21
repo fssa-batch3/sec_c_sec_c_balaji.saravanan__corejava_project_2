@@ -19,7 +19,7 @@ public class ConstituencyDao {
 
 	}
 
-	public static ConstituencyDao getObj() { // private constuctor
+	public static ConstituencyDao getObj() { // private constructor
 
 		return new ConstituencyDao();
 
@@ -28,12 +28,12 @@ public class ConstituencyDao {
 	Logger logger = new Logger();
 
 	/*
-	 * This insertConstituency methoed only prepare statement code only run hear.
-	 * what reason for that the add leader method codeline i do want to decress so
-	 * that reson. this code add leader prepare statement executeupdate code
+	 * This insertConstituency method only prepare statement code only run hear.
+	 * what reason for that the add leader method modeline I do want to decrees so
+	 * that reason. this code add leader prepare statement executable code
 	 */
 
-	private boolean insertConstituency(Constituency constituency, PreparedStatement pst) throws SQLException {
+	private boolean insertConstituency(Constituency constituency, PreparedStatement pst) throws SQLException, LeaderValidateException {
 
 		int electionTypeId = findElectionTypeId(constituency.getElectionTypeName().toString());
 
@@ -57,28 +57,28 @@ public class ConstituencyDao {
 
 			return true;
 
-		} else {
+		} else { 
 
 			return false;
 		}
 	}
 
 	/*
-	 * in this method insert update method only prepare statment code heare this
+	 * in this method insert update method only prepare statement code here this
 	 * only update the code return a boolean value
 	 */
 	private boolean insertUpdate(Constituency constituency, PreparedStatement pst, String constituencyUpadateName)
-			throws SQLException {
+			throws SQLException, LeaderValidateException {
 
 		int electionTypeId = findElectionTypeId(constituency.getElectionTypeName().toString());
 
-		int constituncyUpdateId = LeaderDao.findConstituencyId(constituencyUpadateName);
+		int constituencyUpdateId = LeaderDao.findConstituencyId(constituencyUpadateName);
 
 		pst.setString(1, constituency.getConstituencyName());
 		pst.setString(2, constituency.getDistrictName());
 		pst.setInt(3, constituency.getConstituencyNumber());
 		pst.setInt(4, electionTypeId);
-		pst.setInt(5, constituncyUpdateId);
+		pst.setInt(5, constituencyUpdateId);
 
 		int row = pst.executeUpdate();
 
@@ -88,7 +88,7 @@ public class ConstituencyDao {
 
 	/*
 	 * addConstituency add a new constituency in database this method hava a
-	 * connection ans also prepare statement this call a insert constituency that
+	 * connection and also prepare statement this call a insert constituency that
 	 * place run a prepare statement
 	 */
 
@@ -112,8 +112,8 @@ public class ConstituencyDao {
 	}
 
 	/*
-	 * update constituency perform update the vlaues in database this also call a
-	 * insert update that plass run a prepare Statement
+	 * update constituency perform update the values in database this also call a
+	 * insert update that plays run a prepare Statement
 	 */
 
 	public boolean updateConstituency(Constituency constituency, String constituencyName)
@@ -133,7 +133,7 @@ public class ConstituencyDao {
 	}
 
 	/*
-	 * deleteconstituency method deleate a constituency this perform given id
+	 * delete-constituency method delete a constituency this performs given id
 	 */
 
 	public boolean deleteConstituency(int constituencyId) throws SQLException, LeaderValidateException {
@@ -200,11 +200,11 @@ public class ConstituencyDao {
 	}
 
 	/*
-	 * find election id method i given the name that name find the database return
-	 * the that name row id this help to forienn key find and fetch this table
+	 * find election id method I have given the name that name find the database return
+	 * the that name row id this help to forenoon key find and fetch this table
 	 */
 
-	public static int findElectionTypeId(String electionName) {
+	public static int findElectionTypeId(String electionName) throws LeaderValidateException {
 
 		final String query = "SELECT id FROM Election WHERE electionType = ?";
 
@@ -226,11 +226,12 @@ public class ConstituencyDao {
 
 		} catch (SQLException sqe) {
 
-			sqe.printStackTrace();
+			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return electionId;
 	}
+	
 
 	/*
 	 * findElectionTypeName method i given the int id that give String election name
@@ -238,7 +239,7 @@ public class ConstituencyDao {
 	 * and then return the name this help to read the name throu the id
 	 */
 
-	public static String findElectionTypeName(int electionId) { 
+	public static String findElectionTypeName(int electionId) throws LeaderValidateException { 
 
 		final String query = "SELECT electionType FROM Election WHERE id = ?";
 
@@ -260,7 +261,7 @@ public class ConstituencyDao {
 
 		} catch (SQLException sqe) {
 
-			sqe.printStackTrace();
+			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return electionName;
