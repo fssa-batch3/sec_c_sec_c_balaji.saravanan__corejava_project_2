@@ -6,10 +6,10 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.fssa.politifact.dao.LeaderDao;
-import com.fssa.politifact.dao.Logger;
 import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Leader;
+import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.LeaderValidateError;
 import com.fssa.politifact.validator.LeaderValidator;
 
@@ -22,15 +22,16 @@ import com.fssa.politifact.validator.LeaderValidator;
 class LeaderServiceTest {
 
 	Logger logger = new Logger();
-	
+	 
 	/**
 	 * add leader give the value in service layer.
 	 * @throws SQLException
 	 * @throws LeaderValidateException
+	 * @throws DaoException 
 	 */
 
 	@Test
-	void testAddLeader() throws SQLException, LeaderValidateException {
+	void testAddLeader() throws SQLException, LeaderValidateException, DaoException {
 
 		Leader leader = getLeaders();
 
@@ -67,7 +68,7 @@ class LeaderServiceTest {
 	}
 	
 	/**
-	 * it is a constuctor of service.
+	 * it is a constructor of service.
 	 * @return
 	 */
 

@@ -15,7 +15,7 @@ import com.fssa.politifact.model.Leader;
 import com.fssa.politifact.util.ConnectionUtil;
 import com.fssa.politifact.validator.LeaderValidateError;
 
-// this page do crud
+// this page do CRUD
 
 public class LeaderDao {
 
@@ -29,11 +29,11 @@ public class LeaderDao {
 	}
 
 	/*
-	 * findConstituencyId method is only perform the search opretion and give the
+	 * findConstituencyId method is only perform the search operation and give the
 	 * id. this help to find the constituency id .
 	 */
 
-	public static int findConstituencyId(String constituencyName) throws LeaderValidateException {
+	public static int findConstituencyId(String constituencyName) throws DaoException {
 
 		final String query = "SELECT constituencyID FROM Constituency WHERE constituencyName = ?";
 
@@ -51,6 +51,9 @@ public class LeaderDao {
 
 						constituencyId = resultSet.getInt("constituencyID");
 
+					} else {
+
+						throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_NAME);
 					}
 				}
 
@@ -58,24 +61,25 @@ public class LeaderDao {
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return constituencyId;
 	}
 
 	/*
-	 * findPartyId method is only perform the serch operation in the database and
+	 * findPartyId method is only perform the search operation in the database and
 	 * then give the id, it also this help to find the party id.
 	 */
 
-	public static int findPartyId(String partyName) throws LeaderValidateException {
+	public static int findPartyId(String partyName) throws DaoException {
 
 		final String query = "SELECT partyId FROM Party WHERE partyName = ?";
 
 		int partyId = 0;
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
+
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
 				pst.setString(1, partyName);
@@ -86,6 +90,9 @@ public class LeaderDao {
 
 						partyId = resultSet.getInt("partyId");
 
+					} else {
+
+						throw new DaoException(LeaderValidateError.INVALID_PARTYNAME);
 					}
 				}
 
@@ -93,53 +100,58 @@ public class LeaderDao {
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return partyId;
 	}
 
 	/*
-	 * findConstituencyName method is we give the id in datase that id what value
+	 * findConstituencyName method is we give the id in database that id what value
 	 * have that name return this method. it s help to print the value
 	 * 
 	 */
 
-	public static String findConstituencyName(int constituencyId) throws LeaderValidateException {
+	public static String findConstituencyName(int constituencyId) throws DaoException {
 
 		final String query = "SELECT constituencyName FROM Constituency WHERE constituencyID = ?";
 
 		String constituencyName = "";
 
-		try (Connection connection = ConnectionUtil.getConnection();
-				PreparedStatement pst = connection.prepareStatement(query)) {
+		try (Connection connection = ConnectionUtil.getConnection()) {
 
-			pst.setInt(1, constituencyId);
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
-			try (ResultSet resultSet = pst.executeQuery()) {
+				pst.setInt(1, constituencyId);
 
-				if (resultSet.next()) {
+				try (ResultSet resultSet = pst.executeQuery()) {
 
-					constituencyName = resultSet.getString("constituencyName");
+					if (resultSet.next()) {
 
+						constituencyName = resultSet.getString("constituencyName");
+						
+					} else {
+						
+						throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
+					}
 				}
-			}
 
+			}
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return constituencyName;
 	}
 
 	/*
-	 * findPartyName method is we give the id in datase that id what value have that
-	 * name return this method. it s help to print the value
+	 * findPartyName method is we give the id in database that id what value have
+	 * that name return this method. it s help to print the value
 	 * 
 	 */
 
-	private static String findPartyName(int partyId) throws LeaderValidateException {
+	private static String findPartyName(int partyId) throws DaoException {
 
 		final String query = "SELECT partyName FROM Party WHERE partyId = ?";
 
@@ -156,12 +168,15 @@ public class LeaderDao {
 
 					partyName = resultSet.getString("partyName");
 
+				}else {
+					
+				throw new DaoException(LeaderValidateError.INVALID_PARTY_ID);
 				}
 			}
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return partyName;
@@ -173,29 +188,33 @@ public class LeaderDao {
 	 * then operation happening .
 	 */
 
-	private static int findLeaderId(String leaderName) throws LeaderValidateException {
+	private static int findLeaderId(String leaderName) throws DaoException {
 
 		final String query = "SELECT id FROM Leader WHERE name = ?";
 
 		int leaderId = 0;
 
-		try (Connection connection = ConnectionUtil.getConnection();
-				PreparedStatement pst = connection.prepareStatement(query)) {
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
-			pst.setString(1, leaderName);
+				pst.setString(1, leaderName);
 
-			try (ResultSet resultSet = pst.executeQuery()) {
+				try (ResultSet resultSet = pst.executeQuery()) {
 
-				if (resultSet.next()) {
+					if (resultSet.next()) {
 
-					leaderId = resultSet.getInt("id");
+						leaderId = resultSet.getInt("id");
 
+					}else {
+						
+						throw new DaoException(LeaderValidateError.INVALID_NAME);
+					}
 				}
 			}
-
+			
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return leaderId;
@@ -203,10 +222,11 @@ public class LeaderDao {
 
 	/*
 	 * insertLeader method is only perform the result set work its help to method
-	 * code line decress this help to add leader.
+	 * code line decrees this help to add leader.
 	 */
 
-	private static boolean insertLeader(Leader leader, PreparedStatement pst) throws SQLException, LeaderValidateException {
+	private static boolean insertLeader(Leader leader, PreparedStatement pst)
+			throws SQLException, LeaderValidateException, DaoException {
 
 		int partyId = findPartyId(leader.getPartyName());
 
@@ -250,10 +270,11 @@ public class LeaderDao {
 
 	/*
 	 * insertUpdate method is only perform the result set work its help to method
-	 * code line decress this help to update the leader.
+	 * code line decrees this help to update the leader.
 	 */
 
-	private static boolean insertUpdate(Leader leader, PreparedStatement pst, String name) throws SQLException, LeaderValidateException {
+	private static boolean insertUpdate(Leader leader, PreparedStatement pst, String name)
+			throws SQLException, LeaderValidateException, DaoException {
 
 		int constituencyId = findConstituencyId(leader.getCounstuencyName());
 
@@ -283,10 +304,10 @@ public class LeaderDao {
 
 	/*
 	 * read method is only perform the result set work its help to method code line
-	 * decress this help to read the all value in the table.
+	 * Decrees this help to read the all value in the table.
 	 */
 
-	private static Leader read(ResultSet rs) throws SQLException, LeaderValidateException {
+	private static Leader read(ResultSet rs) throws SQLException, LeaderValidateException, DaoException {
 
 		Leader leader = new Leader();
 
@@ -312,12 +333,13 @@ public class LeaderDao {
 	}
 
 	/*
-	 * addLeader method is add the leaer all value in the database. this method call
-	 * to insertleader that method do result set opretion. this method only receive
-	 * the object. any occure happend in this code this throw userdefine exception.
+	 * addLeader method is add the leader all value in the database. this method
+	 * call to insert leader that method do result set operation. this method only
+	 * receive the object. any occur happen in this code this throw user define
+	 * exception.
 	 */
 
-	public boolean addLeader(Leader leader) throws LeaderValidateException {
+	public boolean addLeader(Leader leader) throws LeaderValidateException, DaoException {
 
 		final String query = "INSERT INTO Leader (name, position, partyId, experience, occupation, counstuencyId, descriptionOfBirth, descriptionOfEducation, descriptionOfPastWorkExperience, descritionOfpolitics, descriptionOffamily, descriptionOfIncome, imageUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -329,18 +351,18 @@ public class LeaderDao {
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 
 		}
 
 	}
 
 	/*
-	 * updateLeader method is update the leaer all value in the database. this
-	 * method call to insertupdate that method do result set opretion. this method
+	 * updateLeader method is update the leader all value in the database. this
+	 * method call to insert update that method do result set operation. this method
 	 * receive the object and also what name row update that attribute also receive.
 	 * that name go to the method find leader id that method search name in database
-	 * turn the id. any occure happend in this code this throw userdefine exception.
+	 * turn the id. any occur happen in this code this throw user define exception.
 	 */
 
 	public boolean updateLeader(Leader leader, String name) throws SQLException, DaoException, LeaderValidateException {
@@ -360,10 +382,10 @@ public class LeaderDao {
 	}
 
 	/*
-	 * deleteLeader method is delete the leaer all value in the database. this
+	 * deleteLeader method is delete the leader all value in the database. this
 	 * method receive the what name row delete that attribute receive. that name go
 	 * to the method find leader id that method search name in database turn the id.
-	 * any occure happend in this code this throw userdefine exception.
+	 * any occur happen in this code this throw user define exception.
 	 */
 
 	public boolean deleteLeader(String leaderName) throws DaoException, LeaderValidateException, SQLException {
@@ -442,6 +464,7 @@ public class LeaderDao {
 
 			try (ResultSet resultSet = stmt.executeQuery(query)) {
 				while (resultSet.next()) {
+
 					String name = resultSet.getString("name");
 					String position = resultSet.getString("position");
 					double experience = resultSet.getDouble("experience");
@@ -449,9 +472,9 @@ public class LeaderDao {
 					String constituencyName = resultSet.getString("constituencyName");
 					int constituencyNumber = resultSet.getInt("constituencyNumber");
 					String partyName = resultSet.getString("partyName");
-					
 
 					Leader leader = new Leader();
+
 					leader.setName(name);
 					leader.setPosition(position);
 					leader.setExperience(experience);
@@ -459,18 +482,20 @@ public class LeaderDao {
 					leader.setCounstuencyName(constituencyName);
 					leader.setPartyName(partyName);
 
-					
 					Constituency constituency = new Constituency("", "", 1, null);
+
 					constituency.setConstituencyName(constituencyName);
 					constituency.setConstituencyNumber(constituencyNumber);
-					
+
 					String leaderAndConstituency = leader.toString() + " Constituency: " + constituency.toString();
 
 					leadersAndConstituencies.add(leaderAndConstituency);
 				}
 
 				return leadersAndConstituencies;
+
 			} catch (SQLException sqe) {
+
 				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Party;
 import com.fssa.politifact.util.ConnectionUtil;
@@ -54,7 +55,7 @@ public class PartyDao {
 
 			return true;
 
-		} else {
+		} else { 
 
 			return false;
 		}
@@ -66,7 +67,7 @@ public class PartyDao {
 	 * true otherwise rturn false.
 	 */
 
-	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName) throws SQLException, LeaderValidateException {
+	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName) throws SQLException, LeaderValidateException, DaoException {
 
 		int partyId = LeaderDao.findPartyId(partyName);
 
@@ -85,7 +86,7 @@ public class PartyDao {
 	 * the statement this send the value insertparty doing the preparestatment.
 	 */
 
-	public boolean addParty(Party party) throws SQLException, LeaderValidateException {
+	public boolean addParty(Party party) throws SQLException, LeaderValidateException, DaoException {
 
 		final String query = "INSERT INTO Party (PartyName, partyImageUrl) VALUES (?, ?)";
 
@@ -97,7 +98,7 @@ public class PartyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}
@@ -107,7 +108,7 @@ public class PartyDao {
 	 * in the statement this send the value insertparty doing the preparestatment.
 	 */
 
-	public boolean updateParty(Party party, String partyName) throws SQLException, LeaderValidateException {
+	public boolean updateParty(Party party, String partyName) throws SQLException, DaoException, LeaderValidateException {
 
 		final String query = "UPDATE Party SET PartyName=?, partyImageUrl=? WHERE partyId=?";
 
@@ -121,7 +122,7 @@ public class PartyDao {
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 	}
 
@@ -129,7 +130,7 @@ public class PartyDao {
 	 * the deleteParty method is delete the values in the data base.
 	 */
 
-	public boolean deleteParty(String partyName) throws SQLException, LeaderValidateException {
+	public boolean deleteParty(String partyName) throws SQLException, DaoException {
 
 		final String query = "DELETE FROM Parties WHERE partyId=?";
 
@@ -147,17 +148,17 @@ public class PartyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
+				throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
 			}
 		}
 	}
 
 	/*
 	 * read all party values in the table help this table , this not doing any
-	 * operation only doing the reading the all vlaues in the data base.
+	 * operation only doing the reading the all values in the data base.
 	 */
 
-	public List<Party> readAllParties() throws SQLException, LeaderValidateException {
+	public List<Party> readAllParties() throws SQLException, DaoException {
 
 		ArrayList<Party> partyList = new ArrayList<>();
 
@@ -182,7 +183,7 @@ public class PartyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}

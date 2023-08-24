@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.fssa.politifact.dao.ConstituencyDao;
+import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
 import com.fssa.politifact.validator.ConstituencyValidator;
@@ -13,7 +14,7 @@ import com.fssa.politifact.validator.LeaderValidateError;
  * this is service layer
  * this connect to the dao layer and validator 
  * given all value check the validator and then send the dao
- * this purpuse help to this layer.
+ * this purpose help to this layer.
  */
 
 public class ConstituencyService {
@@ -23,10 +24,10 @@ public class ConstituencyService {
 	public final ConstituencyValidator constituencyValidator;
 	
 	/*
-	 * constiteuncy have a one constuctor
+	 * Constituency have a one constructor
 	 */
 	 
-
+ 
 	public ConstituencyService(ConstituencyValidator constituencyValidator, ConstituencyDao constituencyDao) {
 
 		this.constituencyDao = constituencyDao; 
@@ -39,7 +40,7 @@ public class ConstituencyService {
 	 * and then send the object the dao layer.
 	 */
 	
-	public boolean addConstituency(Constituency constituency) throws LeaderValidateException, SQLException {
+	public boolean addConstituency(Constituency constituency) throws LeaderValidateException, SQLException, DaoException {
 
 		if (constituency == null) {
 
@@ -63,7 +64,7 @@ public class ConstituencyService {
 	 * and then send the object the dao layer.
 	 */
 
-	public boolean upDateConstituency(Constituency constituency ,String constituencyName) throws LeaderValidateException, SQLException {
+	public boolean upDateConstituency(Constituency constituency ,String constituencyName) throws LeaderValidateException, SQLException, DaoException {
 
 		if (constituency == null) {
 
@@ -88,9 +89,10 @@ public class ConstituencyService {
 	 * @return true or false
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-	public boolean deleteConstituency(int constituency) throws LeaderValidateException, SQLException {
+	public boolean deleteConstituency(int constituency) throws LeaderValidateException, SQLException, DaoException {
 		if (constituency < 0) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_CANDIDATE_ID);
@@ -112,9 +114,10 @@ public class ConstituencyService {
 	 * @return true or false
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-	public List<Constituency> constuencyList() throws LeaderValidateException, SQLException {
+	public List<Constituency> constuencyList() throws LeaderValidateException, SQLException, DaoException {
 
 		return this.constituencyDao.readAllConstituencies();
 

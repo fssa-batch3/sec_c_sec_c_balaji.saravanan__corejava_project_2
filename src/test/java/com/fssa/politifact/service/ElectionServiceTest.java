@@ -5,11 +5,11 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.fssa.politifact.dao.ElectionDao;
-import com.fssa.politifact.dao.Logger;
 import com.fssa.politifact.enums.ElectionTypes;
 import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Election;
+import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.ElectionValidator;
 
 /**
@@ -21,7 +21,7 @@ import com.fssa.politifact.validator.ElectionValidator;
  */
 
  class ElectionServiceTest {
-	
+	 
 	Logger logger = new Logger();
 	
 	/**
@@ -74,10 +74,11 @@ import com.fssa.politifact.validator.ElectionValidator;
 	 * update election.
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
  
 	@Test
-	 void tesupDateElection() throws LeaderValidateException, SQLException {
+	 void tesupDateElection() throws LeaderValidateException, SQLException, DaoException {
 		
 		Election election = new Election(1,2023, ElectionTypes.LOCAL_ELECTION);
 
@@ -107,10 +108,11 @@ import com.fssa.politifact.validator.ElectionValidator;
 	 * reade all election in the table.
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
 	@Test
-	 void testAllElection() throws LeaderValidateException, SQLException {
+	 void testAllElection() throws LeaderValidateException, SQLException, DaoException {
 
 		ElectionService electionService = getElectionService();
 

@@ -8,9 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
 import com.fssa.politifact.util.ConnectionUtil;
+import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.LeaderValidateError;
 
 public class ConstituencyDao {
@@ -20,7 +22,7 @@ public class ConstituencyDao {
 	}
 
 	public static ConstituencyDao getObj() { // private constructor
-
+ 
 		return new ConstituencyDao();
 
 	}
@@ -33,7 +35,7 @@ public class ConstituencyDao {
 	 * that reason. this code add leader prepare statement executable code
 	 */
 
-	private boolean insertConstituency(Constituency constituency, PreparedStatement pst) throws SQLException, LeaderValidateException {
+	private boolean insertConstituency(Constituency constituency, PreparedStatement pst) throws SQLException, LeaderValidateException, DaoException {
 
 		int electionTypeId = findElectionTypeId(constituency.getElectionTypeName().toString());
 
@@ -68,7 +70,7 @@ public class ConstituencyDao {
 	 * only update the code return a boolean value
 	 */
 	private boolean insertUpdate(Constituency constituency, PreparedStatement pst, String constituencyUpadateName)
-			throws SQLException, LeaderValidateException {
+			throws SQLException, LeaderValidateException, DaoException {
 
 		int electionTypeId = findElectionTypeId(constituency.getElectionTypeName().toString());
 
@@ -92,7 +94,7 @@ public class ConstituencyDao {
 	 * place run a prepare statement
 	 */
 
-	public boolean addConstituency(Constituency constituency) throws SQLException, LeaderValidateException {
+	public boolean addConstituency(Constituency constituency) throws SQLException, LeaderValidateException, DaoException {
 
 		final String query = "INSERT INTO Constituency (constituencyName, districtName, constituencyNumber, electionTypeId) VALUES (?, ?, ?, ?)";
 
@@ -106,7 +108,7 @@ public class ConstituencyDao {
 
 				logger.info(sqe.getMessage());
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}
@@ -117,7 +119,7 @@ public class ConstituencyDao {
 	 */
 
 	public boolean updateConstituency(Constituency constituency, String constituencyName)
-			throws SQLException, LeaderValidateException {
+			throws SQLException, LeaderValidateException, DaoException {
 
 		final String query = "UPDATE Constituency SET constituencyName=?, districtName=?, constituencyNumber=?, electionTypeId=? WHERE constituencyID=?";
 
@@ -128,7 +130,7 @@ public class ConstituencyDao {
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 	}
 
@@ -136,7 +138,7 @@ public class ConstituencyDao {
 	 * delete-constituency method delete a constituency this performs given id
 	 */
 
-	public boolean deleteConstituency(int constituencyId) throws SQLException, LeaderValidateException {
+	public boolean deleteConstituency(int constituencyId) throws SQLException, LeaderValidateException, DaoException {
 
 		final String query = "DELETE FROM constituency WHERE constituencyID=?"; // query
 
@@ -152,7 +154,7 @@ public class ConstituencyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
+				throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
 			}
 		}
 	}
@@ -163,7 +165,7 @@ public class ConstituencyDao {
 	 * return value go to the service layer.
 	 */
 
-	public List<Constituency> readAllConstituencies() throws SQLException, LeaderValidateException {
+	public List<Constituency> readAllConstituencies() throws SQLException, LeaderValidateException, DaoException {
 
 		ArrayList<Constituency> constituenciesList = new ArrayList<>();
 
@@ -194,7 +196,7 @@ public class ConstituencyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}
@@ -204,7 +206,7 @@ public class ConstituencyDao {
 	 * the that name row id this help to forenoon key find and fetch this table
 	 */
 
-	public static int findElectionTypeId(String electionName) throws LeaderValidateException {
+	public static int findElectionTypeId(String electionName) throws DaoException {
 
 		final String query = "SELECT id FROM Election WHERE electionType = ?";
 
@@ -226,7 +228,7 @@ public class ConstituencyDao {
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return electionId;
@@ -239,7 +241,7 @@ public class ConstituencyDao {
 	 * and then return the name this help to read the name throu the id
 	 */
 
-	public static String findElectionTypeName(int electionId) throws LeaderValidateException { 
+	public static String findElectionTypeName(int electionId) throws LeaderValidateException, DaoException { 
 
 		final String query = "SELECT electionType FROM Election WHERE id = ?";
 
@@ -261,7 +263,7 @@ public class ConstituencyDao {
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 
 		return electionName;

@@ -29,15 +29,16 @@ public class LeaderService {
 
 		this.leaderDao = leader;
 
-	} 
+	}  
 	/**
 	 * add leader doing check all object atrributes and then send value in dao.
 	 * @param leader
 	 * @return
 	 * @throws LeaderValidateException
+	 * @throws DaoException 
 	 */
 
-	public boolean addLeader(Leader leader) throws LeaderValidateException {
+	public boolean addLeader(Leader leader) throws LeaderValidateException, DaoException {
 
 		if (leader == null) {
 

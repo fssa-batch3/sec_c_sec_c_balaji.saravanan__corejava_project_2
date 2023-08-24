@@ -6,7 +6,7 @@ public class LeaderValidateError {
 
 	}
 	/**
-	 * this is constent message so we store.
+	 * this is consent message so we store.
 	 */
 
 	public static final String INVALID_LEADER_NULL = "Leader object cannot be null.";
@@ -29,4 +29,5 @@ public class LeaderValidateError {
 	public static final String INVALID_AFFIDAVIT_ID = "Invalid affidavit ID.";
 	public static final String INVALID_ELECTION_ID = "Invalid election ID.";
 	public static final String INVALID_ELECTIPTION_TYPE = "Invalid election type.";
+	
 }

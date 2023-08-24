@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.fssa.politifact.dao.AffidavitDao;
-import com.fssa.politifact.dao.Logger;
 import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Affidavit;
+import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.AffidavitValidator;
 
  class AffidavitServiceTest {

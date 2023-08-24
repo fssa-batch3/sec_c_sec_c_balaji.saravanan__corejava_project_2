@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.fssa.politifact.dao.PartyDao;
+import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Party;
 import com.fssa.politifact.validator.LeaderValidateError;
@@ -20,7 +21,7 @@ public class PartyService {
 	public final PartyDao partyDao;
 	
 	/**
-	 * this is party service constuctor
+	 * this is party service constructor
 	 * @param partyValidator
 	 * @param partyDao
 	 */
@@ -39,9 +40,10 @@ public class PartyService {
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-	public boolean addParty(Party party) throws LeaderValidateException, SQLException {
+	public boolean addParty(Party party) throws LeaderValidateException, SQLException, DaoException {
 
 		if (party == null) {
 
@@ -65,9 +67,10 @@ public class PartyService {
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-	public boolean upDateParty(Party party, String name) throws LeaderValidateException, SQLException {
+	public boolean upDateParty(Party party, String name) throws LeaderValidateException, SQLException, DaoException {
 
 		if (party == null) {
 
@@ -93,9 +96,10 @@ public class PartyService {
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-	public boolean deleteParty(String party) throws LeaderValidateException, SQLException {
+	public boolean deleteParty(String party) throws LeaderValidateException, SQLException, DaoException {
 		if (party == null) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_CANDIDATE_ID);
@@ -117,9 +121,10 @@ public class PartyService {
 	 * @return
 	 * @throws SQLException
 	 * @throws LeaderValidateException
+	 * @throws DaoException 
 	 */
 
-	public List<Party> partyList() throws SQLException, LeaderValidateException {
+	public List<Party> partyList() throws SQLException, LeaderValidateException, DaoException {
 
 		return this.partyDao.readAllParties();
 

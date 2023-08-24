@@ -4,10 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.fssa.politifact.dao.Logger;
+
 import com.fssa.politifact.dao.PartyDao;
+import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Party;
+import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.PartyValidator;
 
 /**
@@ -23,10 +25,11 @@ import com.fssa.politifact.validator.PartyValidator;
 	 * add party give the value in service layer.
 	 * @throws LeaderValidateException
 	 * @throws SQLException
-	 */
+	 * @throws DaoException 
+	 */ 
 
 	@Test
-	 void testAddParty() throws LeaderValidateException, SQLException {
+	 void testAddParty() throws LeaderValidateException, SQLException, DaoException {
 
 		Party party = getParty();
 
@@ -68,10 +71,11 @@ import com.fssa.politifact.validator.PartyValidator;
 	 * update party.
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
  
 	@Test
-	void tesupDateParty() throws LeaderValidateException, SQLException {
+	void tesupDateParty() throws LeaderValidateException, SQLException, DaoException {
 
 		Party party = new Party("Independent candidate", "https://www.example.com/party.jpg");
 
@@ -101,10 +105,11 @@ import com.fssa.politifact.validator.PartyValidator;
 	 * read all party.
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
 	@Test
-	 void testAllParty() throws LeaderValidateException, SQLException {
+	 void testAllParty() throws LeaderValidateException, SQLException, DaoException {
 
 		PartyService partyService = getPartyService();
 		

@@ -1,4 +1,4 @@
-package com.fssa.politifact.dao;
+package com.fssa.politifact.util;
 
 /*
  * The logger function prints all values and aids in debugging the code.

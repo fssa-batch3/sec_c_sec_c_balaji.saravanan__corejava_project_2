@@ -25,7 +25,7 @@ public class ElectionDao {
 		return new ElectionDao();
 	}
 	
-	/*
+	/* 
 	 * insertElection method is only perform the result set work 
 	 * its help to method code line decress
 	 * this help to add election.
@@ -65,7 +65,7 @@ public class ElectionDao {
 	 * this help to update election
 	 */
 	
-	private static boolean insertUpdate(Election election, PreparedStatement pst, String electionName) throws SQLException, LeaderValidateException {
+	private static boolean insertUpdate(Election election, PreparedStatement pst, String electionName) throws SQLException, LeaderValidateException, DaoException {
 
 		int electionTypeId= ConstituencyDao.findElectionTypeId(electionName);
 		
@@ -108,7 +108,7 @@ public class ElectionDao {
 	 * in case any exception hapend this code thorw the user defind exception
 	 */
 
-	public boolean updateElection(Election election, String electionName) throws SQLException, LeaderValidateException {
+	public boolean updateElection(Election election, String electionName) throws SQLException, LeaderValidateException, DaoException {
 
 		final String query = "UPDATE Election SET electionYear=?, electionType=? WHERE id=?";
 
@@ -120,7 +120,7 @@ public class ElectionDao {
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class ElectionDao {
 	 * in case any exception hapend this code thorw the user defind exception
 	 */
 
-	public boolean deleteElection(String electionName) throws SQLException, LeaderValidateException {
+	public boolean deleteElection(String electionName) throws SQLException, LeaderValidateException, DaoException {
 
 		final String query = "DELETE FROM election WHERE id=?";
 
@@ -148,7 +148,7 @@ public class ElectionDao {
 
 			} catch (SQLException sqe) {
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
+				throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
 			}
 		}
 	}
@@ -159,7 +159,7 @@ public class ElectionDao {
 	 * this select all coloum and give array list the send to service the service receive and then print
 	 */
 
-	public List<Election> readAllElection() throws SQLException, LeaderValidateException {
+	public List<Election> readAllElection() throws SQLException, LeaderValidateException, DaoException {
 
 		ArrayList<Election> electionList = new ArrayList<>();
 
@@ -185,7 +185,7 @@ public class ElectionDao {
 
 			} catch (SQLException sqe) {
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}

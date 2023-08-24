@@ -5,10 +5,11 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.fssa.politifact.dao.ConstituencyDao;
-import com.fssa.politifact.dao.Logger;
 import com.fssa.politifact.enums.ElectionTypes;
+import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
+import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.ConstituencyValidator;
 
 /**
@@ -25,14 +26,15 @@ class ConstituencyServiceTest {
 
 	Logger logger = new Logger();
 	
-	/**
+	/** 
 	 * add constituency . this send the value in service layer that layer validate and then send for dao
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
 	@Test
-	 void testAddConstituency() throws LeaderValidateException, SQLException {
+	 void testAddConstituency() throws LeaderValidateException, SQLException, DaoException {
 
 		Constituency constituency = getConstituency(); 
 
@@ -74,10 +76,11 @@ class ConstituencyServiceTest {
 	 * update constituency .
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
 	@Test
-	 void tesupDateConstituency() throws LeaderValidateException, SQLException {
+	 void tesupDateConstituency() throws LeaderValidateException, SQLException, DaoException {
 
 		Constituency constituency = new Constituency("tambaram", "villupuram", 1, ElectionTypes.GENERAL_ELECTION);
 
@@ -107,10 +110,11 @@ class ConstituencyServiceTest {
 	 * read all constituency.
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
 	@Test
-	void testAllConstituency() throws LeaderValidateException, SQLException {
+	void testAllConstituency() throws LeaderValidateException, SQLException, DaoException {
 
 		ConstituencyService constituencyService = getConstituencyService();
 

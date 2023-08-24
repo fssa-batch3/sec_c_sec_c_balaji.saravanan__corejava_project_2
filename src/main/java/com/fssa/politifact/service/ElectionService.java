@@ -26,7 +26,7 @@ public class ElectionService {
 	 * @param electionValidator
 	 * @param electionDao
 	 */
-
+ 
 	public ElectionService(ElectionValidator electionValidator, ElectionDao electionDao) {
 
 		this.electionValidator = electionValidator;
@@ -67,9 +67,10 @@ public class ElectionService {
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-	public boolean upDateElection(Election election, String electionName) throws LeaderValidateException, SQLException {
+	public boolean upDateElection(Election election, String electionName) throws LeaderValidateException, SQLException, DaoException {
 
 		if (election == null) {
 
@@ -94,9 +95,10 @@ public class ElectionService {
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-	public boolean deleteElection(String electionName) throws LeaderValidateException, SQLException {
+	public boolean deleteElection(String electionName) throws LeaderValidateException, SQLException, DaoException {
 		if (electionName == null) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_CANDIDATE_ID);
@@ -118,9 +120,10 @@ public class ElectionService {
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-	public List<Election> electionList() throws LeaderValidateException, SQLException {
+	public List<Election> electionList() throws LeaderValidateException, SQLException, DaoException {
 
 		return this.electionDao.readAllElection();
 
