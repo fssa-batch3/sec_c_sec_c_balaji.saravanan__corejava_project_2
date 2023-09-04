@@ -14,9 +14,9 @@ import com.fssa.politifact.model.Election;
 public class ElectionValidator {
 	
 	/**
-	 * validate election object.
+	 * validate election object. 
 	 * @param election
-	 * @return
+	 * @return 
 	 * @throws LeaderValidateException
 	 */
 
@@ -45,7 +45,7 @@ public class ElectionValidator {
 
 		if (year < 1900) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_STARTING_DATE);
+			throw new LeaderValidateException(LeaderValidateError.INVALID_ELECTION_YEAR);
 		}
 	}
 	
@@ -60,7 +60,7 @@ public class ElectionValidator {
 
 		if (electionType == null) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_ELECTIPTION_TYPE);
+			throw new LeaderValidateException(LeaderValidateError.INVALID_ELECTION_TYPE);
 		}
 		return true;
 	}

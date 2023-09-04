@@ -16,6 +16,14 @@
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
+		
+		<dependency>
+			<groupId>com.fssa</groupId>
+			<artifactId>politifact_web</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -25,7 +33,7 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv -->
-		
+
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -33,6 +41,7 @@
 			<version>5.9.1</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -41,6 +50,7 @@
 		</dependency>
 
 
+		
 	</dependencies>
 	<build>
 		<pluginManagement>

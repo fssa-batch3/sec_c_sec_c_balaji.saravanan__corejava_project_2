@@ -2,8 +2,10 @@ package com.fssa.politifact.validator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Affidavit;
 

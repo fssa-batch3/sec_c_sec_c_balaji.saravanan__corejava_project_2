@@ -1,8 +1,11 @@
 package com.fssa.politifact.service;
 
 import java.sql.SQLException;
+
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import com.fssa.politifact.dao.AffidavitDao;
 import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
@@ -43,7 +46,7 @@ import com.fssa.politifact.validator.AffidavitValidator;
 
 	public Affidavit getAffidavit() { 
 
-		Affidavit affidavit = new Affidavit(1, 1, "https://www.example.com/affidavit1.pdf");
+		Affidavit affidavit = new Affidavit(1, 5, "https://www.example.com/affidavit1.pdf");
 
 		return affidavit;
 	}
@@ -68,10 +71,11 @@ import com.fssa.politifact.validator.AffidavitValidator;
 	 * update affidavit .
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
 	@Test
-	 void tesupDateAffidavit() throws LeaderValidateException, SQLException {
+	 void tesupDateAffidavit() throws LeaderValidateException, SQLException, DaoException {
 
 		Affidavit affidavit = new Affidavit(1, 1, "https://www.example.com/affidavit1.pdf");
 

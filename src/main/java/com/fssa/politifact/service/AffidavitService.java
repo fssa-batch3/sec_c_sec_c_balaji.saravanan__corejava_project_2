@@ -66,10 +66,11 @@ public class AffidavitService {
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
 
-	public boolean upDateAffidavit(Affidavit affidavit, int id) throws LeaderValidateException, SQLException {
+	public boolean upDateAffidavit(Affidavit affidavit, int id) throws LeaderValidateException, SQLException, DaoException {
 
 		if (affidavit == null) {
 
@@ -94,11 +95,12 @@ public class AffidavitService {
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 	
 	
 
-	public boolean deleteAffidavit(int id) throws LeaderValidateException, SQLException {
+	public boolean deleteAffidavit(int id) throws LeaderValidateException, SQLException, DaoException {
 		if (id<0) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_CANDIDATE_ID);

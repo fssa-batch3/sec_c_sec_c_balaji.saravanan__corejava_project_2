@@ -7,7 +7,6 @@ import java.util.List;
 import com.fssa.politifact.dao.LeaderDao;
 import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
-import com.fssa.politifact.model.Constituency;
 import com.fssa.politifact.model.Leader;
 import com.fssa.politifact.validator.LeaderValidateError;
 import com.fssa.politifact.validator.LeaderValidator;
@@ -30,8 +29,10 @@ public class LeaderService {
 		this.leaderDao = leader;
 
 	}  
+	
+	
 	/**
-	 * add leader doing check all object atrributes and then send value in dao.
+	 * add leader doing check all object attributes and then send value in dao.
 	 * @param leader
 	 * @return
 	 * @throws LeaderValidateException
@@ -60,14 +61,14 @@ public class LeaderService {
 	/**
 	 * update leader receive two parameter one is object , and another one is update name
 	 * @param leader
-	 * @param name
+	 * @param id
 	 * @return
 	 * @throws LeaderValidateException
 	 * @throws DaoException
 	 * @throws SQLException
 	 */
 
-	public boolean upDateLeader(Leader leader, String name) throws LeaderValidateException, DaoException, SQLException {
+	public boolean upDateLeader(Leader leader, int id) throws LeaderValidateException, DaoException, SQLException {
 
 		if (leader == null) {
 
@@ -77,7 +78,7 @@ public class LeaderService {
 
 		if (this.leaderValidator.validate(leader)) {
 
-			return this.leaderDao.updateLeader(leader, name);
+			return this.leaderDao.updateLeader(leader, id);
 
 		} else {
 
@@ -96,20 +97,16 @@ public class LeaderService {
 	 * @throws DaoException
 	 */
 
-	public boolean deleteLeader(String leader) throws LeaderValidateException, SQLException, DaoException {
-		if (leader == null) {
+	public boolean deleteLeader(int id) throws LeaderValidateException, SQLException, DaoException {
+		if (id<0) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_NAME);
 		}
 
-		if (leaderValidator.validateName(leader)) {
 
-			return this.leaderDao.deleteLeader(leader);
+			return this.leaderDao.deleteLeader(id);
 
-		} else {
-			return false;
-
-		}
+		
 	}
 	
 	/**

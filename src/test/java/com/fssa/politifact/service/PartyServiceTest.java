@@ -2,6 +2,7 @@ package com.fssa.politifact.service;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +47,7 @@ import com.fssa.politifact.validator.PartyValidator;
 
 	public Party getParty() {
 
-		Party party = new Party("dmk", "https://www.example.com/party.jpg");
+		Party party = new Party("DMK", "https://www.example.com/party.jpg");
 
 		return party;
 	}

@@ -2,8 +2,10 @@ package com.fssa.politifact.service;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import com.fssa.politifact.dao.ElectionDao;
 import com.fssa.politifact.enums.ElectionTypes;
 import com.fssa.politifact.exceptions.DaoException;

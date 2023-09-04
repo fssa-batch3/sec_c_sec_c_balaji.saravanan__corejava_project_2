@@ -2,14 +2,13 @@ package com.fssa.politifact.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.fssa.politifact.exceptions.DaoException;
-import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Affidavit;
 import com.fssa.politifact.util.ConnectionUtil;
+import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.LeaderValidateError;
 
 /*
@@ -19,21 +18,21 @@ import com.fssa.politifact.validator.LeaderValidateError;
  */
 
 public class AffidavitDao {
-	
+
+	Logger logger = new Logger();
+
 	private AffidavitDao() {
-		
+
 	}
-	
+
 	public static AffidavitDao getObj() {
-		
+
 		return new AffidavitDao();
 	}
 
-
 	/*
-	 * insertAffidavit method is only perform the result set work
-	 * its help to method code line decrees
-	 * this help to add election.
+	 * insertAffidavit method is only perform the result set work its help to method
+	 * code line decrees this help to add election.
 	 */
 
 	private static boolean insertAffidavit(Affidavit affidavit, PreparedStatement pst) throws SQLException {
@@ -41,21 +40,12 @@ public class AffidavitDao {
 		pst.setInt(1, affidavit.getElectionId());
 
 		pst.setInt(2, affidavit.getElectionId());
-		
+
 		pst.setString(3, affidavit.getAffidateUrl());
 
 		int rowsAffected = pst.executeUpdate();
 
 		if (rowsAffected > 0) {
-
-			ResultSet generatedKeys = pst.getGeneratedKeys();  // if we need to see what is generate id that time it s use
-
-			if (generatedKeys.next()) {
-
-				int generatedId = generatedKeys.getInt(1);
-
-				affidavit.setId(generatedId);
-			}
 
 			return true;
 
@@ -65,24 +55,21 @@ public class AffidavitDao {
 		}
 	}
 
-
 	/*
-	 * insertUpdate method is only perform the result set work .
-	 * its help to method code line decrees.
-	 * this help to update election
+	 * insertUpdate method is only perform the result set work . its help to method
+	 * code line decrees. this help to update election
 	 */
 
 	private static boolean insertUpdate(Affidavit affidavit, PreparedStatement pst, int id) throws SQLException {
 
-
 		pst.setInt(1, affidavit.getElectionId());
 
-		pst.setInt(2, affidavit.getElectionId());
-		
+		pst.setInt(2, affidavit.getLeaderId());
+
 		pst.setString(3, affidavit.getAffidateUrl());
-		
+
 		pst.setInt(4, id);
-		
+
 		int row = pst.executeUpdate();
 
 		return row > 0;
@@ -90,12 +77,13 @@ public class AffidavitDao {
 	}
 
 	/*
-	 * addAffidavit is performed connection and prepare statement and return this complete or not through boolean
-	 * in case any exception happen this code throw the user defined exception
+	 * addAffidavit is performed connection and prepare statement and return this
+	 * complete or not through boolean in case any exception happen this code throw
+	 * the user defined exception
 	 */
 
 	public boolean addAffidavit(Affidavit affidavit) throws SQLException, DaoException {
-		
+
 		final String query = "INSERT INTO Affidavit (electionId, LeaderId, affidateUrl) VALUES (?, ?, ?)";
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
@@ -104,50 +92,54 @@ public class AffidavitDao {
 
 				return insertAffidavit(affidavit, pst);
 
-			} catch (SQLException sqe) {
-
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
+		} catch (SQLException sqe) {
+
+			System.out.println(sqe.getMessage());
+			
+			return false;
+
 		}
 	}
 
 	/*
-	 * updateAffidavit is performed connection and prepare statement and return this complete or not through boolean.
-	 * and I will send what id I want to delete that id given this method delete.
-	 * in case any exception happen this code throw the user defined exception
+	 * updateAffidavit is performed connection and prepare statement and return this
+	 * complete or not through boolean. and I will send what id I want to delete
+	 * that id given this method delete. in case any exception happen this code
+	 * throw the user defined exception
 	 */
 
-	public boolean updateAffidavit(Affidavit affidavit, int id) throws SQLException, LeaderValidateException {
+	public boolean updateAffidavit(Affidavit affidavit, int id) throws DaoException {
 
 		final String query = "UPDATE Affidavit SET electionId=?, LeaderId=?, affidateUrl=? WHERE id=?";
 
-		try (Connection connection = ConnectionUtil.getConnection();
+		try (Connection connection = ConnectionUtil.getConnection()) {
 
-			 PreparedStatement pst = connection.prepareStatement(query)) {
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
-			return insertUpdate(affidavit, pst, id);
+				return insertUpdate(affidavit, pst, id);
+
+			}
 
 		} catch (SQLException sqe) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 		}
 	}
 
 	/*
-	 * add deleteElection is performed connection and prepare statement and return this complete or not through boolean.
-	 * this deletes the election table where id.
-	 * in case any exception happen this code throw the user defined exception
+	 * add deleteElection is performed connection and prepare statement and return
+	 * this complete or not through boolean. this deletes the election table where
+	 * id. in case any exception happen this code throw the user defined exception
 	 */
 
-	public boolean deleteAffidavit(int id) throws SQLException, LeaderValidateException {
+	public boolean deleteAffidavit(int id) throws DaoException, SQLException {
 
 		final String query = "DELETE FROM Affidavit WHERE id=?";
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
-
-				
 
 				pst.setInt(1, id);
 
@@ -157,7 +149,7 @@ public class AffidavitDao {
 
 			} catch (SQLException sqe) {
 
-				throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}

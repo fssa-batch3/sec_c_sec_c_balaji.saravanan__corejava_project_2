@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="95832b87-033a-461d-b8da-5bccc1bb1ff7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/dao/AffidavitDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/dao/AffidavitDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/dao/LeaderDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/dao/LeaderDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/dao/PartyDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/dao/PartyDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/model/Leader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/model/Leader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/model/Party.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/model/Party.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/service/AffidavitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/service/AffidavitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/service/LeaderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/service/LeaderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/util/ConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/util/ConnectionUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/validator/ElectionValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/validator/ElectionValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/validator/LeaderValidateError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/validator/LeaderValidateError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/validator/LeaderValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fssa/politifact/validator/LeaderValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/AffidavitServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/AffidavitServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/ConstituencyServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/ConstituencyServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/ElectionServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/ElectionServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/LeaderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/LeaderServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/PartyServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/service/PartyServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/validator/AffidavitValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/validator/AffidavitValidatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/validator/LeaderValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fssa/politifact/validator/LeaderValidatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/com.fssa.politifact/politifact/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/maven/com.fssa.politifact/politifact/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/com.fssa.politifact/politifact/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/maven/com.fssa.politifact/politifact/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fssa/politifact/dao/LeaderDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fssa/politifact/dao/LeaderDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fssa/politifact/dao/PartyDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fssa/politifact/dao/PartyDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fssa/politifact/service/LeaderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fssa/politifact/service/LeaderService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fssa/politifact/util/ConnectionUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fssa/politifact/util/ConnectionUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fssa/politifact/validator/ConstituencyValidator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fssa/politifact/validator/ConstituencyValidator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fssa/politifact/validator/ElectionValidator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fssa/politifact/validator/ElectionValidator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fssa/politifact/validator/LeaderValidateError.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fssa/politifact/validator/LeaderValidateError.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fssa/politifact/validator/LeaderValidator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fssa/politifact/validator/LeaderValidator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/service/ConstituencyServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/service/ConstituencyServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/service/ElectionServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/service/ElectionServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/service/LeaderServicetest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/service/LeaderServicetest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/service/PartyServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/service/PartyServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/validator/AffidavitValidatorTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/validator/AffidavitValidatorTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/validator/LeaderValidatorTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fssa/politifact/validator/LeaderValidatorTest.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2Uwdt8zFIw3jUBjbq5uD6cepckq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95832b87-033a-461d-b8da-5bccc1bb1ff7" name="Changes" comment="" />
+      <created>1693854797437</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1693854797437</updated>
+    </task>
+    <servers />
+  </component>
+</project>

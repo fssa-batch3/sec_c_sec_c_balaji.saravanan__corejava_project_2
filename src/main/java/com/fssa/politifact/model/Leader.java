@@ -35,7 +35,7 @@ public class Leader {
 
 	private String occupation;
 
-	private String counstuencyName;
+	private String counstuencyName;    
 
 	private String descriptionOfBirth;
 

@@ -1,10 +1,13 @@
 package com.fssa.politifact.service;
 
 import static org.junit.Assert.assertThrows;
+
 import java.sql.SQLException;
 import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import com.fssa.politifact.dao.LeaderDao;
 import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
@@ -28,12 +31,12 @@ class LeaderServiceTest {
 	 * @throws SQLException
 	 * @throws LeaderValidateException
 	 * @throws DaoException 
-	 */
+	 */ 
 
 	@Test
 	void testAddLeader() throws SQLException, LeaderValidateException, DaoException {
 
-		Leader leader = getLeaders();
+		Leader leader = getLeader();
 
 		LeaderService leaderService = getLeaderService();
 
@@ -46,13 +49,13 @@ class LeaderServiceTest {
 	 * @return
 	 */
 
-	public Leader getLeaders() {
+	public Leader getLeader() {
 
 		Leader leader = new Leader();
 
 		leader.setName("balaji");
 		leader.setPosition("CHIEF_MINISTER");
-		leader.setPartyName("Independent candidate");
+		leader.setPartyName("dmk");
 		leader.setExperience(2.2);
 		leader.setOccupation("politicin");
 		leader.setCounstuencyName("villupuram");
@@ -75,11 +78,12 @@ class LeaderServiceTest {
 	public LeaderService getLeaderService() {
 
 		LeaderValidator leaderValidator = new LeaderValidator();
+		
 
 		LeaderDao leaderDao = LeaderDao.getObj();
 
 		LeaderService leaderService = new LeaderService(leaderValidator, leaderDao);
-
+		
 		return leaderService;
 	}
 	
@@ -116,7 +120,7 @@ class LeaderServiceTest {
 		leader.setPosition("CHIEF_MINISTER");
 		leader.setPartyName("Independent candidate");
 		leader.setExperience(2.2);
-		leader.setOccupation("politicin");
+		leader.setOccupation("politicin"); 
 		leader.setCounstuencyName("villupuram");
 		leader.setDescriptionOfBirth("Description of Birth");
 		leader.setDescriptionOfEducation("Description of education");
@@ -128,7 +132,39 @@ class LeaderServiceTest {
 
 		LeaderService leaderService = getLeaderService();
 
-		Assertions.assertTrue(leaderService.upDateLeader(leader, "bhack"));
+		Assertions.assertTrue(leaderService.upDateLeader(leader, 3));
+
+	}
+	/**
+	 * this is invalid update check method
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
+	
+	@Test
+	void testInvalidUpdateLeader() throws SQLException, DaoException {
+
+		Leader leader = new Leader();
+
+		leader.setName("bhack");
+		leader.setPosition("CHIEF_MINISTER");
+		leader.setPartyName("Independent candidate");
+		leader.setExperience(2.2);
+		leader.setOccupation("politicin"); 
+		leader.setCounstuencyName("villupuram");
+		leader.setDescriptionOfBirth("Description of Birth");
+		leader.setDescriptionOfEducation("Description of education");
+		leader.setDescriptionOfPastWorkExperience("Description of Past work experience");
+		leader.setDescritionOfpolitics("Description of Politics");
+		leader.setDescriptionOffamily("Description of Family");
+		leader.setDescriptionOfIncome("Description of income");
+		leader.setImageUrl("https://www.example.com/image.jpg");
+
+		LeaderService leaderService = getLeaderService();
+
+		DaoException exception = assertThrows(DaoException.class,()->leaderService.upDateLeader(leader, 1));
+		
+		Assertions.assertEquals(LeaderValidateError.INVALID_NAME,exception.getMessage());
 
 	}
 	
@@ -138,12 +174,12 @@ class LeaderServiceTest {
 	 */
 
 	@Test
-	void testUpdateLeaderInvalid() throws LeaderValidateException {
+	void testUpdateLeaderInvalid() throws LeaderValidateException { 
 
 		LeaderService leaderService = getLeaderService();
 
 		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> leaderService.upDateLeader(null, ""));
+				() -> leaderService.upDateLeader(null, 0));
 
 		Assertions.assertEquals(LeaderValidateError.INVALID_LEADER_NULL, exception.getMessage());
 
@@ -200,7 +236,7 @@ class LeaderServiceTest {
 	@Test
 	void testAllLeaderWithJoin() throws LeaderValidateException, SQLException, DaoException {
 
-		LeaderService leaderService = getLeaderService();
+		LeaderService leaderService = getLeaderService(); 
 
 		List<String> leadersList = leaderService.readAllLeader();
 

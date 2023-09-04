@@ -24,7 +24,7 @@ public class LeaderValidator {
 		if (leader == null) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_LEADER_NULL);
-		}
+		} 
 
 		validateName(leader.getName());
 		validatePosition(leader.getPosition());
@@ -83,7 +83,7 @@ public class LeaderValidator {
 
 		if (partyName == null || partyName.isEmpty()) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_PARTY_ID);
+			throw new LeaderValidateException(LeaderValidateError.INVALID_PARTYNAME);
 		}
 	}
 	
@@ -124,7 +124,7 @@ public class LeaderValidator {
 
 		if (constituencyName == null || constituencyName.isEmpty()) {
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_NUMBER);
+			throw new LeaderValidateException(LeaderValidateError.INVALID_CONSTITUENCY_NAME);
 		}
 	}
 	

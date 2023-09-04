@@ -1,9 +1,11 @@
 package com.fssa.politifact.service;
 
-import java.sql.SQLException; 
+import java.sql.SQLException;
 import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import com.fssa.politifact.dao.ConstituencyDao;
 import com.fssa.politifact.enums.ElectionTypes;
 import com.fssa.politifact.exceptions.DaoException;
@@ -51,7 +53,7 @@ class ConstituencyServiceTest {
 
 	public Constituency getConstituency() { 
 
-		Constituency constituency = new Constituency("villupuram", "villupuram", 1, ElectionTypes.GENERAL_ELECTION);
+		Constituency constituency = new Constituency("perungudi", "chennai", 1, ElectionTypes.ASSEMBLY_ELECTION);
 
 		return constituency;
 	}
@@ -82,7 +84,7 @@ class ConstituencyServiceTest {
 	@Test
 	 void tesupDateConstituency() throws LeaderValidateException, SQLException, DaoException {
 
-		Constituency constituency = new Constituency("tambaram", "villupuram", 1, ElectionTypes.GENERAL_ELECTION);
+		Constituency constituency = new Constituency("perungudi", "chennai", 1, ElectionTypes.ASSEMBLY_ELECTION);
 
 		ConstituencyService constituencyService = getConstituencyService();
 

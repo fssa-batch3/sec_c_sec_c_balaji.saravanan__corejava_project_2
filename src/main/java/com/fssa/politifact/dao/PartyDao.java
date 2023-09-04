@@ -173,8 +173,7 @@ public class PartyDao {
 
 					Party party = new Party("dmk", "image//url");
 
-					party.setPartyName(rs.getString(2));
-					party.setPartyImageUrl(rs.getString(3));
+					party.setPartyName(rs.getString("partyName"));
 
 					partyList.add(party);
 				}
