@@ -13,12 +13,12 @@ public class Affidavit {
 	private int id;
 	private int electionId;
 	private int leaderId;
-	private String affidateUrl;
+	private String affidateUrl; 
 	
 	
 	public Affidavit(int electionId, int leaderId, String affidateUrl) {
 		
-		this.electionId = electionId;
+		this.electionId = electionId; 
 		this.leaderId = leaderId;
 		this.affidateUrl = affidateUrl;
 	}

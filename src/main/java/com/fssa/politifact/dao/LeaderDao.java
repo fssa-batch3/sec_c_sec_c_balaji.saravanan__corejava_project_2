@@ -20,8 +20,8 @@ import com.fssa.politifact.validator.LeaderValidateError;
 // this page do CRUD
 
 public class LeaderDao {
-	
-	static Logger logger= new Logger();
+
+	static Logger logger = new Logger();
 
 	private LeaderDao() {
 
@@ -77,7 +77,7 @@ public class LeaderDao {
 	 */
 
 	public static int findPartyId(String partyName) throws DaoException {
-		
+
 		final String query = "SELECT partyId FROM Party WHERE partyName = ?";
 
 		int partyId = 0;
@@ -92,10 +92,9 @@ public class LeaderDao {
 
 					if (resultSet.next()) {
 
-						partyId = resultSet.getInt("partyId");
+						partyId = resultSet.getInt(1);
 
 					} else {
-						
 
 						throw new DaoException(LeaderValidateError.INVALID_PARTYNAME);
 					}
@@ -135,9 +134,9 @@ public class LeaderDao {
 					if (resultSet.next()) {
 
 						constituencyName = resultSet.getString("constituencyName");
-						
+
 					} else {
-						
+
 						throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
 					}
 				}
@@ -157,7 +156,7 @@ public class LeaderDao {
 	 * 
 	 */
 
-	private static String findPartyName(int partyId) throws DaoException {
+	public static String findPartyName(int partyId) throws DaoException {
 
 		final String query = "SELECT partyName FROM Party WHERE partyId = ?";
 
@@ -174,9 +173,9 @@ public class LeaderDao {
 
 					partyName = resultSet.getString("partyName");
 
-				}else {
-					
-				throw new DaoException(LeaderValidateError.INVALID_PARTY_ID);
+				} else {
+
+					throw new DaoException(LeaderValidateError.INVALID_PARTY_ID);
 				}
 			}
 
@@ -200,7 +199,7 @@ public class LeaderDao {
 	 */
 
 	private static boolean insertLeader(Leader leader, PreparedStatement pst)
-			throws SQLException, LeaderValidateException, DaoException {
+			throws SQLException, DaoException {
 
 		int partyId = findPartyId(leader.getPartyName());
 
@@ -222,26 +221,9 @@ public class LeaderDao {
 
 		int rowsAffected = pst.executeUpdate();
 
-		if (rowsAffected > 0) {
-			
-			logger.info("success");
+		return rowsAffected > 0;
 
-			ResultSet generatedKeys = pst.getGeneratedKeys();
-
-			if (generatedKeys.next()) {
-
-				int generatedId = generatedKeys.getInt(1);
-
-				leader.setId(generatedId);
-
-			}
-
-			return true;
-
-		} else {
-
-			return false;
-		}
+		
 	}
 
 	/*
@@ -250,7 +232,7 @@ public class LeaderDao {
 	 */
 
 	private static boolean insertUpdate(Leader leader, PreparedStatement pst, int id)
-			throws SQLException, LeaderValidateException, DaoException {
+			throws SQLException, DaoException {
 
 		int constituencyId = findConstituencyId(leader.getCounstuencyName());
 
@@ -258,10 +240,10 @@ public class LeaderDao {
 
 		pst.setString(1, leader.getName());
 		pst.setString(2, leader.getPosition().toString());
-		pst.setInt(3, constituencyId);
+		pst.setInt(3, partyId); 
 		pst.setDouble(4, leader.getExperience());
 		pst.setString(5, leader.getOccupation());
-		pst.setInt(6, partyId);
+		pst.setInt(6, constituencyId);
 		pst.setString(7, leader.getDescriptionOfBirth());
 		pst.setString(8, leader.getDescriptionOfEducation());
 		pst.setString(9, leader.getDescriptionOfPastWorkExperience());
@@ -281,7 +263,7 @@ public class LeaderDao {
 	 * Decrees this help to read the all value in the table.
 	 */
 
-	private static Leader read(ResultSet rs) throws SQLException, LeaderValidateException, DaoException {
+	private static Leader read(ResultSet rs) throws SQLException, DaoException {
 
 		Leader leader = new Leader();
 
@@ -319,14 +301,12 @@ public class LeaderDao {
 
 		try (Connection connection = ConnectionUtil.getConnection();
 
-				PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+				PreparedStatement pst = connection.prepareStatement(query)) {
 
-			
-			
 			return insertLeader(leader, pst);
 
 		} catch (SQLException sqe) {
-			
+
 			logger.info(sqe.getMessage());
 
 			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
@@ -353,6 +333,7 @@ public class LeaderDao {
 			return insertUpdate(leader, pst, id);
 
 		} catch (SQLException sqe) {
+			System.err.println(sqe.getMessage());
 
 			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 
@@ -366,7 +347,7 @@ public class LeaderDao {
 	 * any occur happen in this code this throw user define exception.
 	 */
 
-	public boolean deleteLeader(int id) throws DaoException, LeaderValidateException, SQLException {
+	public boolean deleteLeader(int id) throws DaoException, SQLException {
 
 		final String query = "DELETE FROM Leader WHERE id=?";
 
@@ -381,6 +362,8 @@ public class LeaderDao {
 				return rowsDeleted > 0;
 
 			} catch (SQLException sqe) {
+
+				System.err.println(sqe.getMessage());
 
 				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
@@ -398,25 +381,26 @@ public class LeaderDao {
 
 		final String query = "SELECT * FROM Leader";
 
-		try (Connection connection = ConnectionUtil.getConnection();
+		try (Connection connection = ConnectionUtil.getConnection()) {
 
-				Statement stmt = connection.createStatement()) {
+			try (Statement stmt = connection.createStatement()) {
 
-			try (ResultSet rs = stmt.executeQuery(query)) {
+				try (ResultSet rs = stmt.executeQuery(query)) {
 
-				while (rs.next()) {
+					while (rs.next()) {
 
-					Leader leader = read(rs);
+						Leader leader = read(rs);
 
-					leadersList.add(leader);
+						leadersList.add(leader);
+					}
+
+					return leadersList;
+
+				} catch (SQLException sqe) {
+
+					throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+
 				}
-
-				return leadersList;
-
-			} catch (SQLException sqe) {
-
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
-
 			}
 		}
 	}
@@ -428,6 +412,7 @@ public class LeaderDao {
 	 */
 
 	public List<String> readAllJoin() throws SQLException, DaoException {
+		
 		ArrayList<String> leadersAndConstituencies = new ArrayList<>();
 
 		final String query = "SELECT Leader.name, Leader.position, Leader.experience,"
@@ -449,7 +434,7 @@ public class LeaderDao {
 					int constituencyNumber = resultSet.getInt("constituencyNumber");
 					String partyName = resultSet.getString("partyName");
 
-					Leader leader = new Leader();
+					Leader leader = new Leader(); 
 
 					leader.setName(name);
 					leader.setPosition(position);
@@ -458,11 +443,11 @@ public class LeaderDao {
 					leader.setCounstuencyName(constituencyName);
 					leader.setPartyName(partyName);
 
-					Constituency constituency = new Constituency("", "", 1, null);
+					Constituency constituency = new Constituency("", "", 1, 0);
 
 					constituency.setConstituencyName(constituencyName);
 					constituency.setConstituencyNumber(constituencyNumber);
-					
+
 					Party party = new Party("", "");
 
 					String leaderAndConstituency = leader.toString() + " Constituency: " + constituency.toString();
@@ -477,6 +462,36 @@ public class LeaderDao {
 				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
+	}
+
+	public List<Leader> readSpecificLeader(int id) throws SQLException, DaoException, LeaderValidateException {
+
+		ArrayList<Leader> leadersList = new ArrayList<>();
+
+		final String query = "SELECT * FROM Leader WHERE id=?";
+
+		try (Connection connection = ConnectionUtil.getConnection();
+				
+				PreparedStatement pst = connection.prepareStatement(query)) {
+
+			pst.setInt(1, id); 
+
+			try (ResultSet rs = pst.executeQuery()) {
+
+				if (rs.next()) {
+					
+					Leader leader = read(rs);
+					
+					leadersList.add(leader);
+				}
+
+			} catch (SQLException sqe) {
+				System.err.println(sqe.getMessage());
+				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			}
+		}
+
+		return leadersList;
 	}
 
 }

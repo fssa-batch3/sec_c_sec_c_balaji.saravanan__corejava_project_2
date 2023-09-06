@@ -65,7 +65,7 @@ public class ElectionDao {
 	 * this help to update election
 	 */
 	
-	private static boolean insertUpdate(Election election, PreparedStatement pst, String electionName) throws SQLException, LeaderValidateException, DaoException {
+	private static boolean insertUpdate(Election election, PreparedStatement pst, String electionName) throws SQLException, DaoException {
 
 		int electionTypeId= ConstituencyDao.findElectionTypeId(electionName);
 		
@@ -130,7 +130,7 @@ public class ElectionDao {
 	 * in case any exception hapend this code thorw the user defind exception
 	 */
 
-	public boolean deleteElection(String electionName) throws SQLException, LeaderValidateException, DaoException {
+	public boolean deleteElection(String electionName) throws SQLException, DaoException {
 
 		final String query = "DELETE FROM election WHERE id=?";
 
@@ -159,7 +159,7 @@ public class ElectionDao {
 	 * this select all coloum and give array list the send to service the service receive and then print
 	 */
 
-	public List<Election> readAllElection() throws SQLException, LeaderValidateException, DaoException {
+	public List<Election> readAllElection() throws SQLException, DaoException {
 
 		ArrayList<Election> electionList = new ArrayList<>();
 

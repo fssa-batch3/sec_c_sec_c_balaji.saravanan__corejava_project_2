@@ -2,11 +2,16 @@ package com.fssa.politifact.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fssa.politifact.exceptions.DaoException;
+import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Affidavit;
+import com.fssa.politifact.model.Leader;
 import com.fssa.politifact.util.ConnectionUtil;
 import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.LeaderValidateError;
@@ -39,7 +44,7 @@ public class AffidavitDao {
 
 		pst.setInt(1, affidavit.getElectionId());
 
-		pst.setInt(2, affidavit.getElectionId());
+		pst.setInt(2, affidavit.getLeaderId());
 
 		pst.setString(3, affidavit.getAffidateUrl());
 
@@ -92,13 +97,13 @@ public class AffidavitDao {
 
 				return insertAffidavit(affidavit, pst);
 
+			} catch (SQLException sqe) {
+
+				sqe.printStackTrace();
+
+				return false;
+
 			}
-		} catch (SQLException sqe) {
-
-			System.out.println(sqe.getMessage());
-			
-			return false;
-
 		}
 	}
 
@@ -152,6 +157,150 @@ public class AffidavitDao {
 				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
+	}
+
+	public List<Affidavit> readAllAffidavit() throws SQLException, LeaderValidateException, DaoException {
+
+		ArrayList<Affidavit> affidavitList = new ArrayList<>();
+
+		final String query = "SELECT * FROM Affidavit ";
+
+		try (Connection connection = ConnectionUtil.getConnection();
+
+				Statement stmt = connection.createStatement()) {
+
+			try (ResultSet rs = stmt.executeQuery(query)) {
+				while (rs.next()) {
+
+					Affidavit affidavit = new Affidavit(0, 0, "");
+
+					affidavit.setElectionId(rs.getInt(2));
+					affidavit.setLeaderId(rs.getInt(2));
+					affidavit.setAffidateUrl(rs.getString(4));
+
+					affidavitList.add(affidavit);
+				}
+
+				return affidavitList;
+
+			} catch (SQLException sqe) {
+
+				System.err.println(sqe);
+
+				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			}
+		}
+	}
+
+	public List<Affidavit> readAllLeaderWithAffidavit(int id) throws DaoException, SQLException {
+		
+		List<Affidavit> leaderAffidavitList = new ArrayList<>();
+
+		String sql = "SELECT L.name, L.id, L.position, L.experience, L.occupation, L.descriptionOfBirth, "
+				+ "L.descriptionOfEducation, L.descriptionOfPastWorkExperience, L.descritionOfpolitics, "
+				+ "L.descriptionOfFamily, L.descriptionOfIncome, L.imageUrl, A.affidateUrl, L.counstuencyId, L.partyId "
+				+ "FROM Leader L " + "INNER JOIN Affidavit A ON L.id = A.leaderId " + "WHERE L.id = ?";
+
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+			preparedStatement.setInt(1, id);    
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				
+				if (rs.next()) {
+					
+					Leader leader = new Leader();
+					String constituencyName = LeaderDao.findConstituencyName(rs.getInt("counstuencyId"));
+					String partyName = LeaderDao.findPartyName(rs.getInt("partyId"));
+
+					leader.setId(rs.getInt("id"));
+					leader.setName(rs.getString("name"));
+					leader.setPosition(rs.getString("position"));
+					leader.setPartyName(partyName);
+					leader.setExperience(rs.getDouble("experience"));
+					leader.setOccupation(rs.getString("occupation"));
+					leader.setCounstuencyName(constituencyName);
+					leader.setDescriptionOfBirth(rs.getString("descriptionOfBirth"));
+					leader.setDescriptionOfEducation(rs.getString("descriptionOfEducation"));
+					leader.setDescriptionOfPastWorkExperience(rs.getString("descriptionOfPastWorkExperience"));
+					leader.setDescritionOfpolitics(rs.getString("descritionOfpolitics"));
+					leader.setDescriptionOffamily(rs.getString("descriptionOfFamily"));
+					leader.setDescriptionOfIncome(rs.getString("descriptionOfIncome"));
+					leader.setImageUrl(rs.getString("imageUrl"));
+
+					String affidavitUrl = rs.getString("affidateUrl");
+					Affidavit affidavit = new Affidavit(0, 0, affidavitUrl);
+
+					
+					leaderAffidavitList.add(affidavit);
+
+				}
+				
+				return leaderAffidavitList;
+				
+			} catch (SQLException e) {
+				logger.info(e.getMessage());
+				throw new DaoException(e.getMessage());
+			}
+
+		}
+
+	}
+	
+	
+public List<Leader> readAllLeaderPartyId(int id) throws DaoException, SQLException {
+		
+		List<Leader> leaderAffidavitList = new ArrayList<>();
+
+		String sql = "SELECT L.name, L.id, L.position, L.experience, L.occupation, L.descriptionOfBirth, "
+				+ "L.descriptionOfEducation, L.descriptionOfPastWorkExperience, L.descritionOfpolitics, "
+				+ "L.descriptionOfFamily, L.descriptionOfIncome, L.imageUrl, A.affidateUrl, L.counstuencyId, L.partyId "
+				+ "FROM Leader L " + "INNER JOIN Affidavit A ON L.id = A.leaderId " + "WHERE L.partyId = ?";
+
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+			preparedStatement.setInt(1, id);    
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				
+				while (rs.next()) {
+					
+					Leader leader = new Leader();
+					String constituencyName = LeaderDao.findConstituencyName(rs.getInt("counstuencyId"));
+					String partyName = LeaderDao.findPartyName(rs.getInt("partyId"));
+
+					leader.setId(rs.getInt("id"));
+					leader.setName(rs.getString("name"));
+					leader.setPosition(rs.getString("position"));
+					leader.setPartyName(partyName);
+					leader.setExperience(rs.getDouble("experience"));
+					leader.setOccupation(rs.getString("occupation"));
+					leader.setCounstuencyName(constituencyName);
+					leader.setDescriptionOfBirth(rs.getString("descriptionOfBirth"));
+					leader.setDescriptionOfEducation(rs.getString("descriptionOfEducation"));
+					leader.setDescriptionOfPastWorkExperience(rs.getString("descriptionOfPastWorkExperience"));
+					leader.setDescritionOfpolitics(rs.getString("descritionOfpolitics"));
+					leader.setDescriptionOffamily(rs.getString("descriptionOfFamily"));
+					leader.setDescriptionOfIncome(rs.getString("descriptionOfIncome"));
+					leader.setImageUrl(rs.getString("imageUrl"));
+
+					String affidavitUrl = rs.getString("affidateUrl");
+					Affidavit affidavit = new Affidavit(0, 0, affidavitUrl);
+
+					
+					leaderAffidavitList.add(leader);
+
+				}
+				
+				return leaderAffidavitList;
+				
+			} catch (SQLException e) {
+				logger.info(e.getMessage());
+				throw new DaoException(e.getMessage());
+			}
+
+		}
+
 	}
 
 }

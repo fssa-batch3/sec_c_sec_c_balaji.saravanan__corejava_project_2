@@ -124,7 +124,7 @@ public class PartyService {
 	 * @throws DaoException 
 	 */
 
-	public List<Party> partyList() throws SQLException, LeaderValidateException, DaoException {
+	public List<Party> partyList() throws SQLException, DaoException {
 
 		return this.partyDao.readAllParties();
 

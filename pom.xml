@@ -16,12 +16,7 @@
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
-		
-		<dependency>
-			<groupId>com.fssa</groupId>
-			<artifactId>politifact_web</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+	
 		
 		
 		<!-- https://mvnrepository.com/artifact/junit/junit -->

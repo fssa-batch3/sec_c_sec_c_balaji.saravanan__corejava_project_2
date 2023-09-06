@@ -39,7 +39,7 @@ public class ConstituencyService {
 	 * this add constituency check the object help to the validator.
 	 * and then send the object the dao layer.
 	 */
-	
+	 
 	public boolean addConstituency(Constituency constituency) throws LeaderValidateException, SQLException, DaoException {
 
 		if (constituency == null) {
@@ -64,7 +64,7 @@ public class ConstituencyService {
 	 * and then send the object the dao layer.
 	 */
 
-	public boolean upDateConstituency(Constituency constituency ,String constituencyName) throws LeaderValidateException, SQLException, DaoException {
+	public boolean upDateConstituency(Constituency constituency ,int id) throws LeaderValidateException, SQLException, DaoException {
 
 		if (constituency == null) {
 
@@ -74,7 +74,7 @@ public class ConstituencyService {
 
 		if (this.constituencyValidator.validate(constituency)) {
 
-			return this.constituencyDao.updateConstituency(constituency, constituencyName);
+			return this.constituencyDao.updateConstituency(constituency, id);
 			
 		} else {
 

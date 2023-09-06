@@ -1,6 +1,5 @@
 package com.fssa.politifact.validator;
 
-import static org.junit.Assert.assertThrows;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import com.fssa.politifact.enums.ElectionTypes;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Constituency;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * 
@@ -25,7 +26,7 @@ class ConstituencyValidatorTest {
 	 * for each to execute all method rum.
 	 */
 
-	@BeforeEach
+	@BeforeEach 
 	public void setUp() {
 
 		constituencyValidator = new ConstituencyValidator();
@@ -38,8 +39,7 @@ class ConstituencyValidatorTest {
 
 	@Test
 	void testValidConstituency() throws LeaderValidateException {
-		Constituency constituency = new Constituency("villupuram", "villupuram", 105,
-				ElectionTypes.valueOf("GENERAL_ELECTION"));
+		Constituency constituency = new Constituency("villupuram", "villupuram", 105, 3);
 		Assertions.assertTrue(constituencyValidator.validate(constituency));
 	}
 	
@@ -75,8 +75,7 @@ class ConstituencyValidatorTest {
 
 	@Test
 	void testInvalidConstituencyNumber() {
-		Constituency constituency = new Constituency("villupuram", "villupuram", 0,
-				ElectionTypes.valueOf("GENERAL_ELECTION"));
+		Constituency constituency = new Constituency("villupuram", "villupuram", 0,3);
 
 		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
 				() -> constituencyValidator.validate(constituency));
@@ -86,13 +85,4 @@ class ConstituencyValidatorTest {
 	/**
 	 * test election type id.
 	 */
-
-	@Test
-	void testInvlaidElectionId() {
-		Constituency constituency = new Constituency("villupuram", "villupuram", 1, null);
-
-		LeaderValidateException exception = assertThrows(LeaderValidateException.class,
-				() -> constituencyValidator.validate(constituency));
-		Assertions.assertEquals(LeaderValidateError.INVALID_ELECTION_ID, exception.getMessage());
-	}
 }

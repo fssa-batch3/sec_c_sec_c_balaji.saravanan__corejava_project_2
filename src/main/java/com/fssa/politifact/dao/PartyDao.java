@@ -55,7 +55,7 @@ public class PartyDao {
 
 			return true;
 
-		} else { 
+		} else {
 
 			return false;
 		}
@@ -67,7 +67,8 @@ public class PartyDao {
 	 * true otherwise rturn false.
 	 */
 
-	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName) throws SQLException, LeaderValidateException, DaoException {
+	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName)
+			throws SQLException, DaoException {
 
 		int partyId = LeaderDao.findPartyId(partyName);
 
@@ -79,14 +80,14 @@ public class PartyDao {
 
 		return row > 0;
 
-	} 
+	}
 
 	/*
 	 * the add party method is add the values in the data base. this not doing in
 	 * the statement this send the value insertparty doing the preparestatment.
 	 */
 
-	public boolean addParty(Party party) throws SQLException, LeaderValidateException, DaoException {
+	public boolean addParty(Party party) throws SQLException, DaoException {
 
 		final String query = "INSERT INTO Party (PartyName, partyImageUrl) VALUES (?, ?)";
 
@@ -108,7 +109,8 @@ public class PartyDao {
 	 * in the statement this send the value insertparty doing the preparestatment.
 	 */
 
-	public boolean updateParty(Party party, String partyName) throws SQLException, DaoException, LeaderValidateException {
+	public boolean updateParty(Party party, String partyName)
+			throws SQLException, DaoException, LeaderValidateException {
 
 		final String query = "UPDATE Party SET PartyName=?, partyImageUrl=? WHERE partyId=?";
 
@@ -164,25 +166,30 @@ public class PartyDao {
 
 		final String query = "SELECT * FROM Party";
 
-		try (Connection connection = ConnectionUtil.getConnection();
+		try (Connection connection = ConnectionUtil.getConnection()) {
 
-				Statement stmt = connection.createStatement()) {
+			try (Statement stmt = connection.createStatement()) {
 
-			try (ResultSet rs = stmt.executeQuery(query)) {
-				while (rs.next()) {
+				try (ResultSet rs = stmt.executeQuery(query)) {
+					while (rs.next()) {
 
-					Party party = new Party("dmk", "image//url");
+						Party party = new Party("dmk", "image//url");
 
-					party.setPartyName(rs.getString("partyName"));
+						party.setPartyId(rs.getInt(1));
 
-					partyList.add(party);
+						party.setPartyName(rs.getString("partyName"));
+
+						party.setPartyImageUrl(rs.getString(3));
+
+						partyList.add(party);
+					}
+
+					return partyList;
+
+				} catch (SQLException sqe) {
+
+					throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 				}
-
-				return partyList;
-
-			} catch (SQLException sqe) {
-
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
 		}
 	}

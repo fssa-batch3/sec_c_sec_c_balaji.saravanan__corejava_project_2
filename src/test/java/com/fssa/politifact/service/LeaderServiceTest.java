@@ -1,7 +1,5 @@
 package com.fssa.politifact.service;
 
-import static org.junit.Assert.assertThrows;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,6 +14,8 @@ import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.LeaderValidateError;
 import com.fssa.politifact.validator.LeaderValidator;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * 
  * @author BalajiSaravanan
@@ -29,7 +29,7 @@ class LeaderServiceTest {
 	/**
 	 * add leader give the value in service layer.
 	 * @throws SQLException
-	 * @throws LeaderValidateException
+	 * @throws LeaderValidateException 
 	 * @throws DaoException 
 	 */ 
 
@@ -58,7 +58,7 @@ class LeaderServiceTest {
 		leader.setPartyName("dmk");
 		leader.setExperience(2.2);
 		leader.setOccupation("politicin");
-		leader.setCounstuencyName("villupuram");
+		leader.setCounstuencyName("perungudi");
 		leader.setDescriptionOfBirth("Description of Birth");
 		leader.setDescriptionOfEducation("Description of education");
 		leader.setDescriptionOfPastWorkExperience("Description of Past work experience");
@@ -103,25 +103,25 @@ class LeaderServiceTest {
 		Assertions.assertEquals(LeaderValidateError.INVALID_LEADER_NULL, exception.getMessage());
 
 	}
-	
+	 
 	/**
 	 * update leader.
 	 * @throws LeaderValidateException
 	 * @throws SQLException
 	 * @throws DaoException
 	 */
-
+ 
 	@Test
 	void testUpdateLeader() throws LeaderValidateException, SQLException, DaoException {
 
 		Leader leader = new Leader();
 
-		leader.setName("bhack");
+		leader.setName("Uthayanithi");
 		leader.setPosition("CHIEF_MINISTER");
-		leader.setPartyName("Independent candidate");
+		leader.setPartyName("DMK");
 		leader.setExperience(2.2);
 		leader.setOccupation("politicin"); 
-		leader.setCounstuencyName("villupuram");
+		leader.setCounstuencyName("perungudi");
 		leader.setDescriptionOfBirth("Description of Birth");
 		leader.setDescriptionOfEducation("Description of education");
 		leader.setDescriptionOfPastWorkExperience("Description of Past work experience");
@@ -132,7 +132,7 @@ class LeaderServiceTest {
 
 		LeaderService leaderService = getLeaderService();
 
-		Assertions.assertTrue(leaderService.upDateLeader(leader, 3));
+		Assertions.assertTrue(leaderService.upDateLeader(leader, 18)); 
 
 	}
 	/**
@@ -146,12 +146,12 @@ class LeaderServiceTest {
 
 		Leader leader = new Leader();
 
-		leader.setName("bhack");
+		leader.setName("balaji");
 		leader.setPosition("CHIEF_MINISTER");
-		leader.setPartyName("Independent candidate");
+		leader.setPartyName("DMKk");
 		leader.setExperience(2.2);
 		leader.setOccupation("politicin"); 
-		leader.setCounstuencyName("villupuram");
+		leader.setCounstuencyName("perungudi");
 		leader.setDescriptionOfBirth("Description of Birth");
 		leader.setDescriptionOfEducation("Description of education");
 		leader.setDescriptionOfPastWorkExperience("Description of Past work experience");
@@ -164,7 +164,7 @@ class LeaderServiceTest {
 
 		DaoException exception = assertThrows(DaoException.class,()->leaderService.upDateLeader(leader, 1));
 		
-		Assertions.assertEquals(LeaderValidateError.INVALID_NAME,exception.getMessage());
+		Assertions.assertEquals(LeaderValidateError.INVALID_PARTYNAME,exception.getMessage());
 
 	}
 	
@@ -193,9 +193,9 @@ class LeaderServiceTest {
 	 */
 
 //	@Test
-//	public void testDeleteLeader() throws LeaderValidateException, SQLException {
+//	public void testDeleteLeader() throws LeaderValidateException, SQLException, DaoException {
 //
-//		int id = "balaji";
+//		int id = 19;
 //
 //		LeaderService leaderService = getLeaderService();
 //
@@ -254,6 +254,24 @@ class LeaderServiceTest {
 			logger.info(" ");
 		}
 	}
+	
+	
+	
+	@Test
+	void testSpeiicLeader() throws LeaderValidateException, SQLException, DaoException {
+
+		LeaderService leaderService = getLeaderService();
+
+		List<Leader> leadersList = leaderService.readSpecifc(18);
+
+		Assertions.assertTrue(leadersList.size() > 0);
+			
+				logger.info(leadersList);
+
+		
+	}
+	
+	
 	
 	
 	

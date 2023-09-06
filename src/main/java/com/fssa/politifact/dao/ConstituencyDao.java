@@ -35,14 +35,14 @@ public class ConstituencyDao {
 	 * that reason. this code add leader prepare statement executable code
 	 */
 
-	private boolean insertConstituency(Constituency constituency, PreparedStatement pst) throws SQLException, LeaderValidateException, DaoException {
+	private boolean insertConstituency(Constituency constituency, PreparedStatement pst) throws SQLException, DaoException {
 
-		int electionTypeId = findElectionTypeId(constituency.getElectionTypeName().toString());
+		
 
 		pst.setString(1, constituency.getConstituencyName());
 		pst.setString(2, constituency.getDistrictName());
 		pst.setInt(3, constituency.getConstituencyNumber());
-		pst.setInt(4, electionTypeId);
+		pst.setInt(4, constituency.getElectionTypeName());
 
 		int rowsAffected = pst.executeUpdate();
 
@@ -69,18 +69,15 @@ public class ConstituencyDao {
 	 * in this method insert update method only prepare statement code here this
 	 * only update the code return a boolean value
 	 */
-	private boolean insertUpdate(Constituency constituency, PreparedStatement pst, String constituencyUpadateName)
-			throws SQLException, LeaderValidateException, DaoException {
+	private boolean insertUpdate(Constituency constituency, PreparedStatement pst, int id)
+			throws SQLException, DaoException {
 
-		int electionTypeId = findElectionTypeId(constituency.getElectionTypeName().toString());
-
-		int constituencyUpdateId = LeaderDao.findConstituencyId(constituencyUpadateName);
 
 		pst.setString(1, constituency.getConstituencyName());
 		pst.setString(2, constituency.getDistrictName());
 		pst.setInt(3, constituency.getConstituencyNumber());
-		pst.setInt(4, electionTypeId);
-		pst.setInt(5, constituencyUpdateId);
+		pst.setInt(4, constituency.getElectionTypeName());
+		pst.setInt(5, id);
 
 		int row = pst.executeUpdate();
 
@@ -118,7 +115,7 @@ public class ConstituencyDao {
 	 * insert update that plays run a prepare Statement
 	 */
 
-	public boolean updateConstituency(Constituency constituency, String constituencyName)
+	public boolean updateConstituency(Constituency constituency, int id)
 			throws SQLException, LeaderValidateException, DaoException {
 
 		final String query = "UPDATE Constituency SET constituencyName=?, districtName=?, constituencyNumber=?, electionTypeId=? WHERE constituencyID=?";
@@ -126,7 +123,7 @@ public class ConstituencyDao {
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(query)) {
 
-			return insertUpdate(constituency, pst, constituencyName); // invoke the value in insert update methode
+			return insertUpdate(constituency, pst, id); // invoke the value in insert update methode
 
 		} catch (SQLException sqe) {
 
@@ -138,7 +135,7 @@ public class ConstituencyDao {
 	 * delete-constituency method delete a constituency this performs given id
 	 */
 
-	public boolean deleteConstituency(int constituencyId) throws SQLException, LeaderValidateException, DaoException {
+	public boolean deleteConstituency(int constituencyId) throws SQLException, DaoException {
 
 		final String query = "DELETE FROM constituency WHERE constituencyID=?"; // query
 
@@ -176,18 +173,17 @@ public class ConstituencyDao {
 				Statement stmt = connection.createStatement()) {
 
 			try (ResultSet rs = stmt.executeQuery(query)) {
+				
 				while (rs.next()) {
 
-					Constituency constituency = new Constituency("constituency", "district", 1, null);
+					Constituency constituency = new Constituency("constituency", "district", 1, 0);
 
-					String electionType = findElectionTypeName(rs.getInt("electionTypeId"));
-
-					System.out.println(electionType);
-
+					
+					constituency.setConstituencyID(rs.getInt(1));
 					constituency.setConstituencyName(rs.getString(2));
 					constituency.setDistrictName(rs.getString(3));
 					constituency.setConstituencyNumber(rs.getInt(4));
-					constituency.setElectionTypeName(electionType);
+					constituency.setElectionTypeName(rs.getInt(5));
 
 					constituenciesList.add(constituency);
 				}
@@ -241,7 +237,7 @@ public class ConstituencyDao {
 	 * and then return the name this help to read the name throu the id
 	 */
 
-	public static String findElectionTypeName(int electionId) throws LeaderValidateException, DaoException { 
+	public static String findElectionTypeName(int electionId) throws DaoException { 
 
 		final String query = "SELECT electionType FROM Election WHERE id = ?";
 
@@ -253,7 +249,7 @@ public class ConstituencyDao {
 			pst.setInt(1, electionId);
 
 			try (ResultSet resultSet = pst.executeQuery()) {
-
+ 
 				if (resultSet.next()) {
 
 					electionName = resultSet.getString("electionType");
@@ -267,5 +263,5 @@ public class ConstituencyDao {
 		}
 
 		return electionName;
-	}
+	} 
 }

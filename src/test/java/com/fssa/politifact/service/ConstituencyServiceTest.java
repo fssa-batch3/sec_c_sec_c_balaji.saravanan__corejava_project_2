@@ -34,7 +34,7 @@ class ConstituencyServiceTest {
 	 * @throws SQLException
 	 * @throws DaoException 
 	 */
-
+ 
 	@Test
 	 void testAddConstituency() throws LeaderValidateException, SQLException, DaoException {
 
@@ -53,7 +53,7 @@ class ConstituencyServiceTest {
 
 	public Constituency getConstituency() { 
 
-		Constituency constituency = new Constituency("perungudi", "chennai", 1, ElectionTypes.ASSEMBLY_ELECTION);
+		Constituency constituency = new Constituency("perungudi", "chennai", 1, 3);
 
 		return constituency;
 	}
@@ -84,11 +84,11 @@ class ConstituencyServiceTest {
 	@Test
 	 void tesupDateConstituency() throws LeaderValidateException, SQLException, DaoException {
 
-		Constituency constituency = new Constituency("perungudi", "chennai", 1, ElectionTypes.ASSEMBLY_ELECTION);
+		Constituency constituency = new Constituency("perungudi", "chennai", 1, 3);
 
 		ConstituencyService constituencyService = getConstituencyService();
 
-		Assertions.assertTrue(constituencyService.upDateConstituency(constituency, "tambaram"));
+		Assertions.assertTrue(constituencyService.upDateConstituency(constituency, 8));
 
 	}
 	

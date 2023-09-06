@@ -48,7 +48,7 @@ import com.fssa.politifact.model.Party;
 		Assertions.assertEquals(LeaderValidateError.INVALID_PARTYNAME, exception.getMessage());
 	}
 	@Test
-	public void testInvalidPartyNamePattern() {
+	 void testInvalidPartyNamePattern() {
 		Party party = new Party( "2345678", "https://www.example.com/party.jpg");
 		LeaderValidateException exception = Assertions.assertThrows(LeaderValidateException.class,
 				() -> partyValidator.validate(party));

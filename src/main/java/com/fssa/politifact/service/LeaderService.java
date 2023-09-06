@@ -28,15 +28,15 @@ public class LeaderService {
 
 		this.leaderDao = leader;
 
-	}  
-	
-	
+	}
+
 	/**
 	 * add leader doing check all object attributes and then send value in dao.
+	 * 
 	 * @param leader
 	 * @return
 	 * @throws LeaderValidateException
-	 * @throws DaoException 
+	 * @throws DaoException
 	 */
 
 	public boolean addLeader(Leader leader) throws LeaderValidateException, DaoException {
@@ -57,9 +57,11 @@ public class LeaderService {
 
 		}
 	}
-	
+
 	/**
-	 * update leader receive two parameter one is object , and another one is update name
+	 * update leader receive two parameter one is object , and another one is update
+	 * name
+	 * 
 	 * @param leader
 	 * @param id
 	 * @return
@@ -78,7 +80,7 @@ public class LeaderService {
 
 		if (this.leaderValidator.validate(leader)) {
 
-			return this.leaderDao.updateLeader(leader, id);
+			return leaderDao.updateLeader(leader, id);
 
 		} else {
 
@@ -87,9 +89,10 @@ public class LeaderService {
 		}
 
 	}
-	
+
 	/**
-	 * delete leader delete the row of leader in database 
+	 * delete leader delete the row of leader in database
+	 * 
 	 * @param leader
 	 * @return
 	 * @throws LeaderValidateException
@@ -98,31 +101,29 @@ public class LeaderService {
 	 */
 
 	public boolean deleteLeader(int id) throws LeaderValidateException, SQLException, DaoException {
-		if (id<0) {
+		if (id < 0) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_NAME);
 		}
 
+		return leaderDao.deleteLeader(id);
 
-			return this.leaderDao.deleteLeader(id);
-
-		
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 * @throws SQLException
 	 * @throws DaoException
-	 * @throws LeaderValidateException 
+	 * @throws LeaderValidateException
 	 */
 
 	public List<Leader> callAllLeader() throws SQLException, DaoException, LeaderValidateException {
 
-		return this.leaderDao.readLeader();
+		return leaderDao.readLeader();
 
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -131,8 +132,21 @@ public class LeaderService {
 	 * @throws DaoException
 	 */
 
-	public List<String> readAllLeader() throws LeaderValidateException, SQLException, DaoException {
+	public List<String> readAllLeader() throws SQLException, DaoException {
 
-		return this.leaderDao.readAllJoin();
+		return leaderDao.readAllJoin();
+	}
+	
+	
+	
+
+	public List<Leader> readSpecifc(int id) throws SQLException, DaoException, LeaderValidateException {
+		
+		if (id < 0) {
+			throw new LeaderValidateException(LeaderValidateError.INVALID_CANDIDATE_ID);
+		}
+		
+		return leaderDao.readSpecificLeader(id);
+		
 	}
 }

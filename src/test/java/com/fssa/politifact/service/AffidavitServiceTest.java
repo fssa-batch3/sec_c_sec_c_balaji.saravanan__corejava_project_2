@@ -1,7 +1,7 @@
 package com.fssa.politifact.service;
 
 import java.sql.SQLException;
-
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,6 +10,7 @@ import com.fssa.politifact.dao.AffidavitDao;
 import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Affidavit;
+import com.fssa.politifact.model.Leader;
 import com.fssa.politifact.util.Logger;
 import com.fssa.politifact.validator.AffidavitValidator;
 
@@ -46,7 +47,7 @@ import com.fssa.politifact.validator.AffidavitValidator;
 
 	public Affidavit getAffidavit() { 
 
-		Affidavit affidavit = new Affidavit(1, 5, "https://www.example.com/affidavit1.pdf");
+		Affidavit affidavit = new Affidavit(1, 18, "https://www.example.com/affidavit1.pdf");
 
 		return affidavit;
 	}
@@ -77,11 +78,11 @@ import com.fssa.politifact.validator.AffidavitValidator;
 	@Test
 	 void tesupDateAffidavit() throws LeaderValidateException, SQLException, DaoException {
 
-		Affidavit affidavit = new Affidavit(1, 1, "https://www.example.com/affidavit1.pdf");
+		Affidavit affidavit = new Affidavit(1, 18, "https://www.example.com/affidavit1.pdf");
 
 		AffidavitService affidavitService = getAffidavitService();
 
-		Assertions.assertTrue(affidavitService.upDateAffidavit(affidavit, 1));
+		Assertions.assertTrue(affidavitService.upDateAffidavit(affidavit, 4));
 
 	}
 	
@@ -100,6 +101,59 @@ import com.fssa.politifact.validator.AffidavitValidator;
 //
 //		Assertions.assertTrue(affidavitService.upDateAffidavit(id));
 //	}
+	
+	@Test
+	 void readAllAffidavit() throws LeaderValidateException, SQLException, DaoException {
+
+		
+
+		AffidavitService affidavitService = getAffidavitService(); 
+
+		List<Affidavit> affidavit= affidavitService.readAll();
+		
+		Assertions.assertTrue(affidavit.size() > 0);
+			
+			logger.info(affidavit);
+		
+	}
+	
+	
+	@Test
+	 void testLeaderAffidavit() throws LeaderValidateException, SQLException, DaoException {
+
+		
+
+		AffidavitService affidavitService = getAffidavitService(); 
+
+		List<Affidavit> affidavit= affidavitService.readSpecificLeader(18);
+		
+		Assertions.assertTrue(affidavit.size() > 0);
+			
+			logger.info(affidavit);
+		
+	}
+	
+	
+	
+	@Test
+	 void testLeaderParty() throws LeaderValidateException, SQLException, DaoException {
+
+		
+
+		AffidavitService affidavitService = getAffidavitService(); 
+
+		List<Leader> affidavit= affidavitService.readSpecificLeaderPartyId(11);
+		
+		Assertions.assertTrue(affidavit.size() > 0);
+		
+		for(Leader party: affidavit) {
+			
+			logger.info(party);
+		}
+		
+	}
+	
+	
 	
 
 }

@@ -51,9 +51,6 @@ public class Leader {
 
 	private String imageUrl;
 	
-	/*
-	 * leader model constuctor start;
-	 */
 
 	public int getId() {
 		return id;

@@ -16,7 +16,7 @@ public class ConstituencyValidator {
 	/**
 	 * this is validate constituency object
 	 * @param constituency
-	 * @return
+	 * @return 
 	 * @throws LeaderValidateException
 	 */
 
@@ -83,9 +83,9 @@ public class ConstituencyValidator {
 	 * @throws LeaderValidateException
 	 */
 
-	public void validateElectionTypeName(ElectionTypes election) throws LeaderValidateException {
+	public void validateElectionTypeName(int id) throws LeaderValidateException {
 
-		if (election == null) {
+		if (id < 0) {
 
 			throw new LeaderValidateException(LeaderValidateError.INVALID_ELECTION_ID);
 		}

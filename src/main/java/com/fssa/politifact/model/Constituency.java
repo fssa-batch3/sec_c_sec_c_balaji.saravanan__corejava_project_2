@@ -17,10 +17,10 @@ public class Constituency {
 	private String constituencyName;
 	private String districtName;
 	private int constituencyNumber;
-	private ElectionTypes electionTypeName;
+	private int electionTypeName;
 	
 	public Constituency(String constituencyName, String districtName, int constituencyNumber,
-			ElectionTypes electionTypeName) {
+			int electionTypeName) {
 		
 		this.constituencyName = constituencyName;
 		this.districtName = districtName;
@@ -60,12 +60,14 @@ public class Constituency {
 		this.constituencyNumber = constituencyNumber;
 	}
 
-	public ElectionTypes getElectionTypeName() {
+
+
+	public int getElectionTypeName() {
 		return electionTypeName;
 	}
 
-	public void setElectionTypeName(String electionTypeName) {
-		this.electionTypeName = ElectionTypes.valueOf(electionTypeName);
+	public void setElectionTypeName(int electionTypeName) {
+		this.electionTypeName = electionTypeName;
 	}
 
 	@Override
