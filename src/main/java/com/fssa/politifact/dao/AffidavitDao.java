@@ -260,7 +260,7 @@ public List<Leader> readAllLeaderPartyId(int id) throws DaoException, SQLExcepti
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-			preparedStatement.setInt(1, id);    
+			preparedStatement.setInt(1, id);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				
 				while (rs.next()) {

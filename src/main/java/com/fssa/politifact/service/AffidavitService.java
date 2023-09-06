@@ -124,7 +124,7 @@ public class AffidavitService {
 
 	public List<Leader> readSpecificLeaderPartyId(int id) throws DaoException, SQLException {
 
-		return affidavitDao.readAllLeaderPartyId(id);
+		return affidavitDao.readAllLeaderPartyId(id);   
 	}
 
 }

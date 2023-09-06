@@ -142,7 +142,7 @@ import com.fssa.politifact.validator.AffidavitValidator;
 
 		AffidavitService affidavitService = getAffidavitService(); 
 
-		List<Leader> affidavit= affidavitService.readSpecificLeaderPartyId(11);
+		List<Leader> affidavit= affidavitService.readSpecificLeaderPartyId(13);
 		
 		Assertions.assertTrue(affidavit.size() > 0);
 		
