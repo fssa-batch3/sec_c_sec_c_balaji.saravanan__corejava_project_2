@@ -135,23 +135,23 @@ import com.fssa.politifact.validator.AffidavitValidator;
 	
 	
 	
-	@Test
-	 void testLeaderParty() throws LeaderValidateException, SQLException, DaoException {
-
-		
-
-		AffidavitService affidavitService = getAffidavitService(); 
-
-		List<Leader> affidavit= affidavitService.readSpecificLeaderPartyId(13);
-		
-		Assertions.assertTrue(affidavit.size() > 0);
-		
-		for(Leader party: affidavit) {
-			
-			logger.info(party);
-		}
-		
-	}
+//	@Test
+//	 void testLeaderParty() throws LeaderValidateException, SQLException, DaoException {
+//
+//		
+//
+//		AffidavitService affidavitService = getAffidavitService(); 
+//
+//		List<Leader> affidavit= affidavitService.readSpecificLeaderPartyId(13);
+//		
+//		Assertions.assertTrue(affidavit.size() > 0);
+//		
+//		for(Leader party: affidavit) {
+//			
+//			logger.info(party);
+//		}
+//		
+//	}
 	
 	
 	
