@@ -98,10 +98,8 @@ public class AffidavitDao {
 				return insertAffidavit(affidavit, pst);
 
 			} catch (SQLException sqe) {
-
-				sqe.printStackTrace();
-
-				return false;
+				
+              throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 
 			}
 		}
@@ -159,7 +157,7 @@ public class AffidavitDao {
 		}
 	}
 
-	public List<Affidavit> readAllAffidavit() throws SQLException, LeaderValidateException, DaoException {
+	public List<Affidavit> readAllAffidavit() throws SQLException, DaoException {
 
 		ArrayList<Affidavit> affidavitList = new ArrayList<>();
 
@@ -173,9 +171,9 @@ public class AffidavitDao {
 				while (rs.next()) {
 
 					Affidavit affidavit = new Affidavit(0, 0, "");
-
+                    affidavit.setId(rs.getInt(1));
 					affidavit.setElectionId(rs.getInt(2));
-					affidavit.setLeaderId(rs.getInt(2));
+					affidavit.setLeaderId(rs.getInt(3));
 					affidavit.setAffidateUrl(rs.getString(4));
 
 					affidavitList.add(affidavit);
@@ -185,7 +183,6 @@ public class AffidavitDao {
 
 			} catch (SQLException sqe) {
 
-				System.err.println(sqe);
 
 				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
 			}
@@ -283,9 +280,6 @@ public List<Leader> readAllLeaderPartyId(int id) throws DaoException, SQLExcepti
 					leader.setDescriptionOffamily(rs.getString("descriptionOfFamily"));
 					leader.setDescriptionOfIncome(rs.getString("descriptionOfIncome"));
 					leader.setImageUrl(rs.getString("imageUrl"));
-
-					String affidavitUrl = rs.getString("affidateUrl");
-					Affidavit affidavit = new Affidavit(0, 0, affidavitUrl);
 
 					
 					leaderAffidavitList.add(leader);

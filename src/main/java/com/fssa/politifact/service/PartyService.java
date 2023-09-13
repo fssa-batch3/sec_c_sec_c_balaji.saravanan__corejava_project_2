@@ -99,21 +99,12 @@ public class PartyService {
 	 * @throws DaoException 
 	 */
 
-	public boolean deleteParty(String party) throws LeaderValidateException, SQLException, DaoException {
-		if (party == null) {
+	public boolean deleteParty(int id) throws LeaderValidateException, SQLException, DaoException {
+		
 
-			throw new LeaderValidateException(LeaderValidateError.INVALID_CANDIDATE_ID);
+			return this.partyDao.deleteParty(id);
 
-		}
-
-		if (this.partyValidator.validatePartyName(party)) {
-
-			return this.partyDao.deleteParty(party);
-
-		} else {
-			return false;
-
-		}
+		
 	}
 	
 	/**

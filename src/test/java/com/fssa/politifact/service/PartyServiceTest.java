@@ -47,7 +47,7 @@ import com.fssa.politifact.validator.PartyValidator;
 
 	public Party getParty() {
 
-		Party party = new Party("DMK", "https://www.example.com/party.jpg");
+		Party party = new Party("ADIADMK", "https://www.example.com/party.jpg");
 
 		return party;
 	}
@@ -78,11 +78,11 @@ import com.fssa.politifact.validator.PartyValidator;
 	@Test
 	void tesupDateParty() throws LeaderValidateException, SQLException, DaoException {
 
-		Party party = new Party("Independent candidate", "https://www.example.com/party.jpg");
+		Party party = new Party("Independent candidate", "https://freeimghost.net/images/2023/05/07/govt.png");
 
 		PartyService partyService = getPartyService();
 		
-		Assertions.assertTrue(partyService.upDateParty(party, "dmk"));
+		Assertions.assertTrue(partyService.upDateParty(party, "Independent candidate"));
 
 	}
 	
@@ -90,17 +90,18 @@ import com.fssa.politifact.validator.PartyValidator;
 	 * delete party.
 	 * @throws LeaderValidateException
 	 * @throws SQLException
+	 * @throws DaoException 
 	 */
 
-//	@Test
-//	public void testDeleteParty() throws LeaderValidateException, SQLException {
-//
-//		int id = 4;
-//
-//		PartyService partyService = getPartyService();
-//		
-//		Assertions.assertTrue(partyService.deleteParty(id));
-//	}
+	@Test
+	public void testDeleteParty() throws LeaderValidateException, SQLException, DaoException {
+
+		int id = 16;
+
+		PartyService partyService = getPartyService();
+		
+		Assertions.assertTrue(partyService.deleteParty(id));
+	}
 	
 	/**
 	 * read all party.

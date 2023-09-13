@@ -132,17 +132,15 @@ public class PartyDao {
 	 * the deleteParty method is delete the values in the data base.
 	 */
 
-	public boolean deleteParty(String partyName) throws SQLException, DaoException {
+	public boolean deleteParty(int id) throws SQLException, DaoException {
 
-		final String query = "DELETE FROM Parties WHERE partyId=?";
+		final String query = "DELETE FROM Party WHERE partyId=?";
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
-				int partyId = LeaderDao.findPartyId(partyName);
-
-				pst.setInt(1, partyId);
+				pst.setInt(1, id);
 
 				int rowsDeleted = pst.executeUpdate();
 
@@ -162,7 +160,7 @@ public class PartyDao {
 
 	public List<Party> readAllParties() throws SQLException, DaoException {
 
-		ArrayList<Party> partyList = new ArrayList<>();
+		ArrayList<Party> partyList = new ArrayList<>(); 
 
 		final String query = "SELECT * FROM Party";
 
@@ -177,7 +175,7 @@ public class PartyDao {
 
 						party.setPartyId(rs.getInt(1));
 
-						party.setPartyName(rs.getString("partyName"));
+						party.setPartyName(rs.getString(2));
 
 						party.setPartyImageUrl(rs.getString(3));
 

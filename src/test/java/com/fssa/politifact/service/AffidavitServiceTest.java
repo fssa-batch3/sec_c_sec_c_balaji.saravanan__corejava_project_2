@@ -47,7 +47,7 @@ import com.fssa.politifact.validator.AffidavitValidator;
 
 	public Affidavit getAffidavit() { 
 
-		Affidavit affidavit = new Affidavit(1, 18, "https://www.example.com/affidavit1.pdf");
+		Affidavit affidavit = new Affidavit(1, 19, "https://drive.google.com/file/d/1b4cpKxofjnMk-IM4LCUp_v7sE3975eae/preview");
 
 		return affidavit;
 	}
@@ -55,7 +55,7 @@ import com.fssa.politifact.validator.AffidavitValidator;
 	/**
 	 * this is service  constuctor.
 	 * @return
-	 */
+	 */ 
  
 	public AffidavitService getAffidavitService() {
 
@@ -78,7 +78,7 @@ import com.fssa.politifact.validator.AffidavitValidator;
 	@Test
 	 void tesupDateAffidavit() throws LeaderValidateException, SQLException, DaoException {
 
-		Affidavit affidavit = new Affidavit(1, 18, "https://www.example.com/affidavit1.pdf");
+		Affidavit affidavit = new Affidavit(1, 18, "https://drive.google.com/file/d/1CizE-ZahGikKp6f4bSTJRgv0Y6bT9iYR/preview");
 
 		AffidavitService affidavitService = getAffidavitService();
 
