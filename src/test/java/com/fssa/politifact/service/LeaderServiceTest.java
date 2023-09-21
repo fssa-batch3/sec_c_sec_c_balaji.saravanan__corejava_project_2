@@ -54,7 +54,7 @@ class LeaderServiceTest {
 		Leader leader = new Leader();
 
 		leader.setName("balaji");
-		leader.setPosition("CHIEF_MINISTER");
+		leader.setPosition("GENERAL_ELECTION");
 		leader.setPartyName("dmk");
 		leader.setExperience(2.2);
 		leader.setOccupation("politicin");
@@ -76,7 +76,7 @@ class LeaderServiceTest {
 	 */
 
 	public LeaderService getLeaderService() {
-
+ 
 		LeaderValidator leaderValidator = new LeaderValidator();
 		
 
@@ -272,7 +272,14 @@ class LeaderServiceTest {
 	}
 	
 	
-	
+	@Test
+	void testUpdateVerify() throws LeaderValidateException, SQLException, DaoException {
+
+		LeaderService leaderService = getLeaderService();
+
+		Assertions.assertTrue(leaderService.updateVeerify("VERIFY", 5)); 
+
+	}
 	
 	
 

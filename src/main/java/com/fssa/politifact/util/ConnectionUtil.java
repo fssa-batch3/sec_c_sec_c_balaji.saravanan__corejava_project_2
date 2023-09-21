@@ -47,7 +47,7 @@ public class ConnectionUtil {
 
 			connection = DriverManager.getConnection(url, "root", "123456");
 
-			System.out.println("Connection");
+			System.out.println("Connection in database is sucessfull");
 
 		} catch (Exception e) {
 
@@ -56,7 +56,6 @@ public class ConnectionUtil {
 			throw new RuntimeException(e);
 
 		}
-		System.out.println("hello");
 		return connection;
 	}
 

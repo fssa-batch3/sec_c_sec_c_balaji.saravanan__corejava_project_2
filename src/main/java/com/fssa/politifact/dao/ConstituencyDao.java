@@ -105,7 +105,7 @@ public class ConstituencyDao {
 
 				logger.info(sqe.getMessage());
 
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException("constituency add dao error occure "+ sqe.getMessage());
 			}
 		}
 	}
@@ -127,7 +127,7 @@ public class ConstituencyDao {
 
 		} catch (SQLException sqe) {
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("constituency update dao error occure "+ sqe.getMessage());
 		}
 	}
 
@@ -151,7 +151,7 @@ public class ConstituencyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
+				throw new DaoException("constituency delete  dao error occure "+ sqe.getMessage());
 			}
 		}
 	}
@@ -192,7 +192,7 @@ public class ConstituencyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException("List of constituency dao error occure "+ sqe.getMessage());
 			}
 		}
 	}
@@ -224,7 +224,7 @@ public class ConstituencyDao {
 
 		} catch (SQLException sqe) {
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("find the constituency dao error occure "+ sqe.getMessage());
 		}
 
 		return electionId;
@@ -259,7 +259,7 @@ public class ConstituencyDao {
 
 		} catch (SQLException sqe) {
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("find the election dao error occure "+ sqe.getMessage());
 		}
 
 		return electionName;

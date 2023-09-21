@@ -33,7 +33,7 @@ public class ElectionDao {
 
 	private static boolean insertElection(Election election, PreparedStatement pst) throws SQLException {
 
-		pst.setInt(1, election.getElectionYear());
+		pst.setInt(1, election.getElectionYear()); 
 		
 		pst.setString(2, election.getElectionType().toString());
 
@@ -97,7 +97,7 @@ public class ElectionDao {
 
 			} catch (SQLException sqe) {
 
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException("Election add dao error occure "+ sqe.getMessage());
 			}
 		}
 	}
@@ -120,7 +120,7 @@ public class ElectionDao {
 
 		} catch (SQLException sqe) {
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("Election update dao error occure "+ sqe.getMessage());
 		}
 	}
 	
@@ -148,7 +148,7 @@ public class ElectionDao {
 
 			} catch (SQLException sqe) {
 
-				throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
+				throw new DaoException("Delete election dao error occure "+ sqe.getMessage());
 			}
 		}
 	}
@@ -165,18 +165,19 @@ public class ElectionDao {
 
 		final String query = "SELECT * FROM Election";
 
-		try (Connection connection = ConnectionUtil.getConnection();
+		try (Connection connection = ConnectionUtil.getConnection(); 
 
 				Statement stmt = connection.createStatement()) {
 
 			try (ResultSet rs = stmt.executeQuery(query)) {
 				while (rs.next()) {
-
-					Election election = new Election(1, 2023, ElectionTypes.ASSEMBLY_ELECTION);
-
-					election.setElectionYear(rs.getInt(2));
 					
-					election.setElectionType(rs.getString(3));
+					int id= rs.getInt(1);
+					int year= rs.getInt(2);
+					String electionType=rs.getString(3);
+
+					Election election = new Election(id, year,ElectionTypes.valueOf(electionType));
+					
 
 					electionList.add(election);
 				} 
@@ -185,7 +186,7 @@ public class ElectionDao {
 
 			} catch (SQLException sqe) {
 
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException("List of election get dao error occure "+ sqe.getMessage());
 			}
 		}
 	}

@@ -65,7 +65,7 @@ public class LeaderDao {
 
 		} catch (SQLException sqe) {
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException(" find constituency dao error occure "+ sqe.getMessage());
 		}
 
 		return constituencyId;
@@ -105,7 +105,7 @@ public class LeaderDao {
 		} catch (SQLException sqe) {
 			System.out.println(sqe.getMessage());
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("find party id dao error occure "+ sqe.getMessage());
 		}
 
 		return partyId;
@@ -144,7 +144,7 @@ public class LeaderDao {
 			}
 		} catch (SQLException sqe) {
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("find constituency name dao error occure "+ sqe.getMessage());
 		}
 
 		return constituencyName;
@@ -181,7 +181,7 @@ public class LeaderDao {
 
 		} catch (SQLException sqe) {
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("find party name dao error occure "+ sqe.getMessage());
 		}
 
 		return partyName;
@@ -284,6 +284,7 @@ public class LeaderDao {
 		leader.setDescriptionOffamily(rs.getString("descriptionOfFamily"));
 		leader.setDescriptionOfIncome(rs.getString("descriptionOfIncome"));
 		leader.setImageUrl(rs.getString("imageUrl"));
+		leader.setVerify(rs.getString("verify_status"));
 
 		return leader;
 	}
@@ -309,7 +310,7 @@ public class LeaderDao {
 
 			logger.info(sqe.getMessage());
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("Leader add dao error occure "+ sqe.getMessage());
 
 		}
 
@@ -335,7 +336,7 @@ public class LeaderDao {
 		} catch (SQLException sqe) {
 			System.err.println(sqe.getMessage());
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("update leader dao error occure "+ sqe.getMessage());
 
 		}
 	}
@@ -365,7 +366,7 @@ public class LeaderDao {
 
 				System.err.println(sqe.getMessage());
 
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException("delete Leader dao error occure "+ sqe.getMessage());
 			}
 		}
 	}
@@ -398,7 +399,7 @@ public class LeaderDao {
 
 				} catch (SQLException sqe) {
 
-					throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+					throw new DaoException("List of Leader get dao error occure "+ sqe.getMessage());
 
 				}
 			}
@@ -486,12 +487,39 @@ public class LeaderDao {
 				}
 
 			} catch (SQLException sqe) {
-				System.err.println(sqe.getMessage());
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException("Reade specif Leader dao error occure "+ sqe.getMessage());
 			}
 		}
 
 		return leadersList;
 	}
+	
+	
+	
+	public boolean updateLeaderVerifyStatus(String status, int id) throws SQLException, DaoException, LeaderValidateException {
+	    final String query = "UPDATE Leader SET verify_status=? WHERE id=?";
+	    
+	    try (Connection connection = ConnectionUtil.getConnection();
+	         PreparedStatement pst = connection.prepareStatement(query)) {
+	      
+	        pst.setString(1, status);
+	        pst.setInt(2, id);
+	        
+	        int rowsAffected = pst.executeUpdate();
+	    
+	        if (rowsAffected > 0) {
+	            return true;
+	        } else {
+	            return false;
+	        }
+	        
+	    } catch (SQLException sqe) {
+	    	
+	        logger.info(sqe.getMessage());
+	        
+	        throw new DaoException("Update leader dao error occurred: " + sqe.getMessage());
+	    }
+	}
+
 
 }

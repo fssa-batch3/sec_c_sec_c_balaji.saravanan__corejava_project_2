@@ -149,4 +149,19 @@ public class LeaderService {
 		return leaderDao.readSpecificLeader(id);
 		
 	}
+	
+	
+	public boolean updateVeerify(String status, int id) throws LeaderValidateException, DaoException, SQLException {
+
+		if (status == null) {
+
+			throw new LeaderValidateException(LeaderValidateError.INVALID_LEADER_NULL);
+
+		}
+
+			return leaderDao.updateLeaderVerifyStatus(status, id);
+
+		
+
+	}
 }

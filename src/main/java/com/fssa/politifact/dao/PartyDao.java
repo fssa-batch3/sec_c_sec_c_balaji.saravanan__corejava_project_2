@@ -67,14 +67,13 @@ public class PartyDao {
 	 * true otherwise rturn false.
 	 */
 
-	private boolean insertUpdate(Party party, PreparedStatement pst, String partyName)
+	private boolean insertUpdate(Party party, PreparedStatement pst, int id)
 			throws SQLException, DaoException {
 
-		int partyId = LeaderDao.findPartyId(partyName);
-
+		
 		pst.setString(1, party.getPartyName());
 		pst.setString(2, party.getPartyImageUrl());
-		pst.setInt(3, partyId);
+		pst.setInt(3, id);
 
 		int row = pst.executeUpdate();
 
@@ -99,7 +98,7 @@ public class PartyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+				throw new DaoException("party add dao error occure "+ sqe.getMessage());
 			}
 		}
 	}
@@ -109,7 +108,7 @@ public class PartyDao {
 	 * in the statement this send the value insertparty doing the preparestatment.
 	 */
 
-	public boolean updateParty(Party party, String partyName)
+	public boolean updateParty(Party party, int id)
 			throws SQLException, DaoException, LeaderValidateException {
 
 		final String query = "UPDATE Party SET PartyName=?, partyImageUrl=? WHERE partyId=?";
@@ -118,13 +117,13 @@ public class PartyDao {
 
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 
-				return insertUpdate(party, pst, partyName);
+				return insertUpdate(party, pst, id);
 
 			}
 
 		} catch (SQLException sqe) {
 
-			throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+			throw new DaoException("update party dao error occure "+ sqe.getMessage());
 		}
 	}
 
@@ -148,7 +147,7 @@ public class PartyDao {
 
 			} catch (SQLException sqe) {
 
-				throw new DaoException(LeaderValidateError.INVALID_CONSTITUENCY_ID);
+				throw new DaoException("delete party dao error occure "+ sqe.getMessage());
 			}
 		}
 	}
@@ -186,7 +185,7 @@ public class PartyDao {
 
 				} catch (SQLException sqe) {
 
-					throw new DaoException(LeaderValidateError.INVALID_OBJECT);
+					throw new DaoException("List of party dao error occure "+ sqe.getMessage());
 				}
 			}
 		}

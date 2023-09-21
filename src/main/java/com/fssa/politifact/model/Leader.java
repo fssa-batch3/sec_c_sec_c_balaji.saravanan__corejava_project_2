@@ -4,6 +4,7 @@
 package com.fssa.politifact.model;
 
 import com.fssa.politifact.enums.Position;
+import com.fssa.politifact.enums.Verify;
 
 /**
  * @author BalajiSaravanan
@@ -51,6 +52,8 @@ public class Leader {
 
 	private String imageUrl;
 	
+	private Verify verify;
+	
 
 	public int getId() {
 		return id;
@@ -68,7 +71,7 @@ public class Leader {
 		this.name = name;
 	}
 
-	public Position getPosition() {
+	public Position getPosition() { 
 		return position;
 	}
 
@@ -163,26 +166,23 @@ public class Leader {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+	
+	public Verify getVerify() { 
+		return verify;
+	}
+
+	public void setVerify(String verify) { 
+		this.verify = Verify.valueOf(verify);
+	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Leader");
-		sb.append(", name=").append(name);
-		sb.append(", position=").append(position);
-		sb.append(", partyName=").append(partyName);
-		sb.append(", experience=").append(experience);
-		sb.append(", occupation=").append(occupation);
-		sb.append(", counstuencyName=").append(counstuencyName);
-		sb.append(", descriptionOfBirth=").append(descriptionOfBirth);
-		sb.append(", descriptionOfEducation=").append(descriptionOfEducation);
-		sb.append(", descriptionOfPastWorkExperience=").append(descriptionOfPastWorkExperience);
-		sb.append(", descritionOfpolitics=").append(descritionOfpolitics);
-		sb.append(", descriptionOffamily=").append(descriptionOffamily);
-		sb.append(", descriptionOfIncome=").append(descriptionOfIncome);
-		sb.append(", imageUrl=").append(imageUrl);
-		
-		return sb.toString();
+		return "Leader [id=" + id + ", name=" + name + ", position=" + position + ", partyName=" + partyName
+				+ ", experience=" + experience + ", occupation=" + occupation + ", counstuencyName=" + counstuencyName
+				+ ", descriptionOfBirth=" + descriptionOfBirth + ", descriptionOfEducation=" + descriptionOfEducation
+				+ ", descriptionOfPastWorkExperience=" + descriptionOfPastWorkExperience + ", descritionOfpolitics="
+				+ descritionOfpolitics + ", descriptionOffamily=" + descriptionOffamily + ", descriptionOfIncome="
+				+ descriptionOfIncome + ", imageUrl=" + imageUrl + ", verify=" + verify + "]";
 	}
 
 }

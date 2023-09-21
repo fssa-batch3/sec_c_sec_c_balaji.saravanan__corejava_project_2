@@ -82,7 +82,7 @@ import com.fssa.politifact.validator.PartyValidator;
 
 		PartyService partyService = getPartyService();
 		
-		Assertions.assertTrue(partyService.upDateParty(party, "Independent candidate"));
+		Assertions.assertTrue(partyService.upDateParty(party, 1));
 
 	}
 	

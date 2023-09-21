@@ -70,17 +70,11 @@ public class PartyService {
 	 * @throws DaoException 
 	 */
 
-	public boolean upDateParty(Party party, String name) throws LeaderValidateException, SQLException, DaoException {
-
-		if (party == null) {
-
-			throw new LeaderValidateException(LeaderValidateError.INVALID_OBJECT);
-
-		}
+	public boolean upDateParty(Party party, int id) throws LeaderValidateException, SQLException, DaoException {
 
 		if (this.partyValidator.validate(party)) {
 
-			return this.partyDao.updateParty(party, name);
+			return this.partyDao.updateParty(party, id);
 
 		} else {
 

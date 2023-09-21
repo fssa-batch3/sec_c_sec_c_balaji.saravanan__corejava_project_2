@@ -122,9 +122,14 @@ public class AffidavitService {
 		return affidavitDao.readAllLeaderWithAffidavit(id);
 	}
 
-	public List<Leader> readSpecificLeaderPartyId(int id) throws DaoException, SQLException {
+	public List<Leader> readSpecificLeaderPartyId(int id ,int electionId ) throws DaoException, SQLException {
 
-		return affidavitDao.readAllLeaderPartyId(id);   
+		return affidavitDao.readAllLeaderPartyId(id, electionId);   
+	}
+	
+	public List<Leader> readLeaderwithElection(int electionId) throws DaoException, SQLException {
+
+		return affidavitDao.readAllLeaderInelection(electionId);   
 	}
 
 }

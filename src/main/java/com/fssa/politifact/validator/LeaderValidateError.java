@@ -66,4 +66,15 @@ public class LeaderValidateError {
 	// Indicates an invalid election year. The year should be greater than 1900.
 	public static final String INVALID_ELECTION_YEAR = "Invalid election year. Please provide a year greater than 1900.";
 
+	public static final String INVALID_USER_EMAIL= "Invalid email id give correct email the mail should not null and empty pass the email pattern";
+	
+	public static final String INVALID_PASSWORD="Password should 8 character and pass atleast on upearcase and symbol give correctly";
+	
+	public static final String INVALID_MOBILE_NUMBER="Invalid mobile nuber give correctly 10 digits";
+	
+	public static final String INVALID_AGE="age should be grater than 0";
+	
+	public static final String INVALID_GENDER="give correct gender";
+	
+	public static final String INVALID_CITY="Invalid city give correct city";
 }
