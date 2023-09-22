@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.fssa.politifact.dao.AffidavitDao;
+import com.fssa.politifact.dao.LeaderDao;
 import com.fssa.politifact.exceptions.DaoException;
 import com.fssa.politifact.exceptions.LeaderValidateException;
 import com.fssa.politifact.model.Affidavit;
@@ -110,26 +111,48 @@ public class AffidavitService {
 		return this.affidavitDao.deleteAffidavit(id);
 
 	}
+	
 
 	public List<Affidavit> readAll() throws SQLException, LeaderValidateException, DaoException {
 
 		return affidavitDao.readAllAffidavit();
 
 	}
+	
 
 	public List<Affidavit> readSpecificLeader(int id) throws DaoException, SQLException {
 
 		return affidavitDao.readAllLeaderWithAffidavit(id);
 	}
+	
 
 	public List<Leader> readSpecificLeaderPartyId(int id ,int electionId ) throws DaoException, SQLException {
 
 		return affidavitDao.readAllLeaderPartyId(id, electionId);   
 	}
 	
+	
 	public List<Leader> readLeaderwithElection(int electionId) throws DaoException, SQLException {
 
 		return affidavitDao.readAllLeaderInelection(electionId);   
 	}
+	
+	
+	public int readConstituencyId(String constituecy) throws DaoException, SQLException {
+
+		return LeaderDao.findConstituencyId(constituecy);   
+	}
+	
+	public List<Leader> readSpecificLeaderPartyId(int id ,int electionId, int constituencyId) throws DaoException, SQLException {
+
+		return affidavitDao.readAllLeaderPartyId(id, electionId,constituencyId);   
+	}
+	
+	
+	public List<Leader> readAllLeaderSearch() throws DaoException, SQLException {
+
+		return affidavitDao.readAllLeaderSearch();   
+	}
+	
 
 }

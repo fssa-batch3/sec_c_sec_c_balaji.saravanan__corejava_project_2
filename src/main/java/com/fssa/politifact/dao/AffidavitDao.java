@@ -67,7 +67,7 @@ public class AffidavitDao {
 
 	private static boolean insertUpdate(Affidavit affidavit, PreparedStatement pst, int id) throws SQLException {
 
-		pst.setInt(1, affidavit.getElectionId());
+		pst.setInt(1, affidavit.getElectionId()); 
 
 		pst.setInt(2, affidavit.getLeaderId());
 
@@ -251,7 +251,7 @@ public class AffidavitDao {
 		String sql = "SELECT "
 				+ "L.name, L.id, L.position, L.experience, L.occupation, L.descriptionOfBirth, "
 				+ "L.descriptionOfEducation, L.descriptionOfPastWorkExperience, L.descritionOfpolitics, "
-				+ "L.descriptionOfFamily, L.descriptionOfIncome, L.imageUrl, A.affidateUrl, L.counstuencyId, L.partyId, "
+				+ "L.descriptionOfFamily, L.descriptionOfIncome, L.imageUrl, A.affidateUrl, L.counstuencyId, L.partyId, L.verify_status, "
 				+ "E.id, E.electionYear, E.electionType "
 				+ "FROM "
 				+ "Leader L "
@@ -260,7 +260,7 @@ public class AffidavitDao {
 				+ "INNER JOIN "
 				+ "Election E ON E.id = A.electionId "
 				+ "WHERE "
-				+ "L.partyId = ? AND E.id = ? ";
+				+ "L.partyId = ? AND E.id = ? AND L.verify_status='VERIFY'";
  
  
 		try (Connection connection = ConnectionUtil.getConnection(); 
@@ -306,15 +306,14 @@ public class AffidavitDao {
 
 	}
 
-	
-	public List<Leader> readAllLeaderInelection(int electionId) throws DaoException, SQLException {
+	public List<Leader> readAllLeaderPartyId(int id, int electionId , int constituencyId) throws DaoException, SQLException {
 
 		List<Leader> leaderAffidavitList = new ArrayList<>();
 
 		String sql = "SELECT "
 				+ "L.name, L.id, L.position, L.experience, L.occupation, L.descriptionOfBirth, "
 				+ "L.descriptionOfEducation, L.descriptionOfPastWorkExperience, L.descritionOfpolitics, "
-				+ "L.descriptionOfFamily, L.descriptionOfIncome, L.imageUrl, A.affidateUrl, L.counstuencyId, L.partyId, "
+				+ "L.descriptionOfFamily, L.descriptionOfIncome, L.imageUrl, A.affidateUrl, L.counstuencyId, L.partyId, L.verify_status, "
 				+ "E.id, E.electionYear, E.electionType "
 				+ "FROM "
 				+ "Leader L "
@@ -323,7 +322,72 @@ public class AffidavitDao {
 				+ "INNER JOIN "
 				+ "Election E ON E.id = A.electionId "
 				+ "WHERE "
-				+ "E.id = ? ";
+				+ "L.partyId = ? AND E.id = ? AND L.verify_status='VERIFY' AND L.counstuencyId = ?";
+ 
+ 
+		try (Connection connection = ConnectionUtil.getConnection(); 
+				
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+			preparedStatement.setInt(1, id);
+			preparedStatement.setInt(2, electionId);
+			preparedStatement.setInt(3, constituencyId);
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+
+				while (rs.next()) {
+
+					Leader leader = new Leader();
+					String constituencyName = LeaderDao.findConstituencyName(rs.getInt("counstuencyId"));
+					String partyName = LeaderDao.findPartyName(rs.getInt("partyId"));
+
+					leader.setId(rs.getInt("id"));
+					leader.setName(rs.getString("name"));
+					leader.setPosition(rs.getString("position"));
+					leader.setPartyName(partyName);
+					leader.setExperience(rs.getDouble("experience"));
+					leader.setOccupation(rs.getString("occupation"));
+					leader.setCounstuencyName(constituencyName);
+					leader.setDescriptionOfBirth(rs.getString("descriptionOfBirth"));
+					leader.setDescriptionOfEducation(rs.getString("descriptionOfEducation"));
+					leader.setDescriptionOfPastWorkExperience(rs.getString("descriptionOfPastWorkExperience"));
+					leader.setDescritionOfpolitics(rs.getString("descritionOfpolitics"));
+					leader.setDescriptionOffamily(rs.getString("descriptionOfFamily"));
+					leader.setDescriptionOfIncome(rs.getString("descriptionOfIncome"));
+					leader.setImageUrl(rs.getString("imageUrl"));
+
+					leaderAffidavitList.add(leader);
+
+				}
+
+				return leaderAffidavitList;
+
+			} catch (SQLException e) {
+				
+				logger.info(e.getMessage());
+				
+				throw new DaoException("affidavit and leader table join dao error occure " + e.getMessage());
+			}
+
+		}
+
+	}
+	public List<Leader> readAllLeaderInelection(int electionId) throws DaoException, SQLException {
+
+		List<Leader> leaderAffidavitList = new ArrayList<>();
+
+		String sql = "SELECT "
+				+ "L.name, L.id, L.position, L.experience, L.occupation, L.descriptionOfBirth, "
+				+ "L.descriptionOfEducation, L.descriptionOfPastWorkExperience, L.descritionOfpolitics, "
+				+ "L.descriptionOfFamily, L.descriptionOfIncome, L.imageUrl, A.affidateUrl, L.counstuencyId, L.partyId, L.verify_status, "
+				+ "E.id, E.electionYear, E.electionType "
+				+ "FROM "
+				+ "Leader L "
+				+ "INNER JOIN "
+				+ "Affidavit A ON L.id = A.leaderId "
+				+ "INNER JOIN "
+				+ "Election E ON E.id = A.electionId "
+				+ "WHERE "
+				+ "E.id = ? AND L.verify_status='VERIFY'";
  
 
 		try (Connection connection = ConnectionUtil.getConnection(); 
@@ -428,6 +492,62 @@ public class AffidavitDao {
 				
 				logger.info(e.getMessage());
 				
+				throw new DaoException("affidavit and leader table join dao error occure " + e.getMessage());
+			}
+
+		}
+
+	}
+	
+	
+	public List<Leader> readAllLeaderSearch() throws DaoException, SQLException {
+
+		List<Leader> leaderAffidavitList = new ArrayList<>();
+
+		String sql = "SELECT L.name, L.id, L.position, L.experience, L.occupation, L.descriptionOfBirth, "
+				+ "L.descriptionOfEducation, L.descriptionOfPastWorkExperience, L.descritionOfpolitics, "
+				+ "L.descriptionOfFamily, L.descriptionOfIncome, L.imageUrl, A.affidateUrl, L.counstuencyId, L.partyId "
+				+ "FROM Leader L " + "INNER JOIN Affidavit A ON L.id = A.leaderId ";
+
+		
+		
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+
+				while (rs.next()) {
+
+					Leader leader = new Leader();
+					String constituencyName = LeaderDao.findConstituencyName(rs.getInt("counstuencyId"));
+					String partyName = LeaderDao.findPartyName(rs.getInt("partyId"));
+
+					leader.setId(rs.getInt("id"));
+					leader.setName(rs.getString("name"));
+					leader.setPosition(rs.getString("position"));
+					leader.setPartyName(partyName);
+					leader.setExperience(rs.getDouble("experience"));
+					leader.setOccupation(rs.getString("occupation"));
+					leader.setCounstuencyName(constituencyName);
+					leader.setDescriptionOfBirth(rs.getString("descriptionOfBirth"));
+					leader.setDescriptionOfEducation(rs.getString("descriptionOfEducation"));
+					leader.setDescriptionOfPastWorkExperience(rs.getString("descriptionOfPastWorkExperience"));
+					leader.setDescritionOfpolitics(rs.getString("descritionOfpolitics"));
+					leader.setDescriptionOffamily(rs.getString("descriptionOfFamily"));
+					leader.setDescriptionOfIncome(rs.getString("descriptionOfIncome"));
+					leader.setImageUrl(rs.getString("imageUrl"));
+
+					String affidavitUrl = rs.getString("affidateUrl");
+					Affidavit affidavit = new Affidavit(0, 0, affidavitUrl);
+
+					leaderAffidavitList.add(leader);
+
+				}
+
+				return leaderAffidavitList;
+
+			} catch (SQLException e) {
+				logger.info(e.getMessage());
 				throw new DaoException("affidavit and leader table join dao error occure " + e.getMessage());
 			}
 

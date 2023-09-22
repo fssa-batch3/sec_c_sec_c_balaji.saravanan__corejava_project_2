@@ -154,6 +154,23 @@ import com.fssa.politifact.validator.AffidavitValidator;
 		
 	}
 	
+	@Test
+	 void testLeaderFilter() throws LeaderValidateException, SQLException, DaoException {
+
+		
+
+		AffidavitService affidavitService = getAffidavitService(); 
+
+		List<Leader> affidavit= affidavitService.readSpecificLeaderPartyId(5, 1, 2);
+		
+		Assertions.assertTrue(affidavit.size() > 0);
+		
+		for(Leader party: affidavit) {
+			
+			logger.info(party);
+		}
+		
+	}
 	
 	
 	@Test
@@ -172,10 +189,25 @@ import com.fssa.politifact.validator.AffidavitValidator;
 			logger.info(party);
 		}
 		
-	}
+	} 
 	
-	
-	
+	@Test
+	 void testLeaderSearch() throws LeaderValidateException, SQLException, DaoException {
+
+			
+
+			AffidavitService affidavitService = getAffidavitService(); 
+
+			List<Leader> affidavit= affidavitService.readAllLeaderSearch();
+			
+			Assertions.assertTrue(affidavit.size() > 0);
+			
+			for(Leader party: affidavit) {
+				
+				logger.info(party);
+			}
+			
+		} 
 	
 
 }

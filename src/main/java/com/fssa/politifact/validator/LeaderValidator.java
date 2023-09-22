@@ -95,7 +95,7 @@ public class LeaderValidator {
 
 	public void validateExperience(double experience) throws LeaderValidateException {
 
-		if (experience <= 0) {
+		if (experience <0) {
 			throw new LeaderValidateException(LeaderValidateError.INVALID_EXPERIENCE);
 		}
 	}
