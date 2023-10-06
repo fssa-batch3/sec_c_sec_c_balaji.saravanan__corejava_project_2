@@ -112,6 +112,14 @@ public class AffidavitService {
 
 	}
 	
+	/**
+	 * this is read all affidavit
+	 * @return
+	 * @throws SQLException
+	 * @throws LeaderValidateException
+	 * @throws DaoException
+	 */
+	
 
 	public List<Affidavit> readAll() throws SQLException, LeaderValidateException, DaoException {
 
@@ -119,11 +127,28 @@ public class AffidavitService {
 
 	}
 	
+	/**
+	 *this is read leader with particular Id
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 * @throws SQLException
+	 */
+	
 
 	public List<Affidavit> readSpecificLeader(int id) throws DaoException, SQLException {
 
 		return affidavitDao.readAllLeaderWithAffidavit(id);
 	}
+	
+	/**
+	 * read specfic leader id with election
+	 * @param id
+	 * @param electionId
+	 * @return
+	 * @throws DaoException
+	 * @throws SQLException
+	 */
 	
 
 	public List<Leader> readSpecificLeaderPartyId(int id ,int electionId ) throws DaoException, SQLException {
@@ -132,27 +157,68 @@ public class AffidavitService {
 	}
 	
 	
+	/**
+	 * read leader election only
+	 * @param electionId
+	 * @return
+	 * @throws DaoException
+	 * @throws SQLException
+	 */
+	
 	public List<Leader> readLeaderwithElection(int electionId) throws DaoException, SQLException {
 
 		return affidavitDao.readAllLeaderInelection(electionId);   
 	}
 	
+	/**
+	 * read leader by election and constituency and party and election
+	 * 
+	 * @param id
+	 * @param electionId
+	 * @param constituencyId
+	 * @return
+	 * @throws DaoException
+	 * @throws SQLException
+	 */
 	
-	public int readConstituencyId(String constituecy) throws DaoException, SQLException {
-
-		return LeaderDao.findConstituencyId(constituecy);   
-	}
 	
 	public List<Leader> readSpecificLeaderPartyId(int id ,int electionId, int constituencyId) throws DaoException, SQLException {
 
 		return affidavitDao.readAllLeaderPartyId(id, electionId,constituencyId);   
 	}
 	
+	/**
+	 * read leader for search purpose
+	 * @return
+	 * @throws DaoException
+	 * @throws SQLException
+	 */
+	
 	
 	public List<Leader> readAllLeaderSearch() throws DaoException, SQLException {
 
 		return affidavitDao.readAllLeaderSearch();   
 	}
+	
+	/**
+	 * give constituency name get id
+	 * @param constituecy
+	 * @return
+	 * @throws DaoException
+	 * @throws SQLException
+	 */
+	
+	public int readConstituencyId(String constituecy) throws DaoException, SQLException {
+
+		return LeaderDao.findConstituencyId(constituecy);   
+	}
+	
+	
+	public List<Leader> readeLeaderByconstituencyId(int constituencyId ,int electionId ) throws DaoException, SQLException {
+
+		return affidavitDao.readAllLeaderbyconstituency(constituencyId, electionId);   
+	}
+
 	
 
 }

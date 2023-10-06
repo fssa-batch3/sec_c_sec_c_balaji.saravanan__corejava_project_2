@@ -63,6 +63,13 @@ public class UserServiceTest {
 		return UserService;
 	}
 	
+	/**
+	 * test user available or not
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
+	
 	
 	@Test
 	 void testStatus() throws LeaderValidateException, SQLException, DaoException {
@@ -74,20 +81,32 @@ public class UserServiceTest {
 
 	} 
 	
+	/**
+	 * get user details using email id
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
+	
 	@Test
 	  void userDetails() throws LeaderValidateException, SQLException, DaoException {
 
 
 		UserService userService = getUserService();
 
-	    List<User> userListt= userService.getUser("hemanathm4@gmail.com");
+	    User userListt= userService.getUser("hemanathm4@gmail.com");
 	    
-	    for(User e: userListt) {
 	    	
-	    	logger.info(e);
-	    }
-
+	    	logger.info(userListt);
+	    
 	}
+	
+	/**
+	 * update user id
+	 * @throws LeaderValidateException
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
 	
 	@Test
 	  void userUpdateDetails() throws LeaderValidateException, SQLException, DaoException {

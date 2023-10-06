@@ -1,5 +1,14 @@
 package com.fssa.politifact.model;
 
+
+
+
+/*
+ * The User class represents a user details.
+ * It contains the following attributes:
+ *   above code......
+ */
+
 public class User {
 
 

@@ -11,17 +11,32 @@ import com.fssa.politifact.validator.LeaderValidateError;
 import com.fssa.politifact.validator.UserValidator;
 
 public class UserService {
-	
+
 	private UserValidator userValidator;
 	private UserDao userDao;
-	
+
+	/**
+	 * this user service constructor
+	 * 
+	 * @param userValidator
+	 * @param userDao
+	 */
 	public UserService(UserValidator userValidator, UserDao userDao) {
-		
-		this.userValidator= userValidator;
-		this.userDao= userDao;
-		
+
+		this.userValidator = userValidator;
+		this.userDao = userDao;
+
 	}
-	
+
+	/**
+	 * add user service
+	 * 
+	 * @param user
+	 * @return
+	 * @throws DaoException
+	 * @throws SQLException
+	 * @throws LeaderValidateException
+	 */
 	public boolean addUser(User user) throws DaoException, SQLException, LeaderValidateException {
 
 		if (user == null) {
@@ -40,7 +55,17 @@ public class UserService {
 		}
 
 	}
-	
+
+	/**
+	 * check for user available or not
+	 * 
+	 * @param email
+	 * @return
+	 * @throws LeaderValidateException
+	 * @throws DaoException
+	 * @throws SQLException
+	 */
+
 	public boolean userStatus(String email) throws LeaderValidateException, DaoException, SQLException {
 		if (email == null) {
 
@@ -51,34 +76,56 @@ public class UserService {
 		if (this.userValidator.validateEmail(email)) {
 
 			return this.userDao.emailExists(email);
-			
+
 		} else {
 
 			return false;
 
 		}
-		
+
 	}
-	
-	public boolean userLogin(String emailId, String password) throws  SQLException, DaoException {
-		
-	    if (userDao.emailExists(emailId)) {
-	    	
-		    return userDao.userLogin(emailId, password);
-		    
+
+	/**
+	 * this is user login service
+	 * 
+	 * @param emailId
+	 * @param password
+	 * @return
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
+
+	public boolean userLogin(String emailId, String password) throws SQLException, DaoException {
+
+		if (userDao.emailExists(emailId)) {
+
+			return userDao.userLogin(emailId, password);
+
 		} else {
-		    return false;
+			return false;
 		}
-	    
+
 	}
-	
-	public List<User> getUser(String emailId) throws  SQLException, DaoException { 
-			
-	    return userDao.getUserByEmail(emailId);
-	    
+
+	/**
+	 * get user give string get user
+	 * 
+	 * @param emailId
+	 * @return
+	 * @throws SQLException
+	 * @throws DaoException
+	 */
+
+	public User getUser(String emailId) throws SQLException, DaoException {
+
+		return userDao.getUserByEmail(emailId);
+
 	}
-	
-	
+
+	/**
+	 * user update
+	 */
+
 	public boolean updateUser(User user) throws DaoException, SQLException, LeaderValidateException {
 
 		if (user == null) {
@@ -87,7 +134,7 @@ public class UserService {
 
 		}
 
-		if (this.userValidator.validate(user)) {
+		if (this.userValidator.validateEmail(user.getEmailId()) && this.userValidator.validateUserName(user.getUserName()) && this.userValidator.validateMobileNo(user.getMobileNo())) {
 
 			return this.userDao.updateUserProfile(user);
 		} else {

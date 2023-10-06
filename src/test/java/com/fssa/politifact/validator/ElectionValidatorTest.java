@@ -28,6 +28,7 @@ import com.fssa.politifact.model.Election;
 
     @Test
     void testNullElection() {
+    	
         assertThrows(LeaderValidateException.class, () -> electionValidator.validate(null));
     }
 

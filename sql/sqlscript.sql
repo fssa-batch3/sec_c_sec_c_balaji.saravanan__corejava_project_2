@@ -6,6 +6,7 @@ CREATE TABLE Party (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+
 CREATE TABLE Election (
     id INT AUTO_INCREMENT PRIMARY KEY,
     electionYear INT NOT NULL,
@@ -14,7 +15,8 @@ CREATE TABLE Election (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-
+ALTER TABLE Election
+ADD CONSTRAINT uq_election_unique_combo UNIQUE (electionType, electionYear);
 
 CREATE TABLE Constituency (
     constituencyID INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,7 +29,12 @@ CREATE TABLE Constituency (
     FOREIGN KEY (electionTypeId) REFERENCES Election(id)
 );
 
+
+ALTER TABLE Constituency
+ADD CONSTRAINT uq_constituency_unique_combo UNIQUE (constituencyName, electionTypeId);
+
 CREATE TABLE Leader (
+
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     position VARCHAR(100) NOT NULL,
@@ -49,6 +56,18 @@ CREATE TABLE Leader (
   
 );
 
+ALTER TABLE Leader
+ADD CONSTRAINT uq_affidavit_unique_combo UNIQUE (name, position);
+
+
+ALTER TABLE Leader
+ADD COLUMN verify_status VARCHAR(20) DEFAULT 'INPROGRESS';
+
+ALTER TABLE Leader
+ADD COLUMN verify_status VARCHAR(20) DEFAULT 'INPROGRESS';
+
+ALTER TABLE Leader
+DROP COLUMN verify_status;
 
 CREATE TABLE Affidavit (
 
@@ -64,7 +83,25 @@ CREATE TABLE Affidavit (
 
 
 
+ALTER TABLE Affidavit
+ADD CONSTRAINT uq_affidavit_unique_combo UNIQUE (electionId, LeaderId);
+
+
+
+
 INSERT INTO Election (electionYear, electionType) VALUES
     (2023, 'LOCAL_ELECTION'),
     (2023, 'GENERAL_ELECTION'),
     (2023, 'ASSEMBLY_ELECTION');
+
+CREATE TABLE Users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    emailId VARCHAR(255) NOT NULL,
+    userName VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    mobileNo VARCHAR(15) NOT NULL,
+    age INT,
+    occupation VARCHAR(255),
+    gender VARCHAR(20),
+   UNIQUE(emailId)
+);
